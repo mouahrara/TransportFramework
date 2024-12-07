@@ -1,0 +1,23 @@
+﻿{
+	// Stardew Valley
+	"About_Title": "Stardew Valley",
+
+	// Stations menu
+	"Menu.NoDestinations": "There are no destinations available at the moment.",
+
+	// GMCM
+	"GMCM.AllowHorsebackTravel.Title": "Allow horseback travel",
+	"GMCM.AllowHorsebackTravel.Tooltip": "Defines whether or not the use of horseback transportation is allowed when the player has a {{HorseFlute}} in his inventory. Even if this option is enabled, the horse will be left behind if there is not enough space at the arrival.",
+	"GMCM.SkipTravelAnimations.Title": "Skip travel animations",
+	"GMCM.SkipTravelAnimations.Tooltip": "Defines whether or not to skip the travel animations.",
+	"GMCM.PreviousPageButtonPosition.Title": "Previous page button position",
+	"GMCM.PreviousPageButtonPosition.Tooltip": "Defines the position of the previous page button in the selection menu.",
+	"GMCM.NextPageButtonPosition.Title": "Next page button position",
+	"GMCM.NextPageButtonPosition.Tooltip": "Defines the position of the next page button in the selection menu.",
+	"GMCM.PagePosition.Top": "Top",
+	"GMCM.PagePosition.Bottom": "Bottom",
+	"GMCM.NumberOfDestinationsPerPage.Title": "Number of destinations per page",
+	"GMCM.NumberOfDestinationsPerPage.Tooltip": "Defines the maximum number of destinations per page in the selection menu.",
+	"GMCM.AllowObjectDestruction.Title": "Allow object destruction",
+	"GMCM.AllowObjectDestruction.Tooltip": "Defines whether or not object destruction is allowed. For example, for base stations, this determines whether the bus destroys objects on collision."
+}

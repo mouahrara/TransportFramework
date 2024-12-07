@@ -1,0 +1,23 @@
+﻿{
+	// Stardew Valley
+	"About_Title": "Stardew Valley",
+
+	// Stations menu
+	"Menu.NoDestinations": "Il n'y a pas de destinations disponibles pour le moment.",
+
+	// GMCM
+	"GMCM.AllowHorsebackTravel.Title": "Autoriser les voyages à cheval",
+	"GMCM.AllowHorsebackTravel.Tooltip": "Définit si l'utilisation de moyens de transport à cheval est autorisée ou non lorsque le joueur a une {{HorseFlute}} dans son inventaire. Même si cette option est activée, le cheval sera laissé sur place s'il n'y a pas assez d'espace à l'arrivée.",
+	"GMCM.SkipTravelAnimations.Title": "Passer les animations de voyage",
+	"GMCM.SkipTravelAnimations.Tooltip": "Définit s'il faut passer ou non les animations de voyage.",
+	"GMCM.PreviousPageButtonPosition.Title": "Position du bouton « Page précédente »",
+	"GMCM.PreviousPageButtonPosition.Tooltip": "Définit la position du bouton « Page précédente » dans le menu de sélection.",
+	"GMCM.NextPageButtonPosition.Title": "Position du bouton « Page suivante »",
+	"GMCM.NextPageButtonPosition.Tooltip": "Définit la position du bouton « Page suivante » dans le menu de sélection.",
+	"GMCM.PagePosition.Top": "Haut",
+	"GMCM.PagePosition.Bottom": "Bas",
+	"GMCM.NumberOfDestinationsPerPage.Title": "Nombre de destinations par page",
+	"GMCM.NumberOfDestinationsPerPage.Tooltip": "Définit le nombre maximum de destinations par page dans le menu de sélection.",
+	"GMCM.AllowObjectDestruction.Title": "Autoriser la destruction d'objets",
+	"GMCM.AllowObjectDestruction.Tooltip": "Définit si la destruction d'objets est autorisée ou non. Par exemple, pour les stations de base, cela détermine si le bus détruit les objets en cas de collision."
+}
