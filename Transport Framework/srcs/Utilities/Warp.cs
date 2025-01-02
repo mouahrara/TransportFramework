@@ -108,7 +108,7 @@ namespace TransportFramework.Utilities
 				}
 				else
 				{
-					gameEvent = new(TokensUtility.ParseText(departureStation, events[i].Script), null, eventId, Game1.player)
+					gameEvent = new(TokensUtility.ParseText(events[i].Type.Equals("Departure") ? departureStation : arrivalStation, events[i].Script), null, eventId, Game1.player)
 					{
 						showActiveObject = false,
 						showGroundObjects = true,
