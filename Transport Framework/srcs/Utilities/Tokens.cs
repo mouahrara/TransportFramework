@@ -88,7 +88,7 @@ namespace TransportFramework.Utilities
 				return TokenParser.LogTokenError(query, "context station not defined", out replacement);
 			}
 
-			GameLocation location = Game1.getLocationFromName(Station.Location);
+			GameLocation location = LocationUtility.GetLocationFromName(Station.Location);
 
 			if (location is not null)
 			{
@@ -105,7 +105,7 @@ namespace TransportFramework.Utilities
 				return TokenParser.LogTokenError(query, "context station not defined", out replacement);
 			}
 
-			GameLocation location = Game1.getLocationFromName(Station.Location);
+			GameLocation location = LocationUtility.GetLocationFromName(Station.Location);
 
 			if (location is not null)
 			{

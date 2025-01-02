@@ -27,7 +27,7 @@ namespace TransportFramework.Patches
 			);
 			harmony.Patch(
 				original: AccessTools.Method(typeof(BusStop), "resetLocalState"),
-				postfix: new HarmonyMethod(typeof(BusPatch), nameof(ResetLocalStatePostfix))
+				postfix: new HarmonyMethod(typeof(BusPatch), nameof(ResetLocalStatePostfixBusStop))
 			);
 			harmony.Patch(
 				original: AccessTools.Method(typeof(Desert), "resetLocalState"),
@@ -35,7 +35,15 @@ namespace TransportFramework.Patches
 			);
 			harmony.Patch(
 				original: AccessTools.Method(typeof(Desert), "resetLocalState"),
-				postfix: new HarmonyMethod(typeof(BusPatch), nameof(ResetLocalStatePostfix))
+				postfix: new HarmonyMethod(typeof(BusPatch), nameof(ResetLocalStatePostfixDesert))
+			);
+			harmony.Patch(
+				original: AccessTools.Method(typeof(DesertFestival), "resetLocalState"),
+				prefix: new HarmonyMethod(typeof(BusPatch), nameof(ResetLocalStatePrefix))
+			);
+			harmony.Patch(
+				original: AccessTools.Method(typeof(DesertFestival), "resetLocalState"),
+				postfix: new HarmonyMethod(typeof(BusPatch), nameof(ResetLocalStatePostfixDesert))
 			);
 		}
 
@@ -69,11 +77,24 @@ namespace TransportFramework.Patches
 			Game1.player.previousLocationName = __instance.Name;
 		}
 
-		private static void ResetLocalStatePostfix(GameLocation __instance, string __state)
+		private static void ResetLocalStatePostfixBusStop(GameLocation __instance, string __state)
 		{
-			FieldInfo fieldInfoBusPosition = __instance.GetType().GetField("busPosition", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
-			FieldInfo fieldInfoBusDoor = __instance.GetType().GetField("busDoor", BindingFlags.NonPublic | BindingFlags.Instance);
+			FieldInfo fieldInfoBusPosition = typeof(BusStop).GetField("busPosition", BindingFlags.Public | BindingFlags.Instance);
+			FieldInfo fieldInfoBusDoor = typeof(BusStop).GetField("busDoor", BindingFlags.NonPublic | BindingFlags.Instance);
 
+			ResetLocalStatePostfix(__instance, __state, fieldInfoBusPosition, fieldInfoBusDoor);
+		}
+
+		private static void ResetLocalStatePostfixDesert(GameLocation __instance, string __state)
+		{
+			FieldInfo fieldInfoBusPosition = typeof(Desert).GetField("busPosition", BindingFlags.NonPublic | BindingFlags.Instance);
+			FieldInfo fieldInfoBusDoor = typeof(Desert).GetField("busDoor", BindingFlags.NonPublic | BindingFlags.Instance);
+
+			ResetLocalStatePostfix(__instance, __state, fieldInfoBusPosition, fieldInfoBusDoor);
+		}
+
+		private static void ResetLocalStatePostfix(GameLocation __instance, string __state, FieldInfo fieldInfoBusPosition, FieldInfo fieldInfoBusDoor)
+		{
 			if (fieldInfoBusPosition is not null && fieldInfoBusDoor is not null)
 			{
 				fieldInfoBusPosition.SetValue(__instance, new Vector2(float.MinValue, float.MinValue));

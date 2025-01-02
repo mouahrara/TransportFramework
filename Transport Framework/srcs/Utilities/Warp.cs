@@ -19,7 +19,7 @@ namespace TransportFramework.Utilities
 				return false;
 			}
 
-			LocationRequest destination = Game1.getLocationRequest(arrivalStation.Location);
+			LocationRequest destination = LocationUtility.GetLocationRequest(arrivalStation.Location);
 
 			if (Game1.player.IsSitting())
 			{
@@ -211,9 +211,9 @@ namespace TransportFramework.Utilities
 		{
 			string eventLocation = @event.Location ?? (@event.Type.Equals("Departure") ? departureStationLocation : arrivalStationLocation);
 
-			if (!isFirstEvent || Game1.currentLocation != Game1.getLocationFromName(eventLocation))
+			if (!isFirstEvent || Game1.currentLocation != LocationUtility.GetLocationFromName(eventLocation))
 			{
-				LocationRequest eventLocationRequest = Game1.getLocationRequest(eventLocation);
+				LocationRequest eventLocationRequest = LocationUtility.GetLocationRequest(eventLocation);
 
 				eventLocationRequest.OnWarp += () =>
 				{

@@ -107,7 +107,7 @@ namespace TransportFramework.Patches
 
 			foreach (Station station in ModEntry.Stations)
 			{
-				if (station.Location.Equals(__instance.Name))
+				if (LocationUtility.GetLocationFromName(station.Location) == __instance)
 				{
 					if (station.Sprites is not null)
 					{
@@ -142,7 +142,7 @@ namespace TransportFramework.Patches
 		{
 			foreach (Station station in ModEntry.Stations)
 			{
-				if (station.Location.Equals(__instance.Name))
+				if (LocationUtility.GetLocationFromName(station.Location) == __instance)
 				{
 					if (station.Sprites is not null)
 					{
@@ -175,7 +175,7 @@ namespace TransportFramework.Patches
 
 				foreach (Station station in ModEntry.Stations)
 				{
-					if (station.Location.Equals(__instance.Name))
+					if (LocationUtility.GetLocationFromName(station.Location) == __instance)
 					{
 						if (station.Sprites is not null)
 						{

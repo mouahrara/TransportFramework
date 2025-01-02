@@ -54,12 +54,12 @@ namespace TransportFramework.Utilities
 
 		private static bool IsCharacterAtTileForDeparture(string[] query, GameStateQueryContext context)
 		{
-			return IsCharacterAtTile(query, context) || Game1.currentLocation != Game1.getLocationFromName(SCondition.Station.Location);
+			return IsCharacterAtTile(query, context) || Game1.currentLocation != LocationUtility.GetLocationFromName(SCondition.Station.Location);
 		}
 
 		private static bool IsCharacterAtTileForArrival(string[] query, GameStateQueryContext context)
 		{
-			return IsCharacterAtTile(query, context) || Game1.currentLocation == Game1.getLocationFromName(SCondition.Station.Location);
+			return IsCharacterAtTile(query, context) || Game1.currentLocation == LocationUtility.GetLocationFromName(SCondition.Station.Location);
 		}
 
 		private static bool IsCharacterAtTile(string[] query, GameStateQueryContext context)
@@ -80,7 +80,7 @@ namespace TransportFramework.Utilities
 				return RemoveCondition(query, $"{npc} not found");
 			}
 
-			GameLocation stationLocation = Game1.getLocationFromName(SCondition.Station.Location);
+			GameLocation stationLocation = LocationUtility.GetLocationFromName(SCondition.Station.Location);
 
 			if (stationLocation is null)
 			{

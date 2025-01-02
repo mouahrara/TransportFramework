@@ -21,7 +21,7 @@ namespace TransportFramework.Utilities
 					MoveBusTilesFromBuildingsLayerToBackLayer(editor.Data, 21, 7, "outdoors", new int[] { 1054, 1056, 1082 });
 				});
 			}
-			else if (e.Name.IsEquivalentTo("Maps/Desert"))
+			else if (e.Name.IsEquivalentTo("Maps/Desert") || e.Name.IsEquivalentTo("Maps/Desert-Festival"))
 			{
 				e.Edit(asset =>
 				{

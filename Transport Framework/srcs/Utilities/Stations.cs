@@ -1152,7 +1152,7 @@ namespace TransportFramework.Utilities
 
 		public static void GenerateCurrentLocationEnumerable()
 		{
-			ModEntry.CurrentLocationStations = ModEntry.Stations?.Where(s => s.Location == Game1.currentLocation?.Name) ?? Enumerable.Empty<Station>();
+			ModEntry.CurrentLocationStations = ModEntry.Stations?.Where(s => LocationUtility.GetLocationFromName(s.Location) == Game1.currentLocation) ?? Enumerable.Empty<Station>();
 		}
 
 		public static void GenerateUpdateEnumerables()
