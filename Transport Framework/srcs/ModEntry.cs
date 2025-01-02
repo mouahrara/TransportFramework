@@ -45,6 +45,7 @@ namespace TransportFramework
 				// Apply patches
 				Game1Patch.Apply(harmony);
 				GameLocationPatch.Apply(harmony);
+				PathFindControllerPatch.Apply(harmony);
 				BusPatch.Apply(harmony);
 				BoatPatch.Apply(harmony);
 				MinecartPatch.Apply(harmony);
