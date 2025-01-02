@@ -10,6 +10,7 @@ namespace TransportFramework.Classes
 		internal ITranslationHelper	Translation = null;
 
 		public string				Format = null;
+		public List<Template>		Templates = null;
 		public List<Station>		Stations = null;
 	}
 }

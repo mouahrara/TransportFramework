@@ -46,6 +46,9 @@ namespace TransportFramework.Handlers
 			// Initialize content packs
 			ContentPacksUtility.Initialize();
 
+			// Apply templates to stations
+			StationsUtility.ApplyTemplatesToStations();
+
 			// Set station references in conditions and events
 			StationsUtility.SetStationReferences();
 

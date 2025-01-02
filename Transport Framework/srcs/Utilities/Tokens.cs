@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using StardewModdingAPI.Utilities;
 using StardewValley;
 using StardewValley.TokenizableStrings;
@@ -8,9 +9,9 @@ namespace TransportFramework.Utilities
 {
 	internal class TokensUtility
 	{
-		internal static readonly PerScreen<Station>	station = new(() => null);
+		private static readonly PerScreen<Station>	station = new(() => null);
 
-		private static Station Station
+		internal static Station Station
 		{
 			get => station.Value;
 			set => station.Value = value;
@@ -28,8 +29,16 @@ namespace TransportFramework.Utilities
 
 		public static void Register()
 		{
+			// Translation
 			TokenParser.RegisterParser($"{ModEntry.ModManifest.UniqueID}_LocalizedStardewValley", LocalizedStardewValley);
 			TokenParser.RegisterParser($"{ModEntry.ModManifest.UniqueID}_I18n", I18n);
+
+			// Templates
+			TokenParser.RegisterParser($"{ModEntry.ModManifest.UniqueID}_StationTileX", StationTileX);
+			TokenParser.RegisterParser($"{ModEntry.ModManifest.UniqueID}_StationTileY", StationTileY);
+			TokenParser.RegisterParser($"{ModEntry.ModManifest.UniqueID}_StationLocationWidth", StationLocationWidth);
+			TokenParser.RegisterParser($"{ModEntry.ModManifest.UniqueID}_StationLocationHeight", StationLocationHeight);
+			TokenParser.RegisterParser($"{ModEntry.ModManifest.UniqueID}_QueryExpression", QueryExpression);
 		}
 
 		private static bool LocalizedStardewValley(string[] query, out string replacement, Random random, Farmer player)
@@ -40,7 +49,7 @@ namespace TransportFramework.Utilities
 
 		private static bool I18n(string[] query, out string replacement, Random random, Farmer player)
 		{
-			if (station is null)
+			if (Station is null)
 			{
 				return TokenParser.LogTokenError(query, "context station not defined", out replacement);
 			}
@@ -50,6 +59,77 @@ namespace TransportFramework.Utilities
 			}
 			replacement = Station.ContentPack.Translation.Get(key);
 			return true;
+		}
+
+		private static bool StationTileX(string[] query, out string replacement, Random random, Farmer player)
+		{
+			if (Station is null)
+			{
+				return TokenParser.LogTokenError(query, "context station not defined", out replacement);
+			}
+			replacement = Station.Tile.X.ToString();
+			return true;
+		}
+
+		private static bool StationTileY(string[] query, out string replacement, Random random, Farmer player)
+		{
+			if (Station is null)
+			{
+				return TokenParser.LogTokenError(query, "context station not defined", out replacement);
+			}
+			replacement = Station.Tile.Y.ToString();
+			return true;
+		}
+
+		private static bool StationLocationWidth(string[] query, out string replacement, Random random, Farmer player)
+		{
+			if (Station is null)
+			{
+				return TokenParser.LogTokenError(query, "context station not defined", out replacement);
+			}
+
+			GameLocation location = Game1.getLocationFromName(Station.Location);
+
+			if (location is not null)
+			{
+				return TokenParser.LogTokenError(query, $"context location '{Station.Location}' not found", out replacement);
+			}
+			replacement = location.Map.Layers[0].LayerWidth.ToString();
+			return true;
+		}
+
+		private static bool StationLocationHeight(string[] query, out string replacement, Random random, Farmer player)
+		{
+			if (Station is null)
+			{
+				return TokenParser.LogTokenError(query, "context station not defined", out replacement);
+			}
+
+			GameLocation location = Game1.getLocationFromName(Station.Location);
+
+			if (location is not null)
+			{
+				return TokenParser.LogTokenError(query, $"context location '{Station.Location}' not found", out replacement);
+			}
+			replacement = location.Map.Layers[0].LayerHeight.ToString();
+			return true;
+		}
+
+		private static bool QueryExpression(string[] query, out string replacement, Random random, Farmer player)
+		{
+			string queryExpression = string.Join(" ", query[1..]);
+
+			try
+			{
+				DataTable dataTable = new();
+
+				replacement = dataTable.Compute(queryExpression, null).ToString();
+				return true;
+			}
+			catch
+			{
+				return TokenParser.LogTokenError(query, $"{queryExpression} is not a valid query expression", out replacement);
+			}
 		}
 	}
 }

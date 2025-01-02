@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Force.DeepCloner;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using StardewModdingAPI;
@@ -18,21 +19,36 @@ namespace TransportFramework.Utilities
 			{
 				Manifest = ModEntry.ModManifest,
 				Translation = ModEntry.Helper.Translation,
-				Format = "1.0.0",
-				Stations = new()
+				Format = "1.0.1",
+				Templates = new()
 				{
 					new()
 					{
-						Id = "Bus_BusStop",
-						DisplayName = "[mouahrara.TransportFramework_LocalizedStardewValley]",
-						Location = "BusStop",
-						Tile = new() { X = 22, Y = 10 },
-						Direction = "down",
+						Id = "Minecart",
 						Price = 0,
+						Network = "Minecart",
+						AccessTiles = new List<Point>
+						{
+							new() { X = 0, Y = -1 }
+						},
+						Conditions = new List<SCondition>
+						{
+							new()
+							{
+								Query = "PLAYER_HAS_MAIL Any ccBoilerRoom Received",
+								LockedMessage = "[LocalizedText Strings\\Locations:MineCart_OutOfOrder]",
+								Update = "OnDayStart"
+							}
+						}
+					},
+					new()
+					{
+						Id = "Bus_left",
+						Price = 500,
 						Network = "Bus",
 						AccessTiles = new List<Point>
 						{
-							new() { X = 17, Y = 11 }
+							new() { X = 0, Y = -1 }
 						},
 						Sprites = new List<SSprite>
 						{
@@ -42,8 +58,8 @@ namespace TransportFramework.Utilities
 								{
 									TextureName = "LooseSprites\\Cursors",
 									SourceRectangle = { X = 288, Y = 1247, Width = 128, Height = 64 },
-									Position = { X = 21f, Y = 6f },
-									LayerDepth = 8.9f
+									Position = { X = -1f, Y = -4f },
+									LayerDepth = -1.1f
 								},
 								CollisionBoxes = new List<SSCollisionBox>()
 								{
@@ -58,10 +74,369 @@ namespace TransportFramework.Utilities
 								{
 									TextureName = "LooseSprites\\Cursors",
 									SourceRectangle = { X = 288, Y = 1311, Width = 16, Height = 38 },
-									Position = { X = 22f, Y = 7.625f },
-									LayerDepth = 9f
+									Position = { X = 0f, Y = -2.375f },
+									LayerDepth = -1f
 								}
 							}
+						},
+						Events = new List<SEvent>
+						{
+							new()
+							{
+								Type = "Departure",
+								Script = @"continue
+										/follow
+										/? 0 0 0
+										/skippable
+										/beginSimultaneousCommand
+										/mouahrara.TransportFramework_removeTemporarySprites
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1247 128 64 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 1] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 4] false false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 0.1] 0 white 1 0 0 0
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1311 16 38 999999 1 1 [mouahrara.TransportFramework_StationTileX] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2.375] false false [mouahrara.TransportFramework_StationTileY] 0 white 1 0 0 0
+										/endSimultaneousCommand
+										/mouahrara.TransportFramework_moveTo farmer [mouahrara.TransportFramework_StationTileX] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 1] 0 1
+										/playSound stoneStep
+										/mouahrara.TransportFramework_hideActor farmer
+										/playMusic none
+										/playSound trashcanlid
+										/beginSimultaneousCommand
+										/mouahrara.TransportFramework_removeTemporarySprites
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1247 128 64 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 1] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 4] false false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 0.1] 0 white 1 0 0 0
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1311 16 38 70 6 1 [mouahrara.TransportFramework_StationTileX] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2.375] false false [mouahrara.TransportFramework_StationTileY] 0 white 1 0 0 0 hold_last_frame true
+										/endSimultaneousCommand
+										/pause 420
+										/fade
+										/mouahrara.TransportFramework_hideWorldCharacters
+										/playSound batFlap
+										/playSound busDriveOff
+										/beginSimultaneousCommand
+										/mouahrara.TransportFramework_removeTemporarySprites
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1247 128 64 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 1] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 4] false false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 0.1] 0 white 1 0 0 0 acceleration -0.1 0
+										/mouahrara.TransportFramework_query mouahrara.TransportFramework_CanDriveYourselfToday 2 1
+										/mouahrara.TransportFramework_temporaryFarmerSprite 117 48 608 16 32 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 0.9375] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2.3125] 3 true true false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 0.01]
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors2 0 0 21 41 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 1] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2.8125] false false [mouahrara.TransportFramework_StationTileY] 0 white 1 0 0 0 acceleration -0.1 0
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 384 1311 15 19 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 1] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2] false false [mouahrara.TransportFramework_StationTileY] 0 white 1 0 0 0 acceleration -0.1 0
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 368 1311 16 38 999999 1 1 [mouahrara.TransportFramework_StationTileX] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2.375] false false [mouahrara.TransportFramework_StationTileY] 0 white 1 0 0 0 acceleration -0.1 0
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -3 -3 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 20] none 0 0 acceleration 0 0
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -2 -3 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 20] none 0 0 acceleration 0 0
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -1 -3 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 20] none 0 0 acceleration 0 0
+										/mouahrara.TransportFramework_destroyObjectsOnCollision -3 0 1.5 8 2.25 true true
+										/endSimultaneousCommand
+										/pause 2400
+										/globalFade 0.01
+										/viewport -1000 -1000
+										/end"
+							},
+							new()
+							{
+								Type = "Arrival",
+								Script = @"none
+										/follow
+										/farmer [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 33] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 1] 3
+										/mouahrara.TransportFramework_hideWorldCharacters
+										/mouahrara.TransportFramework_hideActor farmer
+										/playSound busDriveOff
+										/beginSimultaneousCommand
+										/mouahrara.TransportFramework_removeTemporarySprites
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1247 128 64 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 32] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 4] false false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 0.1] 0 white 1 0 0 0 motion -6 0
+										/mouahrara.TransportFramework_query mouahrara.TransportFramework_CanDriveYourselfToday 2 1
+										/mouahrara.TransportFramework_temporaryFarmerSprite 117 48 608 16 32 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 32.0625] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2.3125] 3 true true false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 0.01]
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors2 0 0 21 41 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 32] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2.8125] false false [mouahrara.TransportFramework_StationTileY] 0 white 1 0 0 0 motion -6 0
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 384 1311 15 19 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 32] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2] false false [mouahrara.TransportFramework_StationTileY] 0 white 1 0 0 0 motion -6 0
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 368 1311 16 38 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 33] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2.375] false false [mouahrara.TransportFramework_StationTileY] 0 white 1 0 0 0 motion -6 0
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -3 -3 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 22] none 0 0 acceleration_change 0.0000896 0 stop_accelerating_when_velocity_is_zero true
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -2 -3 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 22] none 0 0 acceleration_change 0.0000896 0 stop_accelerating_when_velocity_is_zero true
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -1 -3 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 22] none 0 0 acceleration_change 0.0000896 0 stop_accelerating_when_velocity_is_zero true
+										/mouahrara.TransportFramework_destroyObjectsOnCollision -3 0 1.5 8 2.25 true true
+										/mouahrara.TransportFramework_beginSyncWithTemporarySprite farmer
+										/endSimultaneousCommand
+										/skippable
+										/pause 7600
+										/globalFade 0.02
+										/viewport -1000 -1000
+										/end"
+							}
+						},
+						Sound = "trashcanlid"
+					},
+					new()
+					{
+						Id = "Bus_right",
+						Price = 500,
+						Network = "Bus",
+						AccessTiles = new List<Point>
+						{
+							new() { X = 0, Y = -1 }
+						},
+						Sprites = new List<SSprite>
+						{
+							new()
+							{
+								Data = new SSData()
+								{
+									TextureName = "LooseSprites\\Cursors",
+									SourceRectangle = { X = 288, Y = 1247, Width = 128, Height = 64 },
+									Position = { X = -6f, Y = -4f },
+									LayerDepth = -1.1f,
+									Flip = true
+								},
+								CollisionBoxes = new List<SSCollisionBox>()
+								{
+									new() { X = 0f, Y = 1.5f, Width = 6f, Height = 2.25f },
+									new() { X = 6f, Y = 1.5f, Width = 1f, Height = 1.5f },
+									new() { X = 7f, Y = 1.5f, Width = 1f, Height = 2.25f }
+								}
+							},
+							new()
+							{
+								Data = new SSData()
+								{
+									TextureName = "LooseSprites\\Cursors",
+									SourceRectangle = { X = 288, Y = 1311, Width = 16, Height = 38 },
+									Position = { X = 0f, Y = -2.375f },
+									LayerDepth = -1f,
+									Flip = true
+								}
+							}
+						},
+						Events = new List<SEvent>
+						{
+							new()
+							{
+								Type = "Departure",
+								Script = @"continue
+										/follow
+										/? 0 0 0
+										/skippable
+										/beginSimultaneousCommand
+										/mouahrara.TransportFramework_removeTemporarySprites
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1247 128 64 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 6] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 4] false true [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 0.1] 0 white 1 0 0 0
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1311 16 38 999999 1 1 [mouahrara.TransportFramework_StationTileX] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2.375] false true [mouahrara.TransportFramework_StationTileY] 0 white 1 0 0 0
+										/endSimultaneousCommand
+										/mouahrara.TransportFramework_moveTo farmer [mouahrara.TransportFramework_StationTileX] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 1] 0 1
+										/playSound stoneStep
+										/mouahrara.TransportFramework_hideActor farmer
+										/playMusic none
+										/playSound trashcanlid
+										/beginSimultaneousCommand
+										/mouahrara.TransportFramework_removeTemporarySprites
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1247 128 64 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 6] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 4] false true [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 0.1] 0 white 1 0 0 0
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1311 16 38 70 6 1 [mouahrara.TransportFramework_StationTileX] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2.375] false true [mouahrara.TransportFramework_StationTileY] 0 white 1 0 0 0 hold_last_frame true
+										/endSimultaneousCommand
+										/pause 420
+										/fade
+										/mouahrara.TransportFramework_hideWorldCharacters
+										/playSound batFlap
+										/playSound busDriveOff
+										/beginSimultaneousCommand
+										/mouahrara.TransportFramework_removeTemporarySprites
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1247 128 64 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 6] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 4] false true [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 0.1] 0 white 1 0 0 0 acceleration 0.1 0
+										/mouahrara.TransportFramework_query mouahrara.TransportFramework_CanDriveYourselfToday 2 1
+										/mouahrara.TransportFramework_temporaryFarmerSprite 117 48 608 16 32 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 0.9375] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2.3125] 1 false true false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 0.01]
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors2 0 0 21 41 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 0.6875] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2.8125] false true [mouahrara.TransportFramework_StationTileY] 0 white 1 0 0 0 acceleration 0.1 0
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 384 1311 15 19 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 1.0625] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2] false true [mouahrara.TransportFramework_StationTileY] 0 white 1 0 0 0 acceleration 0.1 0
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 368 1311 16 38 999999 1 1 [mouahrara.TransportFramework_StationTileX] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2.375] false true [mouahrara.TransportFramework_StationTileY] 0 white 1 0 0 0 acceleration 0.1 0
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -3 -3 > [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 15] none 0 0 acceleration 0 0
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -2 -3 > [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 15] none 0 0 acceleration 0 0
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -1 -3 > [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 15] none 0 0 acceleration 0 0
+										/mouahrara.TransportFramework_destroyObjectsOnCollision -3 0 1.5 8 2.25 true true
+										/endSimultaneousCommand
+										/pause 2400
+										/globalFade 0.01
+										/viewport -1000 -1000
+										/end"
+							},
+							new()
+							{
+								Type = "Arrival",
+								Script = @"none
+										/follow
+										/farmer [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 33] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 1] 1
+										/mouahrara.TransportFramework_hideWorldCharacters
+										/mouahrara.TransportFramework_hideActor farmer
+										/playSound busDriveOff
+										/beginSimultaneousCommand
+										/mouahrara.TransportFramework_removeTemporarySprites
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1247 128 64 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 39] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 4] false true [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 0.1] 0 white 1 0 0 0 motion 6 0
+										/mouahrara.TransportFramework_query mouahrara.TransportFramework_CanDriveYourselfToday 2 1
+										/mouahrara.TransportFramework_temporaryFarmerSprite 117 48 608 16 32 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 32.0625] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2.3125] 1 false true false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 0.01]
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors2 0 0 21 41 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 32.3125] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2.8125] false true [mouahrara.TransportFramework_StationTileY] 0 white 1 0 0 0 motion 6 0
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 384 1311 15 19 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 31.9375] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2] false true [mouahrara.TransportFramework_StationTileY] 0 white 1 0 0 0 motion 6 0
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 368 1311 16 38 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 33] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2.375] false true [mouahrara.TransportFramework_StationTileY] 0 white 1 0 0 0 motion 6 0
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -3 -3 > [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 29] none 0 0 acceleration_change -0.0000898 0 stop_accelerating_when_velocity_is_zero true
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -2 -3 > [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 29] none 0 0 acceleration_change -0.0000898 0 stop_accelerating_when_velocity_is_zero true
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -1 -3 > [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 29] none 0 0 acceleration_change -0.0000898 0 stop_accelerating_when_velocity_is_zero true
+										/mouahrara.TransportFramework_destroyObjectsOnCollision -3 0 1.5 8 2.25 true true
+										/mouahrara.TransportFramework_beginSyncWithTemporarySprite farmer
+										/endSimultaneousCommand
+										/skippable
+										/pause 7600
+										/globalFade 0.02
+										/viewport -1000 -1000
+										/end"
+							}
+						},
+						Sound = "trashcanlid"
+					},
+					new()
+					{
+						Id = "ParrotExpress",
+						Price = 0,
+						Network = "ParrotExpress",
+						AccessTiles = new List<Point>
+						{
+							new() { X = -1, Y = -2 },
+							new() { X = 0, Y = -2 },
+							new() { X = 1, Y = -2 }
+						},
+						Sprites = new List<SSprite>
+						{
+							new()
+							{
+								Data = new SSData()
+								{
+									TextureName = "LooseSprites\\ParrotPlatform",
+									SourceRectangle = { X = 48, Y = 73, Width = 48, Height = 32 },
+									Position = { X = -1.125f, Y = -1.625f },
+									LayerDepth = -2.1f
+								}
+							},
+							new()
+							{
+								Data = new SSData()
+								{
+									TextureName = "LooseSprites\\ParrotPlatform",
+									SourceRectangle = { X = 0, Y = 0, Width = 48, Height = 68 },
+									Position = { X = -1, Y = -4 },
+									LayerDepth = -2f
+								},
+								CollisionBoxes = new List<SSCollisionBox>()
+								{
+									new() { X = 0f, Y = 2f, Width = 3f, Height = 0.25f },
+									new() { X = 0f, Y = 2f, Width = 0.25f, Height = 2f },
+									new() { X = 2.75f, Y = 2f, Width = 0.25f, Height = 2f },
+									new() { X = 0f, Y = 3.75f, Width = 1f, Height = 0.25f },
+									new() { X = 2f, Y = 3.75f, Width = 1f, Height = 0.25f }
+								}
+							},
+							new()
+							{
+								Data = new SSData()
+								{
+									TextureName = "LooseSprites\\ParrotPlatform",
+									SourceRectangle = { X = 48, Y = 0, Width = 48, Height = 68 },
+									Position = { X = -1, Y = -4 },
+									LayerDepth = 0f
+								}
+							},
+							new()
+							{
+								Data = new SSData()
+								{
+									TextureName = "LooseSprites\\parrots",
+									SourceRectangle = { X = 0, Y = 0, Width = 24, Height = 24 },
+									Position = { X = -0.8f, Y = -5.25f },
+									LayerDepth = 0.1f
+								},
+								Conditions = new List<SSCondition>
+								{
+									new()
+									{
+										Query = "WORLD_STATE_FIELD ParrotPlatformsUnlocked true",
+										Update = "OnLocationChange"
+									}
+								}
+							},
+							new()
+							{
+								Data = new SSData()
+								{
+									TextureName = "LooseSprites\\parrots",
+									SourceRectangle = { X = 0, Y = 0, Width = 24, Height = 24 },
+									Position = { X = 0.325f, Y = -5.25f },
+									Flip = true,
+									LayerDepth = 0.1f
+								},
+								Conditions = new List<SSCondition>
+								{
+									new()
+									{
+										Query = "WORLD_STATE_FIELD ParrotPlatformsUnlocked true",
+										Update = "OnLocationChange"
+									}
+								}
+							}
+						},
+						Conditions = new List<SCondition>
+						{
+							new()
+							{
+								Query = "PLAYER_HAS_MAIL Any Island_UpgradeParrotPlatform",
+								Update = "OnInteract"
+							}
+						},
+						Events = new List<SEvent>
+						{
+							new()
+							{
+								Type = "Departure",
+								Script = @"continue
+										/follow
+										/? 0 0 0
+										/skippable
+										/beginSimultaneousCommand
+										/mouahrara.TransportFramework_removeTemporarySprites
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\ParrotPlatform 48 73 48 32 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 1.125] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 1.625] false false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2.1] 0 white 1 0 0 0
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\ParrotPlatform 0 0 48 68 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 1] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 4] false false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2] 0 white 1 0 0 0
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\ParrotPlatform 48 0 48 68 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 1] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 4] false false [mouahrara.TransportFramework_StationTileY] 0 white 1 0 0 0
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 0 0 24 24 130 2 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 0.8] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 5.25] false false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] + 0.1] 0 white 1 0 0 0 shake_intensity 2 ping_pong true
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 0 0 24 24 130 2 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 0.325] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 5.25] false true [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] + 0.1] 0 white 1 0 0 0 shake_intensity 2 ping_pong true
+										/endSimultaneousCommand
+										/playSound parrot
+										/pause 260
+										/beginSimultaneousCommand
+										/mouahrara.TransportFramework_removeTemporarySprites LooseSprites\parrots
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 0 0 24 24 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 0.8] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 5.25] false false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] + 0.1] 0 white 1 0 0 0
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 0 0 24 24 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 0.325] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 5.25] false true [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] + 0.1] 0 white 1 0 0 0
+										/endSimultaneousCommand
+										/pause 240
+										/beginSimultaneousCommand
+										/mouahrara.TransportFramework_removeTemporarySprites LooseSprites\parrots
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 120 0 24 24 50 3 999999 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 0.8] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 5.25] false false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] + 0.1] 0 white 1 0 0 0 interval_variation 3.75 frame_sound batFlap 2 motion -0.6 -0.6 acceleration 0 -0.1 sway [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 0.325] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 5.25] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 0.325] 0 0.25 2.5 4 16 default default y default
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 120 0 24 24 50 3 999999 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 0.325] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 5.25] false true [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] + 0.1] 0 white 1 0 0 0 interval_variation 3.75 frame_sound batFlap 2 motion 0.6 -0.6 acceleration 0 -0.1 sway [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 0.325] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 5.25] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 0.325] 0 0.25 2.5 4 16 default default y default
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -4 -1 none 0 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 7.25] 0 delay_before_animation_start 1 start_sound treethud
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -4 -1 none 0 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 7.25] 0 shake_intensity 6.6 shake_intensity_change -0.022
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -3 -1 none 0 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 7.25] 0 shake_intensity 6.6 shake_intensity_change -0.022
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -5 -1 none 0 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 7.25] 500 motion 0.16 0.16 scale 1 scale_change -0.01
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -4 -1 none 0 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 7.25] 500 motion 0 0 acceleration 0 -0.1
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -3 -1 none 0 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 7.25] 500 motion 0 0 acceleration 0 -0.1
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -2 -1 none 0 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 7.25] 0 motion 0 0 acceleration 0 0
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -1 -1 none 0 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 7.25] 0 motion 0 0 acceleration 0 0
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -2 -1 none 0 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 7.25] 500 motion 0 0 acceleration 0 -0.1
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -1 -1 none 0 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 7.25] 500 motion 0 0 acceleration 0 -0.1
+										/mouahrara.TransportFramework_beginSyncWithTemporarySprite farmer -4 offset
+										/mouahrara.TransportFramework_locationSpecificCommand_draw_ParrotExpress_lines
+										/endSimultaneousCommand
+										/pause 2600
+										/fade
+										/viewport -1000 -1000
+										/end"
+							}
+						}
+					}
+				},
+				Stations = new()
+				{
+					new()
+					{
+						TemplateId = "Bus_left",
+						Id = "Bus_BusStop",
+						DisplayName = "[mouahrara.TransportFramework_LocalizedStardewValley]",
+						Location = "BusStop",
+						Tile = new() { X = 22, Y = 10 },
+						Price = 0,
+						AccessTiles = new List<Point>
+						{
+							new() { X = 17, Y = 11 }
 						},
 						Conditions = new List<SCondition>
 						{
@@ -78,81 +453,6 @@ namespace TransportFramework.Utilities
 								Update = "OnInteract"
 							}
 						},
-						Events = new List<SEvent>
-						{
-							new()
-							{
-								Type = "Departure",
-								Script = @"continue
-										/follow
-										/? 0 0 0
-										/skippable
-										/beginSimultaneousCommand
-										/mouahrara.TransportFramework_removeTemporarySprites
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1247 128 64 999999 1 1 21 6 false false 9.9 0 white 1 0 0 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1311 16 38 999999 1 1 22 7.625 false false 10.0 0 white 1 0 0 0
-										/endSimultaneousCommand
-										/mouahrara.TransportFramework_moveTo farmer 22 9 0 1
-										/playSound stoneStep
-										/mouahrara.TransportFramework_hideActor farmer
-										/playMusic none
-										/playSound trashcanlid
-										/beginSimultaneousCommand
-										/mouahrara.TransportFramework_removeTemporarySprites
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1247 128 64 999999 1 1 21 6 false false 9.9 0 white 1 0 0 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1311 16 38 70 6 1 22 7.625 false false 10.0 0 white 1 0 0 0 hold_last_frame true
-										/endSimultaneousCommand
-										/pause 420
-										/fade
-										/mouahrara.TransportFramework_hideWorldCharacters
-										/playSound batFlap
-										/playSound busDriveOff
-										/beginSimultaneousCommand
-										/mouahrara.TransportFramework_removeTemporarySprites
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1247 128 64 999999 1 1 21 6 false false 9.9 0 white 1 0 0 0 acceleration -0.1 0
-										/mouahrara.TransportFramework_query mouahrara.TransportFramework_CanDriveYourselfToday 2 1
-										/mouahrara.TransportFramework_temporaryFarmerSprite 117 48 608 16 32 21.0625 7.6875 3 true true false 9.99
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors2 0 0 21 41 999999 1 1 21 7.1875 false false 10.0 0 white 1 0 0 0 acceleration -0.1 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 384 1311 15 19 999999 1 1 21 8 false false 10.0 0 white 1 0 0 0 acceleration -0.1 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 368 1311 16 38 999999 1 1 22 7.625 false false 10.0 0 white 1 0 0 0 acceleration -0.1 0
-										/mouahrara.TransportFramework_destroyObjectsOnCollision -3 0 1.5 8 2.25 true true
-										/endSimultaneousCommand
-										/pause 2400
-										/globalFade 0.01
-										/viewport -1000 -1000
-										/end"
-							},
-							new()
-							{
-								Type = "Arrival",
-								Script = @"none
-										/follow
-										/farmer 55 9 3
-										/mouahrara.TransportFramework_hideWorldCharacters
-										/mouahrara.TransportFramework_hideActor farmer
-										/playSound busDriveOff
-										/beginSimultaneousCommand
-										/mouahrara.TransportFramework_removeTemporarySprites
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1247 128 64 999999 1 1 54 6 false false 9.9 0 white 1 0 0 0 motion -6 0
-										/mouahrara.TransportFramework_query mouahrara.TransportFramework_CanDriveYourselfToday 2 1
-										/mouahrara.TransportFramework_temporaryFarmerSprite 117 48 608 16 32 54.0625 7.6875 3 true true false 9.99
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors2 0 0 21 41 999999 1 1 54 7.1875 false false 10.0 0 white 1 0 0 0 motion -6 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 384 1311 15 19 999999 1 1 54 8 false false 10.0 0 white 1 0 0 0 motion -6 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 368 1311 16 38 999999 1 1 55 7.625 false false 10.0 0 white 1 0 0 0 motion -6 0
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -3 -3 < 44 none 0 0 acceleration_change 0.0000896 0 stop_accelerating_when_velocity_is_zero true
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -2 -2 < 44 none 0 0 acceleration_change 0.0000896 0 stop_accelerating_when_velocity_is_zero true
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -1 -1 < 45 none 0 0 acceleration_change 0.0000896 0 stop_accelerating_when_velocity_is_zero true
-										/mouahrara.TransportFramework_destroyObjectsOnCollision -3 0 1.5 8 2.25 true true
-										/mouahrara.TransportFramework_beginSyncWithTemporarySprite farmer
-										/endSimultaneousCommand
-										/skippable
-										/pause 7600
-										/globalFade 0.02
-										/viewport -1000 -1000
-										/end"
-							}
-						},
-						Sound = "trashcanlid",
 						IgnoreConditionsArrival = new List<string>
 						{
 							"all"
@@ -160,117 +460,11 @@ namespace TransportFramework.Utilities
 					},
 					new()
 					{
+						TemplateId = "Bus_left",
 						Id = "Bus_Desert",
 						DisplayName = "[LocalizedText Strings\\StringsFromCSFiles:MapPage.cs.11062]",
 						Location = "Desert",
-						Tile = new() { X = 18, Y = 28 },
-						Direction = "down",
-						Price = 500,
-						Network = "Bus",
-						AccessTiles = new List<Point>
-						{
-							new() { X = 18, Y = 27 }
-						},
-						Sprites = new List<SSprite>
-						{
-							new()
-							{
-								Data = new SSData()
-								{
-									TextureName = "LooseSprites\\Cursors",
-									SourceRectangle = { X = 288, Y = 1247, Width = 128, Height = 64 },
-									Position = { X = 17f, Y = 24f },
-									LayerDepth = 26.9f
-								},
-								CollisionBoxes = new List<SSCollisionBox>()
-								{
-									new() { X = 0f, Y = 1.5f, Width = 1f, Height = 2.25f },
-									new() { X = 1f, Y = 1.5f, Width = 1f, Height = 1.5f },
-									new() { X = 2f, Y = 1.5f, Width = 6f, Height = 2.25f }
-								}
-							},
-							new()
-							{
-								Data = new SSData()
-								{
-									TextureName = "LooseSprites\\Cursors",
-									SourceRectangle = { X = 288, Y = 1311, Width = 16, Height = 38 },
-									Position = { X = 18f, Y = 25.625f },
-									LayerDepth = 27f
-								}
-							}
-						},
-						Events = new List<SEvent>
-						{
-							new()
-							{
-								Type = "Departure",
-								Script = @"continue
-										/follow
-										/? 0 0 0
-										/skippable
-										/beginSimultaneousCommand
-										/mouahrara.TransportFramework_removeTemporarySprites
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1247 128 64 999999 1 1 17 24 false false 27.9 0 white 1 0 0 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1311 16 38 999999 1 1 18 25.625 false false 28.0 0 white 1 0 0 0
-										/endSimultaneousCommand
-										/playSound stoneStep
-										/mouahrara.TransportFramework_hideActor farmer
-										/playMusic none
-										/playSound trashcanlid
-										/beginSimultaneousCommand
-										/mouahrara.TransportFramework_removeTemporarySprites
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1247 128 64 999999 1 1 17 24 false false 27.9 0 white 1 0 0 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1311 16 38 70 6 1 18 25.625 false false 28.0 0 white 1 0 0 0 hold_last_frame true
-										/endSimultaneousCommand
-										/pause 420
-										/fade
-										/mouahrara.TransportFramework_hideWorldCharacters
-										/playSound batFlap
-										/playSound busDriveOff
-										/beginSimultaneousCommand
-										/mouahrara.TransportFramework_removeTemporarySprites
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1247 128 64 999999 1 1 17 24 false false 27.9 0 white 1 0 0 0 acceleration -0.1 0
-										/mouahrara.TransportFramework_query mouahrara.TransportFramework_CanDriveYourselfToday 2 1
-										/mouahrara.TransportFramework_temporaryFarmerSprite 117 48 608 16 32 17.0625 25.6875 3 true true false 27.99
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors2 0 0 21 41 999999 1 1 17 25.1875 false false 28.0 0 white 1 0 0 0 acceleration -0.1 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 384 1311 15 19 999999 1 1 17 26 false false 28.0 0 white 1 0 0 0 acceleration -0.1 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 368 1311 16 38 999999 1 1 18 25.625 false false 28.0 0 white 1 0 0 0 acceleration -0.1 0
-										/mouahrara.TransportFramework_destroyObjectsOnCollision -3 0 1.5 8 2.25 true true
-										/endSimultaneousCommand
-										/pause 2400
-										/globalFade 0.01
-										/viewport -1000 -1000
-										/end"
-							},
-							new()
-							{
-								Type = "Arrival",
-								Script = @"none
-										/follow
-										/farmer 50 27 3
-										/mouahrara.TransportFramework_hideWorldCharacters
-										/mouahrara.TransportFramework_hideActor farmer
-										/playSound busDriveOff
-										/beginSimultaneousCommand
-										/mouahrara.TransportFramework_removeTemporarySprites
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1247 128 64 999999 1 1 49 24 false false 27.9 0 white 1 0 0 0 motion -6 0 acceleration_change 0.00004606 0 stop_accelerating_when_velocity_is_zero true
-										/mouahrara.TransportFramework_query mouahrara.TransportFramework_CanDriveYourselfToday 2 1
-										/mouahrara.TransportFramework_temporaryFarmerSprite 117 48 608 16 32 49.0625 25.6875 3 true true false 27.99
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors2 0 0 21 41 999999 1 1 49 25.1875 false false 28.0 0 white 1 0 0 0 motion -6 0 acceleration_change 0.00004606 0 stop_accelerating_when_velocity_is_zero true
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 384 1311 15 19 999999 1 1 49 26 false false 28.0 0 white 1 0 0 0 motion -6 0 acceleration_change 0.00004606 0 stop_accelerating_when_velocity_is_zero true
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 368 1311 16 38 999999 1 1 50 25.625 false false 28.0 0 white 1 0 0 0 motion -6 0 acceleration_change 0.00004606 0 stop_accelerating_when_velocity_is_zero true
-										/mouahrara.TransportFramework_destroyObjectsOnCollision -3 0 1.5 8 2.25 true true
-										/mouahrara.TransportFramework_beginSyncWithTemporarySprite farmer
-										/endSimultaneousCommand
-										/skippable
-										/pause 8200
-										/globalFade 0.02
-										/viewport -1000 -1000
-										/end"
-							}
-						},
-						Sound = "trashcanlid"
+						Tile = new() { X = 18, Y = 28 }
 					},
 					new()
 					{
@@ -413,245 +607,19 @@ namespace TransportFramework.Utilities
 					},
 					new()
 					{
+						TemplateId = "ParrotExpress",
 						Id = "ParrotExpress_Volcano",
 						DisplayName = "[LocalizedText Strings\\UI:ParrotPlatform_Volcano]",
 						Location = "IslandNorth",
-						Tile = new() { X = 60, Y = 17 },
-						Direction = "down",
-						Network = "ParrotExpress",
-						AccessTiles = new List<Point>
-						{
-							new() { X = 59, Y = 15 },
-							new() { X = 60, Y = 15 },
-							new() { X = 61, Y = 15 }
-						},
-						Sprites = new List<SSprite>
-						{
-							new()
-							{
-								Data = new SSData()
-								{
-									TextureName = "LooseSprites\\ParrotPlatform",
-									SourceRectangle = { X = 48, Y = 73, Width = 48, Height = 32 },
-									Position = { X = 58.875f, Y = 15.375f },
-									LayerDepth = 0f
-								}
-							},
-							new()
-							{
-								Data = new SSData()
-								{
-									TextureName = "LooseSprites\\ParrotPlatform",
-									SourceRectangle = { X = 0, Y = 0, Width = 48, Height = 68 },
-									Position = { X = 59f, Y = 13f },
-									LayerDepth = 15f
-								},
-								CollisionBoxes = new List<SSCollisionBox>()
-								{
-									new() { X = 0f, Y = 2f, Width = 3f, Height = 0.25f },
-									new() { X = 0f, Y = 2f, Width = 0.25f, Height = 2f },
-									new() { X = 2.75f, Y = 2f, Width = 0.25f, Height = 2f },
-									new() { X = 0f, Y = 3.75f, Width = 1f, Height = 0.25f },
-									new() { X = 2f, Y = 3.75f, Width = 1f, Height = 0.25f }
-								}
-							},
-							new()
-							{
-								Data = new SSData()
-								{
-									TextureName = "LooseSprites\\ParrotPlatform",
-									SourceRectangle = { X = 48, Y = 0, Width = 48, Height = 68 },
-									Position = { X = 59f, Y = 13f },
-									LayerDepth = 17f
-								}
-							},
-							new()
-							{
-								Data = new SSData()
-								{
-									TextureName = "LooseSprites\\parrots",
-									SourceRectangle = { X = 0, Y = 0, Width = 24, Height = 24 },
-									Position = { X = 59.2f, Y = 11.75f },
-									LayerDepth = 17.1f
-								},
-								Conditions = new List<SSCondition>
-								{
-									new()
-									{
-										Query = "WORLD_STATE_FIELD ParrotPlatformsUnlocked true",
-										Update = "OnLocationChange"
-									}
-								}
-							},
-							new()
-							{
-								Data = new SSData()
-								{
-									TextureName = "LooseSprites\\parrots",
-									SourceRectangle = { X = 0, Y = 0, Width = 24, Height = 24 },
-									Position = { X = 60.325f, Y = 11.75f },
-									Flip = true,
-									LayerDepth = 17.1f
-								},
-								Conditions = new List<SSCondition>
-								{
-									new()
-									{
-										Query = "WORLD_STATE_FIELD ParrotPlatformsUnlocked true",
-										Update = "OnLocationChange"
-									}
-								}
-							}
-						},
-						Conditions = new List<SCondition>
-						{
-							new()
-							{
-								Query = "PLAYER_HAS_MAIL Any Island_UpgradeParrotPlatform",
-								Update = "OnInteract"
-							}
-						},
-						Events = new List<SEvent>
-						{
-							new()
-							{
-								Type = "Departure",
-								Script = @"continue
-										/follow
-										/? 0 0 0
-										/skippable
-										/beginSimultaneousCommand
-										/mouahrara.TransportFramework_removeTemporarySprites
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\ParrotPlatform 48 73 48 32 999999 1 1 58.875 15.375 false false 0.0 0 white 1 0 0 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\ParrotPlatform 0 0 48 68 999999 1 1 59 13 false false 15.0 0 white 1 0 0 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\ParrotPlatform 48 0 48 68 999999 1 1 59 13 false false 17.0 0 white 1 0 0 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 0 0 24 24 130 2 1 59.2 11.75 false false 17.1 0 white 1 0 0 0 shake_intensity 2 ping_pong true
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 0 0 24 24 130 2 1 60.325 11.75 false true 17.1 0 white 1 0 0 0 shake_intensity 2 ping_pong true
-										/endSimultaneousCommand
-										/playSound parrot
-										/pause 260
-										/beginSimultaneousCommand
-										/mouahrara.TransportFramework_removeTemporarySprites LooseSprites\parrots
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 0 0 24 24 999999 1 1 59.2 11.75 false false 17.1 0 white 1 0 0 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 0 0 24 24 999999 1 1 60.325 11.75 false true 17.1 0 white 1 0 0 0
-										/endSimultaneousCommand
-										/pause 240
-										/beginSimultaneousCommand
-										/mouahrara.TransportFramework_removeTemporarySprites LooseSprites\parrots
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 120 0 24 24 50 3 999999 59.2 11.75 false false 17.1 0 white 1 0 0 0 interval_variation 3.75 frame_sound batFlap 2 motion -0.6 -0.6 acceleration 0 -0.1 sway 60.325 11.75 60.325 0 0.25 2.5 4 16 default default y default
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 120 0 24 24 50 3 999999 60.325 11.75 false true 17.1 0 white 1 0 0 0 interval_variation 3.75 frame_sound batFlap 2 motion 0.6 -0.6 acceleration 0 -0.1 sway 60.325 11.75 60.325 0 0.25 2.5 4 16 default default y default
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -4 -1 none 0 < 9.75 0 delay_before_animation_start 1 start_sound treethud
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -4 -1 none 0 < 9.75 0 shake_intensity 6.6 shake_intensity_change -0.022
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -3 -1 none 0 < 9.75 0 shake_intensity 6.6 shake_intensity_change -0.022
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -5 -1 none 0 < 9.75 500 motion 0.16 0.16 scale 1 scale_change -0.01
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -4 -1 none 0 < 9.75 500 motion 0 0 acceleration 0 -0.1
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -3 -1 none 0 < 9.75 500 motion 0 0 acceleration 0 -0.1
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -2 -1 none 0 < 9.75 0 motion 0 0 acceleration 0 0
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -1 -1 none 0 < 9.75 0 motion 0 0 acceleration 0 0
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -2 -1 none 0 < 9.75 500 motion 0 0 acceleration 0 -0.1
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -1 -1 none 0 < 9.75 500 motion 0 0 acceleration 0 -0.1
-										/mouahrara.TransportFramework_beginSyncWithTemporarySprite farmer -4 offset
-										/mouahrara.TransportFramework_locationSpecificCommand_draw_ParrotExpress_lines
-										/endSimultaneousCommand
-										/pause 2600
-										/fade
-										/viewport -1000 -1000
-										/end"
-							}
-						}
+						Tile = new() { X = 60, Y = 17 }
 					},
 					new()
 					{
+						TemplateId = "ParrotExpress",
 						Id = "ParrotExpress_Archaeology",
 						DisplayName = "[LocalizedText Strings\\UI:ParrotPlatform_Archaeology]",
 						Location = "IslandNorth",
 						Tile = new() { X = 5, Y = 49 },
-						Direction = "down",
-						Network = "ParrotExpress",
-						AccessTiles = new List<Point>
-						{
-							new() { X = 4, Y = 47 },
-							new() { X = 5, Y = 47 },
-							new() { X = 6, Y = 47 }
-						},
-						Sprites = new List<SSprite>
-						{
-							new()
-							{
-								Data = new SSData()
-								{
-									TextureName = "LooseSprites\\ParrotPlatform",
-									SourceRectangle = { X = 48, Y = 73, Width = 48, Height = 32 },
-									Position = { X = 3.875f, Y = 47.375f },
-									LayerDepth = 0f
-								}
-							},
-							new()
-							{
-								Data = new SSData()
-								{
-									TextureName = "LooseSprites\\ParrotPlatform",
-									SourceRectangle = { X = 0, Y = 0, Width = 48, Height = 68 },
-									Position = { X = 4f, Y = 45f },
-									LayerDepth = 47f
-								},
-								CollisionBoxes = new List<SSCollisionBox>()
-								{
-									new() { X = 0f, Y = 2f, Width = 3f, Height = 0.25f },
-									new() { X = 0f, Y = 2f, Width = 0.25f, Height = 2f },
-									new() { X = 2.75f, Y = 2f, Width = 0.25f, Height = 2f },
-									new() { X = 0f, Y = 3.75f, Width = 1f, Height = 0.25f },
-									new() { X = 2f, Y = 3.75f, Width = 1f, Height = 0.25f }
-								}
-							},
-							new()
-							{
-								Data = new SSData()
-								{
-									TextureName = "LooseSprites\\ParrotPlatform",
-									SourceRectangle = { X = 48, Y = 0, Width = 48, Height = 68 },
-									Position = { X = 4f, Y = 45f },
-									LayerDepth = 49f
-								}
-							},
-							new()
-							{
-								Data = new SSData()
-								{
-									TextureName = "LooseSprites\\parrots",
-									SourceRectangle = { X = 0, Y = 0, Width = 24, Height = 24 },
-									Position = { X = 4.2f, Y = 43.75f },
-									LayerDepth = 49.1f
-								},
-								Conditions = new List<SSCondition>
-								{
-									new()
-									{
-										Query = "WORLD_STATE_FIELD ParrotPlatformsUnlocked true",
-										Update = "OnLocationChange"
-									}
-								}
-							},
-							new()
-							{
-								Data = new SSData()
-								{
-									TextureName = "LooseSprites\\parrots",
-									SourceRectangle = { X = 0, Y = 0, Width = 24, Height = 24 },
-									Position = { X = 5.325f, Y = 43.75f },
-									Flip = true,
-									LayerDepth = 49.1f
-								},
-								Conditions = new List<SSCondition>
-								{
-									new()
-									{
-										Query = "WORLD_STATE_FIELD ParrotPlatformsUnlocked true",
-										Update = "OnLocationChange"
-									}
-								}
-							}
-						},
 						Conditions = new List<SCondition>
 						{
 							new()
@@ -659,507 +627,41 @@ namespace TransportFramework.Utilities
 								Query = "PLAYER_HAS_MAIL Any Island_UpgradeBridge, PLAYER_HAS_MAIL Any Island_UpgradeParrotPlatform",
 								Update = "OnInteract"
 							}
-						},
-						Events = new List<SEvent>
-						{
-							new()
-							{
-								Type = "Departure",
-								Script = @"continue
-										/follow
-										/? 0 0 0
-										/skippable
-										/beginSimultaneousCommand
-										/mouahrara.TransportFramework_removeTemporarySprites
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\ParrotPlatform 48 73 48 32 999999 1 1 3.875 47.375 false false 0.0 0 white 1 0 0 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\ParrotPlatform 0 0 48 68 999999 1 1 4 45 false false 47.0 0 white 1 0 0 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\ParrotPlatform 48 0 48 68 999999 1 1 4 45 false false 49.0 0 white 1 0 0 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 0 0 24 24 130 2 1 4.2 43.75 false false 49.1 0 white 1 0 0 0 shake_intensity 2 ping_pong true
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 0 0 24 24 130 2 1 5.325 43.75 false true 49.1 0 white 1 0 0 0 shake_intensity 2 ping_pong true
-										/endSimultaneousCommand
-										/playSound parrot
-										/pause 260
-										/beginSimultaneousCommand
-										/mouahrara.TransportFramework_removeTemporarySprites LooseSprites\parrots
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 0 0 24 24 999999 1 1 4.2 43.75 false false 49.1 0 white 1 0 0 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 0 0 24 24 999999 1 1 5.325 43.75 false true 49.1 0 white 1 0 0 0
-										/endSimultaneousCommand
-										/pause 240
-										/beginSimultaneousCommand
-										/mouahrara.TransportFramework_removeTemporarySprites LooseSprites\parrots
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 120 0 24 24 50 3 999999 4.2 43.75 false false 49.1 0 white 1 0 0 0 interval_variation 3.75 frame_sound batFlap 2 motion -0.6 -0.6 acceleration 0 -0.1 sway 5.325 43.75 5.325 0 0.25 2.5 4 16 default default y default
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 120 0 24 24 50 3 999999 5.325 43.75 false true 49.1 0 white 1 0 0 0 interval_variation 3.75 frame_sound batFlap 2 motion 0.6 -0.6 acceleration 0 -0.1 sway 5.325 43.75 5.325 0 0.25 2.5 4 16 default default y default
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -4 -1 none 0 < 41.75 0 delay_before_animation_start 1 start_sound treethud
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -4 -1 none 0 < 41.75 0 shake_intensity 6.6 shake_intensity_change -0.022
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -3 -1 none 0 < 41.75 0 shake_intensity 6.6 shake_intensity_change -0.022
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -5 -1 none 0 < 41.75 500 motion 0.16 0.16 scale 1 scale_change -0.01
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -4 -1 none 0 < 41.75 500 motion 0 0 acceleration 0 -0.1
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -3 -1 none 0 < 41.75 500 motion 0 0 acceleration 0 -0.1
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -2 -1 none 0 < 41.75 0 motion 0 0 acceleration 0 0
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -1 -1 none 0 < 41.75 0 motion 0 0 acceleration 0 0
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -2 -1 none 0 < 41.75 500 motion 0 0 acceleration 0 -0.1
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -1 -1 none 0 < 41.75 500 motion 0 0 acceleration 0 -0.1
-										/mouahrara.TransportFramework_beginSyncWithTemporarySprite farmer -4 offset
-										/mouahrara.TransportFramework_locationSpecificCommand_draw_ParrotExpress_lines
-										/endSimultaneousCommand
-										/pause 2600
-										/fade
-										/viewport -1000 -1000
-										/end"
-							}
 						}
 					},
 					new()
 					{
+						TemplateId = "ParrotExpress",
 						Id = "ParrotExpress_Farm",
 						DisplayName = "[LocalizedText Strings\\UI:ParrotPlatform_Farm]",
 						Location = "IslandWest",
-						Tile = new() { X = 74, Y = 10 },
-						Direction = "down",
-						Network = "ParrotExpress",
-						AccessTiles = new List<Point>
-						{
-							new() { X = 73, Y = 8 },
-							new() { X = 74, Y = 8 },
-							new() { X = 75, Y = 8 }
-						},
-						Sprites = new List<SSprite>
-						{
-							new()
-							{
-								Data = new SSData()
-								{
-									TextureName = "LooseSprites\\ParrotPlatform",
-									SourceRectangle = { X = 48, Y = 73, Width = 48, Height = 32 },
-									Position = { X = 72.875f, Y = 8.375f },
-									LayerDepth = 0f
-								}
-							},
-							new()
-							{
-								Data = new SSData()
-								{
-									TextureName = "LooseSprites\\ParrotPlatform",
-									SourceRectangle = { X = 0, Y = 0, Width = 48, Height = 68 },
-									Position = { X = 73f, Y = 6f },
-									LayerDepth = 8f
-								},
-								CollisionBoxes = new List<SSCollisionBox>()
-								{
-									new() { X = 0f, Y = 2f, Width = 3f, Height = 0.25f },
-									new() { X = 0f, Y = 2f, Width = 0.25f, Height = 2f },
-									new() { X = 2.75f, Y = 2f, Width = 0.25f, Height = 2f },
-									new() { X = 0f, Y = 3.75f, Width = 1f, Height = 0.25f },
-									new() { X = 2f, Y = 3.75f, Width = 1f, Height = 0.25f }
-								}
-							},
-							new()
-							{
-								Data = new SSData()
-								{
-									TextureName = "LooseSprites\\ParrotPlatform",
-									SourceRectangle = { X = 48, Y = 0, Width = 48, Height = 68 },
-									Position = { X = 73f, Y = 6f },
-									LayerDepth = 10f
-								}
-							},
-							new()
-							{
-								Data = new SSData()
-								{
-									TextureName = "LooseSprites\\parrots",
-									SourceRectangle = { X = 0, Y = 0, Width = 24, Height = 24 },
-									Position = { X = 73.2f, Y = 4.75f },
-									LayerDepth = 10.1f
-								},
-								Conditions = new List<SSCondition>
-								{
-									new()
-									{
-										Query = "WORLD_STATE_FIELD ParrotPlatformsUnlocked true",
-										Update = "OnLocationChange"
-									}
-								}
-							},
-							new()
-							{
-								Data = new SSData()
-								{
-									TextureName = "LooseSprites\\parrots",
-									SourceRectangle = { X = 0, Y = 0, Width = 24, Height = 24 },
-									Position = { X = 74.325f, Y = 4.75f },
-									Flip = true,
-									LayerDepth = 10.1f
-								},
-								Conditions = new List<SSCondition>
-								{
-									new()
-									{
-										Query = "WORLD_STATE_FIELD ParrotPlatformsUnlocked true",
-										Update = "OnLocationChange"
-									}
-								}
-							}
-						},
-						Conditions = new List<SCondition>
-						{
-							new()
-							{
-								Query = "PLAYER_HAS_MAIL Any Island_UpgradeParrotPlatform",
-								Update = "OnInteract"
-							}
-						},
-						Events = new List<SEvent>
-						{
-							new()
-							{
-								Type = "Departure",
-								Script = @"continue
-										/follow
-										/? 0 0 0
-										/skippable
-										/beginSimultaneousCommand
-										/mouahrara.TransportFramework_removeTemporarySprites
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\ParrotPlatform 48 73 48 32 999999 1 1 72.875 8.375 false false 0.0 0 white 1 0 0 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\ParrotPlatform 0 0 48 68 999999 1 1 73 6 false false 8.0 0 white 1 0 0 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\ParrotPlatform 48 0 48 68 999999 1 1 73 6 false false 10.0 0 white 1 0 0 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 0 0 24 24 130 2 1 73.2 4.75 false false 10.1 0 white 1 0 0 0 shake_intensity 2 ping_pong true
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 0 0 24 24 130 2 1 74.325 4.75 false true 10.1 0 white 1 0 0 0 shake_intensity 2 ping_pong true
-										/endSimultaneousCommand
-										/playSound parrot
-										/pause 260
-										/beginSimultaneousCommand
-										/mouahrara.TransportFramework_removeTemporarySprites LooseSprites\parrots
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 0 0 24 24 999999 1 1 73.2 4.75 false false 10.1 0 white 1 0 0 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 0 0 24 24 999999 1 1 74.325 4.75 false true 10.1 0 white 1 0 0 0
-										/endSimultaneousCommand
-										/pause 240
-										/beginSimultaneousCommand
-										/mouahrara.TransportFramework_removeTemporarySprites LooseSprites\parrots
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 120 0 24 24 50 3 999999 73.2 4.75 false false 10.1 0 white 1 0 0 0 interval_variation 3.75 frame_sound batFlap 2 motion -0.6 -0.6 acceleration 0 -0.1 sway 74.325 4.75 74.325 0 0.25 2.5 4 16 default default y default
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 120 0 24 24 50 3 999999 74.325 4.75 false true 10.1 0 white 1 0 0 0 interval_variation 3.75 frame_sound batFlap 2 motion 0.6 -0.6 acceleration 0 -0.1 sway 74.325 4.75 74.325 0 0.25 2.5 4 16 default default y default
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -4 -1 none 0 < 2.75 0 delay_before_animation_start 1 start_sound treethud
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -4 -1 none 0 < 2.75 0 shake_intensity 6.6 shake_intensity_change -0.022
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -3 -1 none 0 < 2.75 0 shake_intensity 6.6 shake_intensity_change -0.022
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -5 -1 none 0 < 2.75 500 motion 0.16 0.16 scale 1 scale_change -0.01
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -4 -1 none 0 < 2.75 500 motion 0 0 acceleration 0 -0.1
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -3 -1 none 0 < 2.75 500 motion 0 0 acceleration 0 -0.1
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -2 -1 none 0 < 2.75 0 motion 0 0 acceleration 0 0
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -1 -1 none 0 < 2.75 0 motion 0 0 acceleration 0 0
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -2 -1 none 0 < 2.75 500 motion 0 0 acceleration 0 -0.1
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -1 -1 none 0 < 2.75 500 motion 0 0 acceleration 0 -0.1
-										/mouahrara.TransportFramework_beginSyncWithTemporarySprite farmer -4 offset
-										/mouahrara.TransportFramework_locationSpecificCommand_draw_ParrotExpress_lines
-										/endSimultaneousCommand
-										/pause 2600
-										/fade
-										/viewport -1000 -1000
-										/end"
-							}
-						}
+						Tile = new() { X = 74, Y = 10 }
 					},
 					new()
 					{
+						TemplateId = "ParrotExpress",
 						Id = "ParrotExpress_Forest",
 						DisplayName = "[LocalizedText Strings\\UI:ParrotPlatform_Forest]",
 						Location = "IslandEast",
-						Tile = new() { X = 28, Y = 29 },
-						Direction = "down",
-						Network = "ParrotExpress",
-						AccessTiles = new List<Point>
-						{
-							new() { X = 27, Y = 27 },
-							new() { X = 28, Y = 27 },
-							new() { X = 29, Y = 27 }
-						},
-						Sprites = new List<SSprite>
-						{
-							new()
-							{
-								Data = new SSData()
-								{
-									TextureName = "LooseSprites\\ParrotPlatform",
-									SourceRectangle = { X = 48, Y = 73, Width = 48, Height = 32 },
-									Position = { X = 26.875f, Y = 27.375f },
-									LayerDepth = 0f
-								}
-							},
-							new()
-							{
-								Data = new SSData()
-								{
-									TextureName = "LooseSprites\\ParrotPlatform",
-									SourceRectangle = { X = 0, Y = 0, Width = 48, Height = 68 },
-									Position = { X = 27f, Y = 25f },
-									LayerDepth = 27f
-								},
-								CollisionBoxes = new List<SSCollisionBox>()
-								{
-									new() { X = 0f, Y = 2f, Width = 3f, Height = 0.25f },
-									new() { X = 0f, Y = 2f, Width = 0.25f, Height = 2f },
-									new() { X = 2.75f, Y = 2f, Width = 0.25f, Height = 2f },
-									new() { X = 0f, Y = 3.75f, Width = 1f, Height = 0.25f },
-									new() { X = 2f, Y = 3.75f, Width = 1f, Height = 0.25f }
-								}
-							},
-							new()
-							{
-								Data = new SSData()
-								{
-									TextureName = "LooseSprites\\ParrotPlatform",
-									SourceRectangle = { X = 48, Y = 0, Width = 48, Height = 68 },
-									Position = { X = 27f, Y = 25f },
-									LayerDepth = 29f
-								}
-							},
-							new()
-							{
-								Data = new SSData()
-								{
-									TextureName = "LooseSprites\\parrots",
-									SourceRectangle = { X = 0, Y = 0, Width = 24, Height = 24 },
-									Position = { X = 27.2f, Y = 23.75f },
-									LayerDepth = 29.1f
-								},
-								Conditions = new List<SSCondition>
-								{
-									new()
-									{
-										Query = "WORLD_STATE_FIELD ParrotPlatformsUnlocked true",
-										Update = "OnLocationChange"
-									}
-								}
-							},
-							new()
-							{
-								Data = new SSData()
-								{
-									TextureName = "LooseSprites\\parrots",
-									SourceRectangle = { X = 0, Y = 0, Width = 24, Height = 24 },
-									Position = { X = 28.325f, Y = 23.75f },
-									Flip = true,
-									LayerDepth = 29.1f
-								},
-								Conditions = new List<SSCondition>
-								{
-									new()
-									{
-										Query = "WORLD_STATE_FIELD ParrotPlatformsUnlocked true",
-										Update = "OnLocationChange"
-									}
-								}
-							}
-						},
-						Conditions = new List<SCondition>
-						{
-							new()
-							{
-								Query = "PLAYER_HAS_MAIL Any Island_UpgradeParrotPlatform",
-								Update = "OnInteract"
-							}
-						},
-						Events = new List<SEvent>
-						{
-							new()
-							{
-								Type = "Departure",
-								Script = @"continue
-										/follow
-										/? 0 0 0
-										/skippable
-										/beginSimultaneousCommand
-										/mouahrara.TransportFramework_removeTemporarySprites
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\ParrotPlatform 48 73 48 32 999999 1 1 26.875 27.375 false false 0.0 0 white 1 0 0 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\ParrotPlatform 0 0 48 68 999999 1 1 27 25 false false 27.0 0 white 1 0 0 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\ParrotPlatform 48 0 48 68 999999 1 1 27 25 false false 29.0 0 white 1 0 0 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 0 0 24 24 130 2 1 27.2 23.75 false false 29.1 0 white 1 0 0 0 shake_intensity 2 ping_pong true
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 0 0 24 24 130 2 1 28.325 23.75 false true 29.1 0 white 1 0 0 0 shake_intensity 2 ping_pong true
-										/endSimultaneousCommand
-										/playSound parrot
-										/pause 260
-										/beginSimultaneousCommand
-										/mouahrara.TransportFramework_removeTemporarySprites LooseSprites\parrots
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 0 0 24 24 999999 1 1 27.2 23.75 false false 29.1 0 white 1 0 0 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 0 0 24 24 999999 1 1 28.325 23.75 false true 29.1 0 white 1 0 0 0
-										/endSimultaneousCommand
-										/pause 240
-										/beginSimultaneousCommand
-										/mouahrara.TransportFramework_removeTemporarySprites LooseSprites\parrots
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 120 0 24 24 50 3 999999 27.2 23.75 false false 29.1 0 white 1 0 0 0 interval_variation 3.75 frame_sound batFlap 2 motion -0.6 -0.6 acceleration 0 -0.1 sway 28.325 23.75 28.325 0 0.25 2.5 4 16 default default y default
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 120 0 24 24 50 3 999999 28.325 23.75 false true 29.1 0 white 1 0 0 0 interval_variation 3.75 frame_sound batFlap 2 motion 0.6 -0.6 acceleration 0 -0.1 sway 28.325 23.75 28.325 0 0.25 2.5 4 16 default default y default
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -4 -1 none 0 < 21.75 0 delay_before_animation_start 1 start_sound treethud
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -4 -1 none 0 < 21.75 0 shake_intensity 6.6 shake_intensity_change -0.022
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -3 -1 none 0 < 21.75 0 shake_intensity 6.6 shake_intensity_change -0.022
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -5 -1 none 0 < 21.75 500 motion 0.16 0.16 scale 1 scale_change -0.01
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -4 -1 none 0 < 21.75 500 motion 0 0 acceleration 0 -0.1
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -3 -1 none 0 < 21.75 500 motion 0 0 acceleration 0 -0.1
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -2 -1 none 0 < 21.75 0 motion 0 0 acceleration 0 0
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -1 -1 none 0 < 21.75 0 motion 0 0 acceleration 0 0
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -2 -1 none 0 < 21.75 500 motion 0 0 acceleration 0 -0.1
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -1 -1 none 0 < 21.75 500 motion 0 0 acceleration 0 -0.1
-										/mouahrara.TransportFramework_beginSyncWithTemporarySprite farmer -4 offset
-										/mouahrara.TransportFramework_locationSpecificCommand_draw_ParrotExpress_lines
-										/endSimultaneousCommand
-										/pause 2600
-										/fade
-										/viewport -1000 -1000
-										/end"
-							}
-						}
+						Tile = new() { X = 28, Y = 29 }
 					},
 					new()
 					{
+						TemplateId = "ParrotExpress",
 						Id = "ParrotExpress_Docks",
 						DisplayName = "[LocalizedText Strings\\UI:ParrotPlatform_Docks]",
 						Location = "IslandSouth",
-						Tile = new() { X = 6, Y = 32 },
-						Direction = "down",
-						Network = "ParrotExpress",
-						AccessTiles = new List<Point>
-						{
-							new() { X = 5, Y = 30 },
-							new() { X = 6, Y = 30 },
-							new() { X = 7, Y = 30 }
-						},
-						Sprites = new List<SSprite>
-						{
-							new()
-							{
-								Data = new SSData()
-								{
-									TextureName = "LooseSprites\\ParrotPlatform",
-									SourceRectangle = { X = 48, Y = 73, Width = 48, Height = 32 },
-									Position = { X = 4.875f, Y = 30.375f },
-									LayerDepth = 0f
-								}
-							},
-							new()
-							{
-								Data = new SSData()
-								{
-									TextureName = "LooseSprites\\ParrotPlatform",
-									SourceRectangle = { X = 0, Y = 0, Width = 48, Height = 68 },
-									Position = { X = 5f, Y = 28f },
-									LayerDepth = 30f
-								},
-								CollisionBoxes = new List<SSCollisionBox>()
-								{
-									new() { X = 0f, Y = 2f, Width = 3f, Height = 0.25f },
-									new() { X = 0f, Y = 2f, Width = 0.25f, Height = 2f },
-									new() { X = 2.75f, Y = 2f, Width = 0.25f, Height = 2f },
-									new() { X = 0f, Y = 3.75f, Width = 1f, Height = 0.25f },
-									new() { X = 2f, Y = 3.75f, Width = 1f, Height = 0.25f }
-								}
-							},
-							new()
-							{
-								Data = new SSData()
-								{
-									TextureName = "LooseSprites\\ParrotPlatform",
-									SourceRectangle = { X = 48, Y = 0, Width = 48, Height = 68 },
-									Position = { X = 5f, Y = 28f },
-									LayerDepth = 32f
-								}
-							},
-							new()
-							{
-								Data = new SSData()
-								{
-									TextureName = "LooseSprites\\parrots",
-									SourceRectangle = { X = 0, Y = 0, Width = 24, Height = 24 },
-									Position = { X = 5.2f, Y = 26.75f },
-									LayerDepth = 32.1f
-								},
-								Conditions = new List<SSCondition>
-								{
-									new()
-									{
-										Query = "WORLD_STATE_FIELD ParrotPlatformsUnlocked true",
-										Update = "OnLocationChange"
-									}
-								}
-							},
-							new()
-							{
-								Data = new SSData()
-								{
-									TextureName = "LooseSprites\\parrots",
-									SourceRectangle = { X = 0, Y = 0, Width = 24, Height = 24 },
-									Position = { X = 6.325f, Y = 26.75f },
-									Flip = true,
-									LayerDepth = 32.1f
-								},
-								Conditions = new List<SSCondition>
-								{
-									new()
-									{
-										Query = "WORLD_STATE_FIELD ParrotPlatformsUnlocked true",
-										Update = "OnLocationChange"
-									}
-								}
-							}
-						},
-						Conditions = new List<SCondition>
-						{
-							new()
-							{
-								Query = "PLAYER_HAS_MAIL Any Island_UpgradeParrotPlatform",
-								Update = "OnInteract"
-							}
-						},
-						Events = new List<SEvent>
-						{
-							new()
-							{
-								Type = "Departure",
-								Script = @"continue
-										/follow
-										/? 0 0 0
-										/skippable
-										/beginSimultaneousCommand
-										/mouahrara.TransportFramework_removeTemporarySprites
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\ParrotPlatform 48 73 48 32 999999 1 1 4.875 30.375 false false 0.0 0 white 1 0 0 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\ParrotPlatform 0 0 48 68 999999 1 1 5 28 false false 30.0 0 white 1 0 0 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\ParrotPlatform 48 0 48 68 999999 1 1 5 28 false false 32.0 0 white 1 0 0 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 0 0 24 24 130 2 1 5.2 26.75 false false 32.1 0 white 1 0 0 0 shake_intensity 2 ping_pong true
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 0 0 24 24 130 2 1 6.325 26.75 false true 32.1 0 white 1 0 0 0 shake_intensity 2 ping_pong true
-										/endSimultaneousCommand
-										/playSound parrot
-										/pause 260
-										/beginSimultaneousCommand
-										/mouahrara.TransportFramework_removeTemporarySprites LooseSprites\parrots
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 0 0 24 24 999999 1 1 5.2 26.75 false false 32.1 0 white 1 0 0 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 0 0 24 24 999999 1 1 6.325 26.75 false true 32.1 0 white 1 0 0 0
-										/endSimultaneousCommand
-										/pause 240
-										/beginSimultaneousCommand
-										/mouahrara.TransportFramework_removeTemporarySprites LooseSprites\parrots
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 120 0 24 24 50 3 999999 5.2 26.75 false false 32.1 0 white 1 0 0 0 interval_variation 3.75 frame_sound batFlap 2 motion -0.6 -0.6 acceleration 0 -0.1 sway 6.325 26.75 6.325 0 0.25 2.5 4 16 default default y default
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 120 0 24 24 50 3 999999 6.325 26.75 false true 32.1 0 white 1 0 0 0 interval_variation 3.75 frame_sound batFlap 2 motion 0.6 -0.6 acceleration 0 -0.1 sway 6.325 26.75 6.325 0 0.25 2.5 4 16 default default y default
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -4 -1 none 0 < 24.75 0 delay_before_animation_start 1 start_sound treethud
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -4 -1 none 0 < 24.75 0 shake_intensity 6.6 shake_intensity_change -0.022
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -3 -1 none 0 < 24.75 0 shake_intensity 6.6 shake_intensity_change -0.022
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -5 -1 none 0 < 24.75 500 motion 0.16 0.16 scale 1 scale_change -0.01
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -4 -1 none 0 < 24.75 500 motion 0 0 acceleration 0 -0.1
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -3 -1 none 0 < 24.75 500 motion 0 0 acceleration 0 -0.1
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -2 -1 none 0 < 24.75 0 motion 0 0 acceleration 0 0
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -1 -1 none 0 < 24.75 0 motion 0 0 acceleration 0 0
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -2 -1 none 0 < 24.75 500 motion 0 0 acceleration 0 -0.1
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -1 -1 none 0 < 24.75 500 motion 0 0 acceleration 0 -0.1
-										/mouahrara.TransportFramework_beginSyncWithTemporarySprite farmer -4 offset
-										/mouahrara.TransportFramework_locationSpecificCommand_draw_ParrotExpress_lines
-										/endSimultaneousCommand
-										/pause 2600
-										/fade
-										/viewport -1000 -1000
-										/end"
-							}
-						}
+						Tile = new() { X = 6, Y = 32 }
 					}
 				}
 			};
 
 			AddMinecartStationsToContentPack(contentPack);
+			foreach (Template template in contentPack.Templates)
+			{
+				template.ContentPack = contentPack;
+				ModEntry.Templates.Add(template);
+			}
 			foreach (Station station in contentPack.Stations)
 			{
 				station.ContentPack = contentPack;
@@ -1272,6 +774,11 @@ namespace TransportFramework.Utilities
 			}
 		}
 
+		public static void ApplyTemplatesToStations()
+		{
+			RemoveInvalidStations(TryApplyTemplateToStation);
+		}
+
 		public static void RemoveInvalidStationsGameLaunched()
 		{
 			RemoveInvalidStations(IsStationValidGameLaunched);
@@ -1296,6 +803,64 @@ namespace TransportFramework.Utilities
 			}
 		}
 
+		public static bool TryApplyTemplateToStation(Station station)
+		{
+			if (!string.IsNullOrEmpty(station.TemplateId) && station.Tile != new Point(int.MinValue, int.MinValue))
+			{
+				Template template = ModEntry.Templates.Find(t => t.Id.Equals(station.TemplateId));
+
+				if (template is null)
+				{
+					ModEntry.Monitor.Log($"Failed to apply template to station (Id: {station.Id}): The template '{station.TemplateId}' cannot be found.", LogLevel.Error);
+					return false;
+				}
+				if (station.Price == int.MinValue && template.Price != int.MinValue)
+				{
+					station.Price = template.Price.DeepClone();
+				}
+				if (string.IsNullOrWhiteSpace(station.Network) && !string.IsNullOrWhiteSpace(template.Network))
+				{
+					station.Network = template.Network.DeepClone();
+				}
+				if (station.AccessTiles is null && template.AccessTiles is not null)
+				{
+					station.AccessTiles = template.AccessTiles.DeepClone();
+					for (int i = 0; i < station.AccessTiles.Count; i++)
+					{
+						station.AccessTiles[i] = new Point(station.Tile.X + station.AccessTiles[i].X, station.Tile.Y + station.AccessTiles[i].Y);
+					}
+				}
+				if (station.Sprites is null && template.Sprites is not null)
+				{
+					station.Sprites = template.Sprites.DeepClone();
+					for (int i = 0; i < station.Sprites.Count; i++)
+					{
+						if (station.Sprites[i].Data.Position != new Vector2(float.MinValue, float.MinValue))
+						{
+							station.Sprites[i].Data.Position = new Vector2(station.Tile.X + station.Sprites[i].Data.Position.X, station.Tile.Y + station.Sprites[i].Data.Position.Y);
+						}
+						if (station.Sprites[i].Data.LayerDepth != float.MinValue)
+						{
+							station.Sprites[i].Data.LayerDepth = station.Tile.Y + station.Sprites[i].Data.LayerDepth;
+						}
+					}
+				}
+				if (station.Conditions is null && template.Conditions is not null)
+				{
+					station.Conditions = template.Conditions.DeepClone();
+				}
+				if (station.Events is null && template.Events is not null)
+				{
+					station.Events = template.Events.DeepClone();
+				}
+				if (string.IsNullOrWhiteSpace(station.Sound) && !string.IsNullOrWhiteSpace(template.Sound))
+				{
+					station.Sound = template.Sound.DeepClone();
+				}
+			}
+			return true;
+		}
+
 		public static bool IsStationValidGameLaunched(Station station)
 		{
 			if (string.IsNullOrWhiteSpace(station.Location))
@@ -1303,7 +868,7 @@ namespace TransportFramework.Utilities
 				ModEntry.Monitor.Log($"Failed to add station (Id: {station.Id}): The 'Location' property is missing.", LogLevel.Error);
 				return false;
 			}
-			if (station.Tile.X == -1 && station.Tile.Y == -1)
+			if (station.Tile == new Point(int.MinValue, int.MinValue))
 			{
 				ModEntry.Monitor.Log($"Failed to add station (Id: {station.Id}): The 'Tile' property is missing.", LogLevel.Error);
 				return false;
@@ -1321,7 +886,10 @@ namespace TransportFramework.Utilities
 			}
 			if (station.Price < 0)
 			{
-				ModEntry.Monitor.Log($"Failed to set 'Price' for station (Id: {station.Id}): The price ({station.Price}) must be greater than or equal to 0. The default value (0) will be used.", LogLevel.Warn);
+				if (station.Price != int.MinValue)
+				{
+					ModEntry.Monitor.Log($"Failed to set 'Price' for station (Id: {station.Id}): The price ({station.Price}) must be greater than or equal to 0. The default value (0) will be used.", LogLevel.Warn);
+				}
 				station.Price = 0;
 			}
 			if (!string.IsNullOrWhiteSpace(station.Sound) && !Game1.soundBank.Exists(station.Sound))
@@ -1358,7 +926,7 @@ namespace TransportFramework.Utilities
 						station.Sprites.RemoveAt(i--);
 						continue;
 					}
-					if (station.Sprites[i].Data.Position == new Vector2(-1, -1))
+					if (station.Sprites[i].Data.Position == new Vector2(float.MinValue, float.MinValue))
 					{
 						ModEntry.Monitor.Log($"Failed to set station (Id: {station.Id}) sprite no.{i + 1}: The 'Position' property is missing. The sprite will be ignored.", LogLevel.Warn);
 						station.Sprites.RemoveAt(i--);
@@ -1511,7 +1079,7 @@ namespace TransportFramework.Utilities
 									station.Sprites[i].Data.SourceRectangle = station.Sprites[i].Data.Texture.Bounds;
 								}
 								station.Sprites[i].Data.ComputedPosition = station.Sprites[i].Data.Position * Game1.tileSize;
-								if (station.Sprites[i].Data.LayerDepth == -1)
+								if (station.Sprites[i].Data.LayerDepth == float.MinValue)
 								{
 									station.Sprites[i].Data.ComputedLayerDepth = (station.Sprites[i].Data.ComputedPosition.Y + (station.Sprites[i].Data.Texture.Height * station.Sprites[i].Data.Scale * Game1.pixelZoom)) / 10000f;
 								}

@@ -10,9 +10,9 @@ namespace TransportFramework.Utilities
 {
 	internal class QueriesUtility
 	{
-		internal static readonly PerScreen<SCondition>	scondition = new(() => null);
+		private static readonly PerScreen<SCondition>	scondition = new(() => null);
 
-		private static SCondition SCondition
+		internal static SCondition SCondition
 		{
 			get => scondition.Value;
 			set => scondition.Value = value;

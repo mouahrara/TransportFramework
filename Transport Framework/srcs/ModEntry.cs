@@ -19,6 +19,7 @@ namespace TransportFramework
 		internal static new IManifest	ModManifest	{ get; private set; }
 
 		public static ModConfig					Config;
+		public static List<Template>			Templates = new();
 		public static List<Station>				Stations = new();
 		public static IEnumerable<Station>		CurrentLocationStations = null;
 		public static IEnumerable<Station>		OnDayStartStations = null;

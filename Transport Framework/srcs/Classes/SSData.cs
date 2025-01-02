@@ -13,13 +13,13 @@ namespace TransportFramework.Classes
 
 		public string		TextureName = null;
 		public Rectangle	SourceRectangle = Rectangle.Empty;
-		public Vector2		Position = new(-1, -1);
+		public Vector2		Position = new(float.MinValue, float.MinValue);
 		public float		Interval = 999999f;
 		public int			AnimationLength = 1;
 		public bool			Flicker = false;
 		public bool			Flip = false;
 		public bool			VerticalFlip = false;
-		public float		LayerDepth = -1f;
+		public float		LayerDepth = float.MinValue;
 		public string		Color = null;
 		public float		Scale = 1f;
 		public float		Rotation = 0f;

@@ -393,7 +393,7 @@ namespace TransportFramework.Utilities
 				return;
 			}
 			actor.shouldShadowBeOffset = !display;
-			actor.drawOffset = display ? new Vector2(0, 0) : new Vector2(int.MinValue, int.MinValue);
+			actor.drawOffset = display ? new Vector2(0, 0) : new Vector2(float.MinValue, float.MinValue);
 			@event.CurrentCommand++;
 		}
 
@@ -1968,19 +1968,19 @@ namespace TransportFramework.Utilities
 			},
 			new TemporaryAnimatedSpriteList()
 			{
-				new("LooseSprites\\ParrotPlatform", new Rectangle(22, 74, 4, 4), 999999, 1, 1, new Vector2(int.MinValue, int.MinValue), false, false, 0f, 0, Color.White, Game1.pixelZoom, 0, 0, 0),
-				new("LooseSprites\\ParrotPlatform", new Rectangle(0, 73, 16, 4), 999999, 1, 1, new Vector2(int.MinValue, int.MinValue), false, false, 0f, 0, Color.White, Game1.pixelZoom, 0, 0, 0),
-				new("LooseSprites\\ParrotPlatform", new Rectangle(0, 73, 16, 4), 999999, 1, 1, new Vector2(int.MinValue, int.MinValue), false, false, 0f, 0, Color.White, Game1.pixelZoom, 0, 0, 0),
-				new("LooseSprites\\ParrotPlatform", new Rectangle(0, 73, 16, 4), 999999, 1, 1, new Vector2(int.MinValue, int.MinValue), false, false, 0f, 0, Color.White, Game1.pixelZoom, 0, 0, 0),
-				new("LooseSprites\\ParrotPlatform", new Rectangle(0, 73, 16, 4), 999999, 1, 1, new Vector2(int.MinValue, int.MinValue), false, false, 0f, 0, Color.White, Game1.pixelZoom, 0, 0, 0)
+				new("LooseSprites\\ParrotPlatform", new Rectangle(22, 74, 4, 4), 999999, 1, 1, new Vector2(float.MinValue, float.MinValue), false, false, 0f, 0, Color.White, Game1.pixelZoom, 0, 0, 0),
+				new("LooseSprites\\ParrotPlatform", new Rectangle(0, 73, 16, 4), 999999, 1, 1, new Vector2(float.MinValue, float.MinValue), false, false, 0f, 0, Color.White, Game1.pixelZoom, 0, 0, 0),
+				new("LooseSprites\\ParrotPlatform", new Rectangle(0, 73, 16, 4), 999999, 1, 1, new Vector2(float.MinValue, float.MinValue), false, false, 0f, 0, Color.White, Game1.pixelZoom, 0, 0, 0),
+				new("LooseSprites\\ParrotPlatform", new Rectangle(0, 73, 16, 4), 999999, 1, 1, new Vector2(float.MinValue, float.MinValue), false, false, 0f, 0, Color.White, Game1.pixelZoom, 0, 0, 0),
+				new("LooseSprites\\ParrotPlatform", new Rectangle(0, 73, 16, 4), 999999, 1, 1, new Vector2(float.MinValue, float.MinValue), false, false, 0f, 0, Color.White, Game1.pixelZoom, 0, 0, 0)
 			},
 			new TemporaryAnimatedSpriteList()
 			{
-				new("LooseSprites\\ParrotPlatform", new Rectangle(22, 74, 4, 4), 999999, 1, 1, new Vector2(int.MinValue, int.MinValue), false, true, 0f, 0, Color.White, Game1.pixelZoom, 0, 0, 0),
-				new("LooseSprites\\ParrotPlatform", new Rectangle(0, 73, 16, 4), 999999, 1, 1, new Vector2(int.MinValue, int.MinValue), false, true, 0f, 0, Color.White, Game1.pixelZoom, 0, 0, 0),
-				new("LooseSprites\\ParrotPlatform", new Rectangle(0, 73, 16, 4), 999999, 1, 1, new Vector2(int.MinValue, int.MinValue), false, true, 0f, 0, Color.White, Game1.pixelZoom, 0, 0, 0),
-				new("LooseSprites\\ParrotPlatform", new Rectangle(0, 73, 16, 4), 999999, 1, 1, new Vector2(int.MinValue, int.MinValue), false, true, 0f, 0, Color.White, Game1.pixelZoom, 0, 0, 0),
-				new("LooseSprites\\ParrotPlatform", new Rectangle(0, 73, 16, 4), 999999, 1, 1, new Vector2(int.MinValue, int.MinValue), false, true, 0f, 0, Color.White, Game1.pixelZoom, 0, 0, 0)
+				new("LooseSprites\\ParrotPlatform", new Rectangle(22, 74, 4, 4), 999999, 1, 1, new Vector2(float.MinValue, float.MinValue), false, true, 0f, 0, Color.White, Game1.pixelZoom, 0, 0, 0),
+				new("LooseSprites\\ParrotPlatform", new Rectangle(0, 73, 16, 4), 999999, 1, 1, new Vector2(float.MinValue, float.MinValue), false, true, 0f, 0, Color.White, Game1.pixelZoom, 0, 0, 0),
+				new("LooseSprites\\ParrotPlatform", new Rectangle(0, 73, 16, 4), 999999, 1, 1, new Vector2(float.MinValue, float.MinValue), false, true, 0f, 0, Color.White, Game1.pixelZoom, 0, 0, 0),
+				new("LooseSprites\\ParrotPlatform", new Rectangle(0, 73, 16, 4), 999999, 1, 1, new Vector2(float.MinValue, float.MinValue), false, true, 0f, 0, Color.White, Game1.pixelZoom, 0, 0, 0),
+				new("LooseSprites\\ParrotPlatform", new Rectangle(0, 73, 16, 4), 999999, 1, 1, new Vector2(float.MinValue, float.MinValue), false, true, 0f, 0, Color.White, Game1.pixelZoom, 0, 0, 0)
 			});
 			context.Location.temporarySprites.AddRange(LocationSpecificCommandDrawParrotExpressLines.Item2);
 			context.Location.temporarySprites.AddRange(LocationSpecificCommandDrawParrotExpressLines.Item3);

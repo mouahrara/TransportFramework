@@ -32,47 +32,91 @@ namespace TransportFramework.Utilities
 						deserializedContentPack.Translation = contentPack.Translation;
 						if (string.IsNullOrEmpty(deserializedContentPack.Format))
 						{
-							ModEntry.Monitor.Log($"Failed to load content pack ({contentPack.Manifest.Name} {contentPack.Manifest.Version}): The 'Format' property is missing.", LogLevel.Error);
+							ModEntry.Monitor.Log($"Failed to load content pack ({deserializedContentPack.Manifest.Name} {deserializedContentPack.Manifest.Version}): The 'Format' property is missing.", LogLevel.Error);
 							continue;
 						}
-						if (!deserializedContentPack.Format.Equals("1.0.0"))
+						switch (deserializedContentPack.Format)
 						{
-							ModEntry.Monitor.Log($"Failed to load content pack ({contentPack.Manifest.Name} {contentPack.Manifest.Version}): The format {deserializedContentPack.Format} is not supported.", LogLevel.Error);
-							continue;
-						}
-						if (deserializedContentPack.Stations is not null)
-						{
-							for (int i = 0; i < deserializedContentPack.Stations.Count; i++)
-							{
-								deserializedContentPack.Stations[i].ContentPack = deserializedContentPack;
-								if (string.IsNullOrWhiteSpace(deserializedContentPack.Stations[i].Id))
-								{
-									deserializedContentPack.Stations[i].Id = $"{contentPack.Manifest.UniqueID}_Station_{i}";
-								}
-								else if (!deserializedContentPack.Stations[i].Id.StartsWith(contentPack.Manifest.UniqueID))
-								{
-									ModEntry.Monitor.Log($"Failed to add station: The 'Id' property ({deserializedContentPack.Stations[i].Id}) must start with the content pack manifest's UniqueID ({contentPack.Manifest.UniqueID}).", LogLevel.Error);
-									continue;
-								}
-								else
-								{
-									for (int j = 0; j < i; j++)
-									{
-										if (deserializedContentPack.Stations[i].Id.Equals(deserializedContentPack.Stations[j].Id))
-										{
-											ModEntry.Monitor.Log($"Failed to add station: The station with Id '{deserializedContentPack.Stations[i].Id}' already exists.", LogLevel.Error);
-											continue;
-										}
-									}
-								}
-								ModEntry.Stations.Add(deserializedContentPack.Stations[i]);
-							}
+							case "1.0.1":
+								LoadContentPackFormat_1_0_1(deserializedContentPack);
+								break;
+							case "1.0.0":
+								LoadContentPackFormat_1_0_0(deserializedContentPack);
+								break;
+							default:
+								ModEntry.Monitor.Log($"Failed to load content pack ({deserializedContentPack.Manifest.Name} {deserializedContentPack.Manifest.Version}): The format {deserializedContentPack.Format} is not supported.", LogLevel.Error);
+								break;
 						}
 					}
 				}
 				catch (Exception e)
 				{
 					ModEntry.Monitor.Log($"Failed to parse content pack ({contentPack.Manifest.Name} {contentPack.Manifest.Version}): {e.Message}", LogLevel.Error);
+				}
+			}
+		}
+
+		private static void LoadContentPackFormat_1_0_1(ContentPack deserializedContentPack)
+		{
+			LoadContentPackFormat_1_0_0(deserializedContentPack);
+			if (deserializedContentPack.Templates is not null)
+			{
+				for (int i = 0; i < deserializedContentPack.Templates.Count; i++)
+				{
+					deserializedContentPack.Templates[i].ContentPack = deserializedContentPack;
+					if (string.IsNullOrWhiteSpace(deserializedContentPack.Templates[i].Id))
+					{
+						deserializedContentPack.Templates[i].Id = $"{deserializedContentPack.Manifest.UniqueID}_Template_{i}";
+					}
+					else if (!deserializedContentPack.Templates[i].Id.StartsWith(deserializedContentPack.Manifest.UniqueID))
+					{
+						ModEntry.Monitor.Log($"Failed to add template: The 'Id' property ({deserializedContentPack.Templates[i].Id}) must start with the content pack manifest's UniqueID ({deserializedContentPack.Manifest.UniqueID}).", LogLevel.Error);
+						continue;
+					}
+					else
+					{
+						for (int j = 0; j < i; j++)
+						{
+							if (deserializedContentPack.Templates[i].Id.Equals(deserializedContentPack.Templates[j].Id))
+							{
+								ModEntry.Monitor.Log($"Failed to add template: The template with Id '{deserializedContentPack.Templates[i].Id}' already exists.", LogLevel.Error);
+								continue;
+							}
+						}
+					}
+					ModEntry.Templates.Add(deserializedContentPack.Templates[i]);
+				}
+			}
+		}
+
+		private static void LoadContentPackFormat_1_0_0(ContentPack deserializedContentPack)
+		{
+			if (deserializedContentPack.Stations is not null)
+			{
+				for (int i = 0; i < deserializedContentPack.Stations.Count; i++)
+				{
+					deserializedContentPack.Stations[i].ContentPack = deserializedContentPack;
+					if (string.IsNullOrWhiteSpace(deserializedContentPack.Stations[i].Id))
+					{
+						deserializedContentPack.Stations[i].Id = $"{deserializedContentPack.Manifest.UniqueID}_Station_{i}";
+					}
+					else if (!deserializedContentPack.Stations[i].Id.StartsWith(deserializedContentPack.Manifest.UniqueID))
+					{
+						ModEntry.Monitor.Log($"Failed to add station: The 'Id' property ({deserializedContentPack.Stations[i].Id}) must start with the content pack manifest's UniqueID ({deserializedContentPack.Manifest.UniqueID}).", LogLevel.Error);
+						continue;
+					}
+					else
+					{
+						for (int j = 0; j < i; j++)
+						{
+							if (deserializedContentPack.Stations[i].Id.Equals(deserializedContentPack.Stations[j].Id))
+							{
+								ModEntry.Monitor.Log($"Failed to add station: The station with Id '{deserializedContentPack.Stations[i].Id}' already exists.", LogLevel.Error);
+								continue;
+							}
+						}
+					}
+					ModEntry.Stations.Add(deserializedContentPack.Stations[i]);
 				}
 			}
 		}

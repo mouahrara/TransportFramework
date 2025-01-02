@@ -76,7 +76,7 @@ namespace TransportFramework.Patches
 
 			if (fieldInfoBusPosition is not null && fieldInfoBusDoor is not null)
 			{
-				fieldInfoBusPosition.SetValue(__instance, new Vector2(int.MinValue, int.MinValue));
+				fieldInfoBusPosition.SetValue(__instance, new Vector2(float.MinValue, float.MinValue));
 				fieldInfoBusDoor.SetValue(__instance, new TemporaryAnimatedSprite());
 			}
 			Game1.player.previousLocationName = __state;

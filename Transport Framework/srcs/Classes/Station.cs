@@ -11,12 +11,13 @@ namespace TransportFramework.Classes
 		internal bool				ConditionsCache = true;
 		internal string				ConditionsLockedMessageCache = null;
 
+		public string				TemplateId = null;
 		public string				Id = null;
 		public string				DisplayName = null;
 		public string				Location = null;
-		public Point				Tile = new(-1, -1);
+		public Point				Tile = new(int.MinValue, int.MinValue);
 		public string				Direction = null;
-		public int					Price = 0;
+		public int					Price = int.MinValue;
 		public string				Network = null;
 		public List<Point>			AccessTiles = null;
 		public List<SSprite>		Sprites = null;
