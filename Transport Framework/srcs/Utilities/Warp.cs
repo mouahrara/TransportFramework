@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using StardewModdingAPI;
 using StardewValley;
 using StardewValley.Characters;
+using StardewValley.Menus;
 using TransportFramework.Classes;
 
 namespace TransportFramework.Utilities
@@ -20,6 +21,43 @@ namespace TransportFramework.Utilities
 			}
 
 			LocationRequest destination = LocationUtility.GetLocationRequest(arrivalStation.Location);
+			bool isFestivalAtDestination = false;
+
+			if (Event.tryToLoadFestivalData(Game1.currentSeason + Game1.dayOfMonth, out _, out _, out string locationName, out int startTime, out int endTime))
+			{
+				if (destination.Location.Name == locationName)
+				{
+					if (Game1.timeOfDay < startTime)
+					{
+						Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\StringsFromCSFiles:Game1.cs.2973"));
+						return false;
+					}
+					if (startTime <= Game1.timeOfDay && Game1.timeOfDay < endTime)
+					{
+						isFestivalAtDestination = true;
+					}
+				}
+			}
+			if (isFestivalAtDestination && Game1.IsMultiplayer)
+			{
+				Game1.netReady.SetLocalReady("festivalStart", ready: true);
+				Game1.activeClickableMenu = new ReadyCheckDialog("festivalStart", allowCancel: true, (_) =>
+				{
+					Game1.exitActiveMenu();
+					PerformWarpToStation(departureStation, arrivalStation, destination, isFestivalAtDestination);
+				});
+			}
+			else
+			{
+				PerformWarpToStation(departureStation, arrivalStation, destination, isFestivalAtDestination);
+			}
+			return true;
+		}
+
+		private static void PerformWarpToStation(Station departureStation, Station arrivalStation, LocationRequest locationRequest, bool isFestivalAtDestination)
+		{
+			Horse horse = Game1.player.mount;
+			bool horsebackTravel = Game1.player.isRidingHorse();
 
 			if (Game1.player.IsSitting())
 			{
@@ -30,30 +68,26 @@ namespace TransportFramework.Utilities
 				Game1.player.swimming.Value = false;
 				Game1.player.changeOutOfSwimSuit();
 			}
-
-			Horse horse = Game1.player.mount;
-			bool horsebackTravel = Game1.player.isRidingHorse();
-
 			if (horsebackTravel)
 			{
 				horse.dismount();
 			}
-			destination.OnWarp += () =>
+			locationRequest.OnWarp += () =>
 			{
 				if (horsebackTravel)
 				{
-					if ((destination.Location.IsOutdoors || ModConfig.AllowIndoorHorsebackTravel) && destination.Location.isTilePassable(new Vector2(arrivalStation.Tile.X, arrivalStation.Tile.Y)) && !destination.Location.IsTileOccupiedBy(new Vector2(arrivalStation.Tile.X, arrivalStation.Tile.Y), CollisionMask.All, CollisionMask.All) && destination.Location.isTilePassable(new Vector2(arrivalStation.Tile.X + 1, arrivalStation.Tile.Y)) && !destination.Location.IsTileOccupiedBy(new Vector2(arrivalStation.Tile.X + 1, arrivalStation.Tile.Y), CollisionMask.All, CollisionMask.All))
+					if ((locationRequest.Location.IsOutdoors || ModConfig.AllowIndoorHorsebackTravel) && locationRequest.Location.isTilePassable(new Vector2(arrivalStation.Tile.X, arrivalStation.Tile.Y)) && !locationRequest.Location.IsTileOccupiedBy(new Vector2(arrivalStation.Tile.X, arrivalStation.Tile.Y), CollisionMask.All, CollisionMask.All) && locationRequest.Location.isTilePassable(new Vector2(arrivalStation.Tile.X + 1, arrivalStation.Tile.Y)) && !locationRequest.Location.IsTileOccupiedBy(new Vector2(arrivalStation.Tile.X + 1, arrivalStation.Tile.Y), CollisionMask.All, CollisionMask.All))
 					{
-						if (destination.Location.currentEvent is not null)
+						if (locationRequest.Location.currentEvent is not null)
 						{
-							if (!destination.Location.currentEvent.isFestival)
+							if (!locationRequest.Location.currentEvent.isFestival)
 							{
-								destination.Location.currentEvent.onEventFinished += () => WarpHorseAndMount(horse, destination.Location, arrivalStation.Tile.X, arrivalStation.Tile.Y, arrivalStation.DirectionAsInt);
+								locationRequest.Location.currentEvent.onEventFinished += () => WarpHorseAndMount(horse, locationRequest.Location, arrivalStation.Tile.X, arrivalStation.Tile.Y, arrivalStation.DirectionAsInt);
 							}
 						}
 						else
 						{
-							WarpHorseAndMount(horse, destination.Location, arrivalStation.Tile.X, arrivalStation.Tile.Y, arrivalStation.DirectionAsInt);
+							WarpHorseAndMount(horse, locationRequest.Location, arrivalStation.Tile.X, arrivalStation.Tile.Y, arrivalStation.DirectionAsInt);
 						}
 					}
 				}
@@ -62,10 +96,9 @@ namespace TransportFramework.Utilities
 				Game1.player.stats.Increment($"{ModEntry.ModManifest.UniqueID}_TravelFrom_{departureStation.Id}_To_{arrivalStation.Id}", 1);
 				TouchActionsUtility.LastTouchAction = arrivalStation.Id;
 			};
-
 			if (!ModEntry.Config.SkipTravelAnimations)
 			{
-				PlayTravelAnimationsAndWarpFarmer(departureStation, arrivalStation, destination);
+				PlayTravelAnimationsAndWarpFarmer(departureStation, arrivalStation, locationRequest, isFestivalAtDestination);
 			}
 			else
 			{
@@ -73,18 +106,17 @@ namespace TransportFramework.Utilities
 				{
 					Game1.playSound(arrivalStation.Sound);
 				}
-				Game1.warpFarmer(destination, arrivalStation.Tile.X, arrivalStation.Tile.Y, arrivalStation.DirectionAsInt);
+				Game1.warpFarmer(locationRequest, arrivalStation.Tile.X, arrivalStation.Tile.Y, arrivalStation.DirectionAsInt);
 			}
-			return true;
 		}
 
-		private static void PlayTravelAnimationsAndWarpFarmer(Station departureStation, Station arrivalStation, LocationRequest locationRequest)
+		private static void PlayTravelAnimationsAndWarpFarmer(Station departureStation, Station arrivalStation, LocationRequest locationRequest, bool isFestivalAtDestination)
 		{
 			uint TravelCount = Game1.player.stats.Get($"{ModEntry.ModManifest.UniqueID}_TravelFrom_{departureStation.Id}") + 1;
 			uint StationIdTravelCount = Game1.player.stats.Get($"{ModEntry.ModManifest.UniqueID}_TravelFrom_{departureStation.Id}_To_{arrivalStation.Id}") + 1;
 			IEnumerable<SEvent> departureEvents = FilterEvents(departureStation, "Departure", arrivalStation.Id, TravelCount, StationIdTravelCount) ?? Enumerable.Empty<SEvent>();
 			IEnumerable<SEvent> arrivalEvents = FilterEvents(arrivalStation, "Arrival", departureStation.Id, TravelCount, StationIdTravelCount) ?? Enumerable.Empty<SEvent>();
-			List<SEvent> events = departureEvents.Concat(arrivalEvents).ToList();
+			List<SEvent> events = isFestivalAtDestination ? departureEvents.ToList() : departureEvents.Concat(arrivalEvents).ToList();
 			List<Event> gameEvents = new();
 
 			for (int i = 0; i < events.Count; i++)
