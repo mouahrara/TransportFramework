@@ -19,18 +19,6 @@ namespace TransportFramework.Utilities
 			stringBuilder.Append(text);
 		}
 
-		private static void AppendProperty(StringBuilder stringBuilder, string name, object value)
-		{
-			if (name is not null)
-			{
-				Append(stringBuilder, $"{name}: {value ?? "null"}\n");
-			}
-			else
-			{
-				Append(stringBuilder, $"{value ?? "null"}\n");
-			}
-		}
-
 		private static void AppendOpen(StringBuilder stringBuilder, ref int tabs, string name, object value, char character)
 		{
 			if (value is null)
@@ -89,6 +77,18 @@ namespace TransportFramework.Utilities
 			stringBuilder.Append('\n');
 		}
 
+		private static void AppendProperty(StringBuilder stringBuilder, string name, object value)
+		{
+			if (name is not null)
+			{
+				Append(stringBuilder, $"{name}: {value ?? "null"}\n");
+			}
+			else
+			{
+				Append(stringBuilder, $"{value ?? "null"}\n");
+			}
+		}
+
 		private static void AppendPoint(StringBuilder stringBuilder, string name, Point point)
 		{
 			AppendObjectOpen(stringBuilder, name, point);
@@ -98,41 +98,53 @@ namespace TransportFramework.Utilities
 			AppendObjectClose(stringBuilder, point);
 		}
 
-		private static void AppendSSprite(StringBuilder stringBuilder, string name, SSprite ssprite)
+		private static void AppendSSprite(StringBuilder stringBuilder, string name, SSprite ssprite, bool includeInternals)
 		{
 			AppendObjectOpen(stringBuilder, name, ssprite);
 			if (ssprite is not null)
 			{
 				AppendProperty(stringBuilder, nameof(ssprite.Type), ssprite.Type);
 				AppendArrayComma(stringBuilder);
-				AppendSSData(stringBuilder, nameof(ssprite.Data), ssprite.Data);
+				AppendSSData(stringBuilder, nameof(ssprite.Data), ssprite.Data, includeInternals);
 				AppendArrayComma(stringBuilder);
-				AppendItems(stringBuilder, nameof(ssprite.AbsoluteCollisionBoxes), ssprite.AbsoluteCollisionBoxes, AppendRectangle);
+				if (includeInternals)
+				{
+					AppendItems(stringBuilder, nameof(ssprite.AbsoluteCollisionBoxes), ssprite.AbsoluteCollisionBoxes, AppendRectangle, includeInternals);
+					AppendArrayComma(stringBuilder);
+					AppendItems(stringBuilder, nameof(ssprite.ComputedCollisionBoxes), ssprite.ComputedCollisionBoxes, AppendRectangle, includeInternals);
+					AppendArrayComma(stringBuilder);
+				}
+				AppendItems(stringBuilder, nameof(ssprite.CollisionBoxes), ssprite.CollisionBoxes, AppendSSCollisionBox, includeInternals);
 				AppendArrayComma(stringBuilder);
-				AppendItems(stringBuilder, nameof(ssprite.ComputedCollisionBoxes), ssprite.ComputedCollisionBoxes, AppendRectangle);
-				AppendArrayComma(stringBuilder);
-				AppendItems(stringBuilder, nameof(ssprite.CollisionBoxes), ssprite.CollisionBoxes, AppendSSCollisionBox);
-				AppendArrayComma(stringBuilder);
-				AppendProperty(stringBuilder, nameof(ssprite.ConditionsCache), ssprite.ConditionsCache);
-				AppendArrayComma(stringBuilder);
-				AppendItems(stringBuilder, nameof(ssprite.Conditions), ssprite.Conditions, AppendSSCondition);
+				if (includeInternals)
+				{
+					AppendProperty(stringBuilder, nameof(ssprite.ConditionsCache), ssprite.ConditionsCache);
+					AppendArrayComma(stringBuilder);
+				}
+				AppendItems(stringBuilder, nameof(ssprite.Conditions), ssprite.Conditions, AppendSSCondition, includeInternals);
 			}
 			AppendObjectClose(stringBuilder, ssprite);
 		}
 
-		private static void AppendSSData(StringBuilder stringBuilder, string name, SSData ssdata)
+		private static void AppendSSData(StringBuilder stringBuilder, string name, SSData ssdata, bool includeInternals)
 		{
 			AppendObjectOpen(stringBuilder, name, ssdata);
 			if (ssdata is not null)
 			{
-				AppendProperty(stringBuilder, nameof(ssdata.InternalTextureName), ssdata.InternalTextureName);
-				AppendArrayComma(stringBuilder);
+				if (includeInternals)
+				{
+					AppendProperty(stringBuilder, nameof(ssdata.InternalTextureName), ssdata.InternalTextureName);
+					AppendArrayComma(stringBuilder);
+				}
 				AppendProperty(stringBuilder, nameof(ssdata.TextureName), ssdata.TextureName);
 				AppendArrayComma(stringBuilder);
 				AppendRectangle(stringBuilder, nameof(ssdata.SourceRectangle), ssdata.SourceRectangle);
 				AppendArrayComma(stringBuilder);
-				AppendVector(stringBuilder, nameof(ssdata.ComputedPosition), ssdata.ComputedPosition);
-				AppendArrayComma(stringBuilder);
+				if (includeInternals)
+				{
+					AppendVector(stringBuilder, nameof(ssdata.ComputedPosition), ssdata.ComputedPosition);
+					AppendArrayComma(stringBuilder);
+				}
 				AppendVector(stringBuilder, nameof(ssdata.Position), ssdata.Position);
 				AppendArrayComma(stringBuilder);
 				AppendProperty(stringBuilder, nameof(ssdata.Interval), ssdata.Interval);
@@ -145,12 +157,18 @@ namespace TransportFramework.Utilities
 				AppendArrayComma(stringBuilder);
 				AppendProperty(stringBuilder, nameof(ssdata.VerticalFlip), ssdata.VerticalFlip);
 				AppendArrayComma(stringBuilder);
-				AppendProperty(stringBuilder, nameof(ssdata.ComputedLayerDepth), ssdata.ComputedLayerDepth);
-				AppendArrayComma(stringBuilder);
+				if (includeInternals)
+				{
+					AppendProperty(stringBuilder, nameof(ssdata.ComputedLayerDepth), ssdata.ComputedLayerDepth);
+					AppendArrayComma(stringBuilder);
+				}
 				AppendProperty(stringBuilder, nameof(ssdata.LayerDepth), ssdata.LayerDepth);
 				AppendArrayComma(stringBuilder);
-				AppendColor(stringBuilder, nameof(ssdata.ColorAsColor), ssdata.ColorAsColor);
-				AppendArrayComma(stringBuilder);
+				if (includeInternals)
+				{
+					AppendColor(stringBuilder, nameof(ssdata.ColorAsColor), ssdata.ColorAsColor);
+					AppendArrayComma(stringBuilder);
+				}
 				AppendProperty(stringBuilder, nameof(ssdata.Color), ssdata.Color);
 				AppendArrayComma(stringBuilder);
 				AppendProperty(stringBuilder, nameof(ssdata.Scale), ssdata.Scale);
@@ -159,7 +177,7 @@ namespace TransportFramework.Utilities
 				AppendArrayComma(stringBuilder);
 				AppendProperty(stringBuilder, nameof(ssdata.ShakeIntensity), ssdata.ShakeIntensity);
 				AppendArrayComma(stringBuilder);
-				AppendSSDLight(stringBuilder, nameof(ssdata.Light), ssdata.Light);
+				AppendSSDLight(stringBuilder, nameof(ssdata.Light), ssdata.Light, includeInternals);
 				AppendArrayComma(stringBuilder);
 				AppendProperty(stringBuilder, nameof(ssdata.PingPong), ssdata.PingPong);
 				AppendArrayComma(stringBuilder);
@@ -190,13 +208,16 @@ namespace TransportFramework.Utilities
 			AppendObjectClose(stringBuilder, color);
 		}
 
-		private static void AppendSSDLight(StringBuilder stringBuilder, string name, SSDLight ssdLight)
+		private static void AppendSSDLight(StringBuilder stringBuilder, string name, SSDLight ssdLight, bool includeInternals)
 		{
 			AppendObjectOpen(stringBuilder, name, ssdLight);
 			if (ssdLight is not null)
 			{
-				AppendColor(stringBuilder, nameof(ssdLight.ColorAsColor), ssdLight.ColorAsColor);
-				AppendArrayComma(stringBuilder);
+				if (includeInternals)
+				{
+					AppendColor(stringBuilder, nameof(ssdLight.ColorAsColor), ssdLight.ColorAsColor);
+					AppendArrayComma(stringBuilder);
+				}
 				AppendProperty(stringBuilder, nameof(ssdLight.Color), ssdLight.Color);
 				AppendArrayComma(stringBuilder);
 				AppendProperty(stringBuilder, nameof(ssdLight.Radius), ssdLight.Radius);
@@ -233,13 +254,16 @@ namespace TransportFramework.Utilities
 			AppendObjectClose(stringBuilder, sscollisionBox);
 		}
 
-		private static void AppendSSCondition(StringBuilder stringBuilder, string name, SSCondition sscondition)
+		private static void AppendSSCondition(StringBuilder stringBuilder, string name, SSCondition sscondition, bool includeInternals)
 		{
 			AppendObjectOpen(stringBuilder, name, sscondition);
 			if (sscondition is not null)
 			{
-				AppendProperty(stringBuilder, nameof(sscondition.Cache), sscondition.Cache);
-				AppendArrayComma(stringBuilder);
+				if (includeInternals)
+				{
+					AppendProperty(stringBuilder, nameof(sscondition.Cache), sscondition.Cache);
+					AppendArrayComma(stringBuilder);
+				}
 				AppendProperty(stringBuilder, nameof(sscondition.Query), sscondition.Query);
 				AppendArrayComma(stringBuilder);
 				AppendProperty(stringBuilder, nameof(sscondition.Update), sscondition.Update);
@@ -247,13 +271,16 @@ namespace TransportFramework.Utilities
 			AppendObjectClose(stringBuilder, sscondition);
 		}
 
-		private static void AppendSCondition(StringBuilder stringBuilder, string name, SCondition scondition)
+		private static void AppendSCondition(StringBuilder stringBuilder, string name, SCondition scondition, bool includeInternals)
 		{
 			AppendObjectOpen(stringBuilder, name, scondition);
 			if (scondition is not null)
 			{
-				AppendProperty(stringBuilder, nameof(scondition.Cache), scondition.Cache);
-				AppendArrayComma(stringBuilder);
+				if (includeInternals)
+				{
+					AppendProperty(stringBuilder, nameof(scondition.Cache), scondition.Cache);
+					AppendArrayComma(stringBuilder);
+				}
 				AppendProperty(stringBuilder, nameof(scondition.Query), scondition.Query);
 				AppendArrayComma(stringBuilder);
 				AppendProperty(stringBuilder, nameof(scondition.LockedMessage), scondition.LockedMessage);
@@ -295,14 +322,19 @@ namespace TransportFramework.Utilities
 			AppendObjectClose(stringBuilder, sefilter);
 		}
 
-		private static void AppendItems<T>(StringBuilder stringBuilder, string name, IEnumerable<T> items, Action<StringBuilder, string, T> appendItem)
+		private static void AppendItems<T>(StringBuilder stringBuilder, string name, IEnumerable<T> items, Action<StringBuilder, string, T> appendItem, bool includeInternals = true)
+		{
+			AppendItems(stringBuilder, name, items, (sb, n, item, _) => appendItem(sb, n, item), includeInternals);
+		}
+
+		private static void AppendItems<T>(StringBuilder stringBuilder, string name, IEnumerable<T> items, Action<StringBuilder, string, T, bool> appendItem, bool includeInternals = true)
 		{
 			AppendArrayOpen(stringBuilder, name, items);
 			if (items is not null)
 			{
 				foreach (T item in items)
 				{
-					appendItem(stringBuilder, null, item);
+					appendItem(stringBuilder, null, item, includeInternals);
 					AppendArrayComma(stringBuilder);
 				}
 				RemoveArrayLastComma(stringBuilder);
@@ -318,10 +350,10 @@ namespace TransportFramework.Utilities
 				AppendProperty(stringBuilder, nameof(template.Id), template.Id);
 				AppendProperty(stringBuilder, nameof(template.Price), template.Price);
 				AppendProperty(stringBuilder, nameof(template.Network), template.Network);
-				AppendItems(stringBuilder, nameof(template.AccessTiles), template.AccessTiles, AppendPoint);
-				AppendItems(stringBuilder, nameof(template.Sprites), template.Sprites, AppendSSprite);
-				AppendItems(stringBuilder, nameof(template.Conditions), template.Conditions, AppendSCondition);
-				AppendItems(stringBuilder, nameof(template.Events), template.Events, AppendSEvent);
+				AppendItems(stringBuilder, nameof(template.AccessTiles), template.AccessTiles, AppendPoint, false);
+				AppendItems(stringBuilder, nameof(template.Sprites), template.Sprites, AppendSSprite, false);
+				AppendItems(stringBuilder, nameof(template.Conditions), template.Conditions, AppendSCondition, false);
+				AppendItems(stringBuilder, nameof(template.Events), template.Events, AppendSEvent, false);
 				AppendProperty(stringBuilder, nameof(template.Sound), template.Sound);
 			}
 		}

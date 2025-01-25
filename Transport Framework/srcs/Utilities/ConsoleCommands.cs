@@ -171,11 +171,11 @@ namespace TransportFramework.Utilities
 
 			if (count == 0)
 			{
-				summary.Append("No station found.\n");
+				summary.Append("No template found.\n");
 			}
 			else
 			{
-				summary.Append($"List of {count} stations found:\n");
+				summary.Append($"List of {count} templates found:\n");
 				foreach (Template template in filteredTemplates)
 				{
 					StringBuilderUtility.AppendTemplate(summary, template.ContentPack.Manifest.UniqueID, template);
