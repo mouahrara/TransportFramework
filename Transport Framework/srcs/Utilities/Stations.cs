@@ -1020,20 +1020,42 @@ namespace TransportFramework.Utilities
 			int mapWidth = location.Map.Layers[0].LayerWidth - 1;
 			int mapHeight = location.Map.Layers[0].LayerHeight - 1;
 
-			if (station.Tile.X < 0 || mapWidth < station.Tile.X || station.Tile.Y < 0 || mapHeight < station.Tile.Y)
+			if (location.NameOrUniqueName == "Farm")
 			{
-				ModEntry.Monitor.Log($"Failed to add station (Id: {station.Id}): The station coordinates ({station.Tile.X}, {station.Tile.Y}) are outside the map boundaries ({mapWidth} x {mapHeight}).", LogLevel.Error);
-				return false;
-			}
-			if (station.AccessTiles is not null)
-			{
-				for (int i = 0; i < station.AccessTiles.Count; i++)
+				station.Disabled = false;
+				if (station.Tile.X < 0 || mapWidth < station.Tile.X || station.Tile.Y < 0 || mapHeight < station.Tile.Y)
 				{
-					if (station.AccessTiles[i].X < 0 || mapWidth < station.AccessTiles[i].X || station.AccessTiles[i].Y < 0 || mapHeight < station.AccessTiles[i].Y)
+					station.Disabled = true;
+				}
+				if (!station.Disabled && station.AccessTiles is not null)
+				{
+					for (int i = 0; i < station.AccessTiles.Count; i++)
 					{
-						ModEntry.Monitor.Log($"Failed to set station (Id: {station.Id}) access tile no.{i + 1}: The access tile coordinates ({station.Tile.X}, {station.Tile.Y}) are outside the map boundaries ({mapWidth} x {mapHeight}).", LogLevel.Warn);
-						station.AccessTiles.RemoveAt(i--);
-						continue;
+						if (station.AccessTiles[i].X < 0 || mapWidth < station.AccessTiles[i].X || station.AccessTiles[i].Y < 0 || mapHeight < station.AccessTiles[i].Y)
+						{
+							station.Disabled = true;
+							break;
+						}
+					}
+				}
+			}
+			else
+			{
+				if (station.Tile.X < 0 || mapWidth < station.Tile.X || station.Tile.Y < 0 || mapHeight < station.Tile.Y)
+				{
+					ModEntry.Monitor.Log($"Failed to add station (Id: {station.Id}): The station coordinates ({station.Tile.X}, {station.Tile.Y}) are outside the map boundaries ({mapWidth} x {mapHeight}).", LogLevel.Error);
+					return false;
+				}
+				if (station.AccessTiles is not null)
+				{
+					for (int i = 0; i < station.AccessTiles.Count; i++)
+					{
+						if (station.AccessTiles[i].X < 0 || mapWidth < station.AccessTiles[i].X || station.AccessTiles[i].Y < 0 || mapHeight < station.AccessTiles[i].Y)
+						{
+							ModEntry.Monitor.Log($"Failed to set station (Id: {station.Id}) access tile no.{i + 1}: The access tile coordinates ({station.Tile.X}, {station.Tile.Y}) are outside the map boundaries ({mapWidth} x {mapHeight}).", LogLevel.Warn);
+							station.AccessTiles.RemoveAt(i--);
+							continue;
+						}
 					}
 				}
 			}
@@ -1178,7 +1200,7 @@ namespace TransportFramework.Utilities
 
 		public static void GenerateCurrentLocationEnumerable()
 		{
-			ModEntry.CurrentLocationStations = ModEntry.Stations?.Where(s => LocationUtility.GetLocationFromName(s.Location) == Game1.currentLocation) ?? Enumerable.Empty<Station>();
+			ModEntry.CurrentLocationStations = ModEntry.Stations?.Where(s => !s.Disabled && LocationUtility.GetLocationFromName(s.Location) == Game1.currentLocation) ?? Enumerable.Empty<Station>();
 		}
 
 		public static void GenerateUpdateEnumerables()

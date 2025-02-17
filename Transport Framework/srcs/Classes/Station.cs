@@ -10,6 +10,7 @@ namespace TransportFramework.Classes
 		internal int				DirectionAsInt = 2;
 		internal bool				ConditionsCache = true;
 		internal string				ConditionsLockedMessageCache = null;
+		internal bool				Disabled = false;
 
 		public string				TemplateId = null;
 		public string				Id = null;
