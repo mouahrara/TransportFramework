@@ -673,44 +673,50 @@ namespace TransportFramework.Utilities
 		{
 			List<KeyValuePair<string, MinecartNetworkData>> sortedMinecarts = GetSortedMinecarts();
 
-			foreach ((string networkName, MinecartNetworkData networkData) in sortedMinecarts)
+			if (sortedMinecarts is not null)
 			{
-				string network = networkName.Equals("Default") ? "Minecart" : networkName;
-				string lockedMessage = networkData.LockedMessage ?? "[LocalizedText Strings\\Locations:MineCart_OutOfOrder]";
-
-				foreach (MinecartDestinationData destination in networkData.Destinations)
+				foreach ((string networkName, MinecartNetworkData networkData) in sortedMinecarts)
 				{
-					List<SCondition> conditions = new();
+					string network = networkName.Equals("Default") ? "Minecart" : networkName;
+					string lockedMessage = networkData.LockedMessage ?? "[LocalizedText Strings\\Locations:MineCart_OutOfOrder]";
 
-					if (!string.IsNullOrWhiteSpace(networkData.UnlockCondition))
+					if (networkData.Destinations is not null)
 					{
-						conditions.Add(new()
+						foreach (MinecartDestinationData destination in networkData.Destinations)
 						{
-							Query = networkData.UnlockCondition,
-							LockedMessage = lockedMessage,
-							Update = "OnDayStart"
-						});
+							List<SCondition> conditions = new();
+
+							if (!string.IsNullOrWhiteSpace(networkData.UnlockCondition))
+							{
+								conditions.Add(new()
+								{
+									Query = networkData.UnlockCondition,
+									LockedMessage = lockedMessage,
+									Update = "OnDayStart"
+								});
+							}
+							if (!string.IsNullOrWhiteSpace(destination.Condition))
+							{
+								conditions.Add(new()
+								{
+									Query = destination.Condition,
+									LockedMessage = lockedMessage,
+									Update = "OnDayStart"
+								});
+							}
+							contentPack.Stations.Add(new Station
+							{
+								Id = $"{network}_{destination.Id}",
+								DisplayName = destination.DisplayName,
+								Location = destination.TargetLocation,
+								Tile = destination.TargetTile,
+								Direction = destination.TargetDirection,
+								Price = destination.Price,
+								Network = network,
+								Conditions = conditions.Any() ? conditions : null
+							});
+						}
 					}
-					if (!string.IsNullOrWhiteSpace(destination.Condition))
-					{
-						conditions.Add(new()
-						{
-							Query = destination.Condition,
-							LockedMessage = lockedMessage,
-							Update = "OnDayStart"
-						});
-					}
-					contentPack.Stations.Add(new Station
-					{
-						Id = $"{network}_{destination.Id}",
-						DisplayName = destination.DisplayName,
-						Location = destination.TargetLocation,
-						Tile = destination.TargetTile,
-						Direction = destination.TargetDirection,
-						Price = destination.Price,
-						Network = network,
-						Conditions = conditions.Any() ? conditions : null
-					});
 				}
 			}
 		}
@@ -718,22 +724,30 @@ namespace TransportFramework.Utilities
 		private static List<KeyValuePair<string, MinecartNetworkData>> GetSortedMinecarts()
 		{
 			Dictionary<string, MinecartNetworkData> dictionary = DataLoader.Minecarts(Game1.content);
-			List<KeyValuePair<string, MinecartNetworkData>> sortedDictionary = dictionary.OrderBy(pair => pair.Key.Equals("Default") ? string.Empty : pair.Key).ToList();
 
-			foreach ((string networkName, MinecartNetworkData networkData) in sortedDictionary)
+			if (dictionary is not null)
 			{
-				if (networkName.Equals("Default"))
-				{
-					List<string> defaultMinecartsOrder = new() { "Bus", "Quarry", "Mines", "Town" };
+				List<KeyValuePair<string, MinecartNetworkData>> sortedDictionary = dictionary.OrderBy(pair => pair.Key.Equals("Default") ? string.Empty : pair.Key).ToList();
 
-					networkData.Destinations = networkData.Destinations.OrderBy(d => defaultMinecartsOrder.IndexOf(d.Id) >= 0 ? defaultMinecartsOrder.IndexOf(d.Id) : int.MaxValue).ThenBy(d => d.Id).ToList();
-				}
-				else
+				foreach ((string networkName, MinecartNetworkData networkData) in sortedDictionary)
 				{
-					networkData.Destinations = networkData.Destinations.OrderBy(d => d.Id).ToList();
+					if (networkData.Destinations is not null)
+					{
+						if (networkName.Equals("Default"))
+						{
+							List<string> defaultMinecartsOrder = new() { "Bus", "Quarry", "Mines", "Town" };
+
+							networkData.Destinations = networkData.Destinations.OrderBy(d => defaultMinecartsOrder.IndexOf(d.Id) >= 0 ? defaultMinecartsOrder.IndexOf(d.Id) : int.MaxValue).ThenBy(d => d.Id).ToList();
+						}
+						else
+						{
+							networkData.Destinations = networkData.Destinations.OrderBy(d => d.Id).ToList();
+						}
+					}
 				}
+				return sortedDictionary;
 			}
-			return sortedDictionary;
+			return null;
 		}
 
 		public static void SetStationReferences()
