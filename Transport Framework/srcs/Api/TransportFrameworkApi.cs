@@ -96,6 +96,11 @@ namespace TransportFramework.Api
 				{
 					if (typeMask.HasFlag(ITransportFrameworkApi.TypeMask.StationCondition))
 					{
+						if (updateMask.HasFlag(ITransportFrameworkApi.UpdateMask.OnSaveLoaded))
+						{
+							StationsUtility.UpdateConditions(ModEntry.OnSaveLoadedConditions, station);
+							StationsUtility.UpdateStations(ModEntry.OnSaveLoadedStations, station);
+						}
 						if (updateMask.HasFlag(ITransportFrameworkApi.UpdateMask.OnDayStart))
 						{
 							StationsUtility.UpdateConditions(ModEntry.OnDayStartConditions, station);
@@ -109,6 +114,11 @@ namespace TransportFramework.Api
 					}
 					if (typeMask.HasFlag(ITransportFrameworkApi.TypeMask.SpriteCondition))
 					{
+						if (updateMask.HasFlag(ITransportFrameworkApi.UpdateMask.OnSaveLoaded))
+						{
+							StationsUtility.UpdateSpriteConditions(ModEntry.OnSaveLoadedSpriteConditions, station);
+							StationsUtility.UpdateSprites(ModEntry.OnSaveLoadedSprites, station);
+						}
 						if (updateMask.HasFlag(ITransportFrameworkApi.UpdateMask.OnDayStart))
 						{
 							StationsUtility.UpdateSpriteConditions(ModEntry.OnDayStartSpriteConditions, station);

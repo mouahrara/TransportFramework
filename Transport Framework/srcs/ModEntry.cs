@@ -22,12 +22,16 @@ namespace TransportFramework
 		public static List<Template>			Templates = new();
 		public static List<Station>				Stations = new();
 		public static IEnumerable<Station>		CurrentLocationStations = null;
+		public static IEnumerable<Station>		OnSaveLoadedStations = null;
 		public static IEnumerable<Station>		OnDayStartStations = null;
 		public static IEnumerable<Station>		OnInteractStations = null;
+		public static IEnumerable<SSprite>		OnSaveLoadedSprites = null;
 		public static IEnumerable<SSprite>		OnDayStartSprites = null;
 		public static IEnumerable<SSprite>		OnLocationChangeSprites = null;
+		public static IEnumerable<SSCondition>	OnSaveLoadedSpriteConditions = null;
 		public static IEnumerable<SSCondition>	OnDayStartSpriteConditions = null;
 		public static IEnumerable<SSCondition>	OnLocationChangeSpriteConditions = null;
+		public static IEnumerable<SCondition>	OnSaveLoadedConditions = null;
 		public static IEnumerable<SCondition>	OnDayStartConditions = null;
 		public static IEnumerable<SCondition>	OnInteractConditions = null;
 

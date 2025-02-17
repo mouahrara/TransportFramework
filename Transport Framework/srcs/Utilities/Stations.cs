@@ -970,9 +970,9 @@ namespace TransportFramework.Utilities
 						station.Conditions.RemoveAt(i--);
 						continue;
 					}
-					if (!station.Conditions[i].Update.Equals("OnDayStart") && !station.Conditions[i].Update.Equals("OnInteract"))
+					if (!station.Conditions[i].Update.Equals("OnSaveLoaded") && !station.Conditions[i].Update.Equals("OnDayStart") && !station.Conditions[i].Update.Equals("OnInteract"))
 					{
-						ModEntry.Monitor.Log($"Failed to set 'Update' for the station (Id: {station.Id}) condition no.{i + 1}: The update ({station.Conditions[i].Update}) must be one of 'OnDayStart' or 'OnInteract'. The default value ('OnDayStart') will be used.", LogLevel.Warn);
+						ModEntry.Monitor.Log($"Failed to set 'Update' for the station (Id: {station.Id}) condition no.{i + 1}: The update ({station.Conditions[i].Update}) must be one of 'OnSaveLoaded', 'OnDayStart' or 'OnInteract'. The default value ('OnDayStart') will be used.", LogLevel.Warn);
 						station.Conditions[i].Update = "OnDayStart";
 					}
 				}
@@ -1205,21 +1205,34 @@ namespace TransportFramework.Utilities
 
 		public static void GenerateUpdateEnumerables()
 		{
+			ModEntry.OnSaveLoadedStations = ModEntry.Stations?.Where(s => s.Conditions?.Any(c => c.Update.Equals("OnSaveLoaded")) == true);
 			ModEntry.OnDayStartStations = ModEntry.Stations?.Where(s => s.Conditions?.Any(c => c.Update.Equals("OnDayStart")) == true);
 			ModEntry.OnInteractStations = ModEntry.Stations?.Where(s => s.Conditions?.Any(c => c.Update.Equals("OnInteract")) == true);
+			ModEntry.OnSaveLoadedSprites = ModEntry.Stations?.Where(s => s.Sprites is not null)?.SelectMany(s => s.Sprites.Where(sprite => sprite.Conditions?.Any(c => c.Update.Equals("OnSaveLoaded")) == true));
 			ModEntry.OnDayStartSprites = ModEntry.Stations?.Where(s => s.Sprites is not null)?.SelectMany(s => s.Sprites.Where(sprite => sprite.Conditions?.Any(c => c.Update.Equals("OnDayStart")) == true));
 			ModEntry.OnLocationChangeSprites = ModEntry.Stations?.Where(s => s.Sprites is not null)?.SelectMany(s => s.Sprites.Where(sprite => sprite.Conditions?.Any(c => c.Update.Equals("OnLocationChange")) == true));
+			ModEntry.OnSaveLoadedSpriteConditions = ModEntry.Stations?.Where(s => s.Sprites is not null)?.SelectMany(s => s.Sprites.Where(s => s.Conditions is not null))?.SelectMany(s => s.Conditions.Where(c => c.Update.Equals("OnSaveLoaded")));
 			ModEntry.OnDayStartSpriteConditions = ModEntry.Stations?.Where(s => s.Sprites is not null)?.SelectMany(s => s.Sprites.Where(s => s.Conditions is not null))?.SelectMany(s => s.Conditions.Where(c => c.Update.Equals("OnDayStart")));
 			ModEntry.OnLocationChangeSpriteConditions = ModEntry.Stations?.Where(s => s.Sprites is not null)?.SelectMany(s => s.Sprites.Where(s => s.Conditions is not null))?.SelectMany(s => s.Conditions.Where(c => c.Update.Equals("OnLocationChange")));
+			ModEntry.OnSaveLoadedConditions = ModEntry.Stations?.Where(s => s.Conditions is not null)?.SelectMany(s => s.Conditions.Where(c => c.Update.Equals("OnSaveLoaded")));
 			ModEntry.OnDayStartConditions = ModEntry.Stations?.Where(s => s.Conditions is not null)?.SelectMany(s => s.Conditions.Where(c => c.Update.Equals("OnDayStart")));
 			ModEntry.OnInteractConditions = ModEntry.Stations?.Where(s => s.Conditions is not null)?.SelectMany(s => s.Conditions.Where(c => c.Update.Equals("OnInteract")));
 		}
 
-		public static void UpdateOnSaveLoad(Station station = null)
+		public static void UpdateAll(Station station = null)
 		{
+			UpdateOnSaveLoaded(station);
 			UpdateOnDayStart(station);
 			UpdateOnLocationChange(station);
 			UpdateOnInteract(station);
+		}
+
+		public static void UpdateOnSaveLoaded(Station station = null)
+		{
+			UpdateSpriteConditions(ModEntry.OnSaveLoadedSpriteConditions, station);
+			UpdateSprites(ModEntry.OnSaveLoadedSprites, station);
+			UpdateConditions(ModEntry.OnSaveLoadedConditions, station);
+			UpdateStations(ModEntry.OnSaveLoadedStations, station);
 		}
 
 		public static void UpdateOnDayStart(Station station = null)

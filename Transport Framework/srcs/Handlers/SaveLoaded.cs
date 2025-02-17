@@ -20,7 +20,7 @@ namespace TransportFramework.Handlers
 			StationsUtility.GenerateUpdateEnumerables();
 
 			// Update stations, sprites and conditions OnSaveLoad
-			StationsUtility.UpdateOnSaveLoad();
+			StationsUtility.UpdateOnSaveLoaded();
 		}
 	}
 }

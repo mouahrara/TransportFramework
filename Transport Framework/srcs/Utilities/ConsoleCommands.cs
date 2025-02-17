@@ -115,7 +115,7 @@ namespace TransportFramework.Utilities
 						summary.Append($"\n{station.ContentPack.Manifest.UniqueID}\n");
 						lastManifestUniqueId = station.ContentPack.Manifest.UniqueID;
 					}
-					StationsUtility.UpdateOnSaveLoad(station);
+					StationsUtility.UpdateAll(station);
 					summary.Append($"- {station.Id}: {station.ConditionsCache}\n");
 				}
 			}

@@ -22,10 +22,11 @@ namespace TransportFramework.Api
 		public enum UpdateMask : byte
 		{
 			None = 0,
-			OnDayStart = 1,
-			OnLocationChange = 2,
-			OnInteract = 4,
-			All = OnDayStart | OnLocationChange | OnInteract
+			OnSaveLoaded = 1,
+			OnDayStart = 2,
+			OnLocationChange = 4,
+			OnInteract = 8,
+			All = OnSaveLoaded | OnDayStart | OnLocationChange | OnInteract
 		}
 
 		/// <summary>
