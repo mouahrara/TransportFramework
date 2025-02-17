@@ -102,7 +102,7 @@ namespace TransportFramework.Utilities
 			}
 			else
 			{
-				if (!string.IsNullOrEmpty(arrivalStation.Sound))
+				if (!string.IsNullOrWhiteSpace(arrivalStation.Sound))
 				{
 					Game1.playSound(arrivalStation.Sound);
 				}
@@ -153,7 +153,7 @@ namespace TransportFramework.Utilities
 			}
 			if (!gameEvents.Any())
 			{
-				if (!string.IsNullOrEmpty(arrivalStation.Sound))
+				if (!string.IsNullOrWhiteSpace(arrivalStation.Sound))
 				{
 					Game1.playSound(arrivalStation.Sound);
 				}
@@ -184,7 +184,7 @@ namespace TransportFramework.Utilities
 					}
 					else
 					{
-						if (!string.IsNullOrEmpty(arrivalStation.Sound))
+						if (!string.IsNullOrWhiteSpace(arrivalStation.Sound))
 						{
 							Game1.playSound(arrivalStation.Sound);
 						}
@@ -207,7 +207,7 @@ namespace TransportFramework.Utilities
 					{
 						string eventId = Game1.getLocationFromName(e.Location ?? station.Location).checkEventPrecondition(e.Id, false);
 
-						if (string.IsNullOrEmpty(eventId) || eventId.Equals("-1"))
+						if (string.IsNullOrWhiteSpace(eventId) || eventId.Equals("-1"))
 						{
 							return false;
 						}

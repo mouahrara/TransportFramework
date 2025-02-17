@@ -819,7 +819,7 @@ namespace TransportFramework.Utilities
 
 		public static bool TryApplyTemplateToStation(Station station)
 		{
-			if (!string.IsNullOrEmpty(station.TemplateId) && station.Tile != new Point(int.MinValue, int.MinValue))
+			if (!string.IsNullOrWhiteSpace(station.TemplateId) && station.Tile != new Point(int.MinValue, int.MinValue))
 			{
 				Template template = ModEntry.Templates.Find(t => t.Id.Equals(station.TemplateId));
 
@@ -877,6 +877,18 @@ namespace TransportFramework.Utilities
 
 		public static bool IsStationValidGameLaunched(Station station)
 		{
+			if (station.RequiredMods is not null)
+			{
+				foreach (SRequiredMod requiredMod in station.RequiredMods)
+				{
+					IModInfo modInfo = ModEntry.Helper.ModRegistry.Get(requiredMod.Id);
+
+					if (modInfo is null || (!string.IsNullOrWhiteSpace(requiredMod.MinimumVersion) && !modInfo.Manifest.Version.IsBetween(requiredMod.MinimumVersion, requiredMod.MinimumVersion) && !modInfo.Manifest.Version.IsNewerThan(requiredMod.MinimumVersion)) || (!string.IsNullOrWhiteSpace(requiredMod.MaximumVersion) && !modInfo.Manifest.Version.IsBetween(requiredMod.MaximumVersion, requiredMod.MaximumVersion) && !modInfo.Manifest.Version.IsOlderThan(requiredMod.MaximumVersion)))
+					{
+						return false;
+					}
+				}
+			}
 			if (string.IsNullOrWhiteSpace(station.Location))
 			{
 				ModEntry.Monitor.Log($"Failed to add station (Id: {station.Id}): The 'Location' property is missing.", LogLevel.Error);

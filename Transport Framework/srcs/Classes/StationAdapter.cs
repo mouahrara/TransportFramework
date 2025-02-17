@@ -145,6 +145,12 @@ namespace TransportFramework.Classes
 			get => _station.IgnoreConditionsArrival;
 			set => _station.IgnoreConditionsArrival = new List<string>(value);
 		}
+
+		public IList<ISRequiredMod> RequiredMods
+		{
+			get => _station.RequiredMods.Select(c => new ISRequiredModAdapter(c)).Cast<ISRequiredMod>().ToList();
+			set => _station.RequiredMods = value.Select(c => ((ISRequiredModAdapter)c).RequiredMod).ToList();
+		}
 	}
 
 	public class ISSpriteAdapter : ISSprite
@@ -498,6 +504,39 @@ namespace TransportFramework.Classes
 		{
 			get => _filter.TravelCount;
 			set => _filter.TravelCount = value;
+		}
+	}
+
+	public class ISRequiredModAdapter : ISRequiredMod
+	{
+		private readonly SRequiredMod _requiredMod;
+
+		public ISRequiredModAdapter(SRequiredMod requiredMod)
+		{
+			_requiredMod = requiredMod ?? throw new ArgumentNullException(nameof(requiredMod));
+		}
+
+		public SRequiredMod RequiredMod
+		{
+			get => _requiredMod;
+		}
+
+		public string Id
+		{
+			get => _requiredMod.Id;
+			set => _requiredMod.Id = value;
+		}
+
+		public string MinimumVersion
+		{
+			get => _requiredMod.MinimumVersion;
+			set => _requiredMod.MinimumVersion = value;
+		}
+
+		public string MaximumVersion
+		{
+			get => _requiredMod.MaximumVersion;
+			set => _requiredMod.MaximumVersion = value;
 		}
 	}
 }

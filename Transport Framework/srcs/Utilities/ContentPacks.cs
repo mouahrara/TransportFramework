@@ -30,7 +30,7 @@ namespace TransportFramework.Utilities
 						deserializedContentPack.Manifest = contentPack.Manifest;
 						deserializedContentPack.ModContent = contentPack.ModContent;
 						deserializedContentPack.Translation = contentPack.Translation;
-						if (string.IsNullOrEmpty(deserializedContentPack.Format))
+						if (string.IsNullOrWhiteSpace(deserializedContentPack.Format))
 						{
 							ModEntry.Monitor.Log($"Failed to load content pack ({deserializedContentPack.Manifest.Name} {deserializedContentPack.Manifest.Version}): The 'Format' property is missing.", LogLevel.Error);
 							continue;

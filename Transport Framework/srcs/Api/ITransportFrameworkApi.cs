@@ -76,6 +76,7 @@ namespace TransportFramework.Api
 		public IList<string>		IgnoreConditions			{ get; set; }
 		public IList<string>		IgnoreConditionsDeparture	{ get; set; }
 		public IList<string>		IgnoreConditionsArrival		{ get; set; }
+		public IList<ISRequiredMod>	RequiredMods				{ get; set; }
 	}
 
 	public interface ISSprite
@@ -147,5 +148,12 @@ namespace TransportFramework.Api
 		IList<string>	IncludeStations	{ get; set; }
 		IList<string>	ExcludeStations	{ get; set; }
 		uint			TravelCount		{ get; set; }
+	}
+
+	public interface ISRequiredMod
+	{
+		string	Id				{ get; set; }
+		string	MinimumVersion	{ get; set; }
+		string	MaximumVersion	{ get; set; }
 	}
 }

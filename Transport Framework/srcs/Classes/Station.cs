@@ -33,5 +33,6 @@ namespace TransportFramework.Classes
 		public List<string>			IgnoreConditions = null;
 		public List<string>			IgnoreConditionsDeparture = null;
 		public List<string>			IgnoreConditionsArrival = null;
+		public List<SRequiredMod>	RequiredMods = null;
 	}
 }
