@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using TransportFramework.Classes;
@@ -330,7 +331,7 @@ namespace TransportFramework.Utilities
 		private static void AppendItems<T>(StringBuilder stringBuilder, string name, IEnumerable<T> items, Action<StringBuilder, string, T, bool> appendItem, bool includeInternals = true)
 		{
 			AppendArrayOpen(stringBuilder, name, items);
-			if (items is not null)
+			if (items is not null && items.Any())
 			{
 				foreach (T item in items)
 				{
