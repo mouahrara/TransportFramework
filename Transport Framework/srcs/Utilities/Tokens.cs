@@ -29,18 +29,22 @@ namespace TransportFramework.Utilities
 
 		public static void Register()
 		{
-			// Translation
+			// Localization
 			TokenParser.RegisterParser($"{ModEntry.ModManifest.UniqueID}_LocalizedStardewValley", LocalizedStardewValley);
 			TokenParser.RegisterParser($"{ModEntry.ModManifest.UniqueID}_I18n", I18n);
 
-			// Templates
+			// Event scripting
+			TokenParser.RegisterParser($"{ModEntry.ModManifest.UniqueID}_PlayerTileX", PlayerTileX);
+			TokenParser.RegisterParser($"{ModEntry.ModManifest.UniqueID}_PlayerTileY", PlayerTileY);
 			TokenParser.RegisterParser($"{ModEntry.ModManifest.UniqueID}_StationTileX", StationTileX);
 			TokenParser.RegisterParser($"{ModEntry.ModManifest.UniqueID}_StationTileY", StationTileY);
 			TokenParser.RegisterParser($"{ModEntry.ModManifest.UniqueID}_StationLocationWidth", StationLocationWidth);
 			TokenParser.RegisterParser($"{ModEntry.ModManifest.UniqueID}_StationLocationHeight", StationLocationHeight);
 			TokenParser.RegisterParser($"{ModEntry.ModManifest.UniqueID}_QueryExpression", QueryExpression);
+			TokenParser.RegisterParser($"{ModEntry.ModManifest.UniqueID}_CheckGameStateQuery", CheckGameStateQuery);
 		}
 
+		// Localization
 		private static bool LocalizedStardewValley(string[] query, out string replacement, Random random, Farmer player)
 		{
 			replacement = ModEntry.Helper.Translation.Get("About_Title");
@@ -58,6 +62,19 @@ namespace TransportFramework.Utilities
 				return TokenParser.LogTokenError(query, error, out replacement);
 			}
 			replacement = Station.ContentPack.Translation.Get(key);
+			return true;
+		}
+
+		// Event scripting
+		private static bool PlayerTileX(string[] query, out string replacement, Random random, Farmer player)
+		{
+			replacement = player.Tile.X.ToString();
+			return true;
+		}
+
+		private static bool PlayerTileY(string[] query, out string replacement, Random random, Farmer player)
+		{
+			replacement = player.Tile.Y.ToString();
 			return true;
 		}
 
@@ -130,6 +147,12 @@ namespace TransportFramework.Utilities
 			{
 				return TokenParser.LogTokenError(query, $"{queryExpression} is not a valid query expression", out replacement);
 			}
+		}
+
+		private static bool CheckGameStateQuery(string[] query, out string replacement, Random random, Farmer player)
+		{
+			replacement = GameStateQuery.CheckConditions(string.Join(" ", query[1..])).ToString();
+			return true;
 		}
 	}
 }
