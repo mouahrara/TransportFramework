@@ -25,6 +25,7 @@ namespace TransportFramework.Utilities
 					new()
 					{
 						Id = "Minecart",
+						Direction = "down",
 						Price = 0,
 						Network = "Minecart",
 						AccessTiles = new List<Point>
@@ -44,6 +45,7 @@ namespace TransportFramework.Utilities
 					new()
 					{
 						Id = "Bus_left",
+						Direction = "down",
 						Price = 500,
 						Network = "Bus",
 						AccessTiles = new List<Point>
@@ -161,6 +163,7 @@ namespace TransportFramework.Utilities
 					new()
 					{
 						Id = "Bus_right",
+						Direction = "down",
 						Price = 500,
 						Network = "Bus",
 						AccessTiles = new List<Point>
@@ -280,6 +283,7 @@ namespace TransportFramework.Utilities
 					new()
 					{
 						Id = "ParrotExpress",
+						Direction = "down",
 						Price = 0,
 						Network = "ParrotExpress",
 						AccessTiles = new List<Point>
@@ -828,6 +832,10 @@ namespace TransportFramework.Utilities
 					ModEntry.Monitor.Log($"Failed to apply template to station (Id: {station.Id}): The template '{station.TemplateId}' cannot be found.", LogLevel.Error);
 					return false;
 				}
+				if (string.IsNullOrWhiteSpace(station.Direction) && !string.IsNullOrWhiteSpace(template.Direction))
+				{
+					station.Direction = template.Direction.DeepClone();
+				}
 				if (station.Price == int.MinValue && template.Price != int.MinValue)
 				{
 					station.Price = template.Price.DeepClone();
@@ -904,7 +912,7 @@ namespace TransportFramework.Utilities
 				ModEntry.Monitor.Log($"Failed to add station (Id: {station.Id}): The 'Network' property is missing.", LogLevel.Error);
 				return false;
 			}
-			if (station.DirectionAsInt < 0 || 3 < station.DirectionAsInt)
+			if (!string.IsNullOrWhiteSpace(station.Direction) && !Utility.TryParseDirection(station.Direction, out _))
 			{
 				ModEntry.Monitor.Log($"Failed to set 'Direction' for station (Id: {station.Id}): The direction ({station.Direction}) must be one of '0', '1', '2', '3', 'up', 'right', 'down' or 'left'. The default value ('down') will be used.", LogLevel.Warn);
 				station.DirectionAsInt = 2;

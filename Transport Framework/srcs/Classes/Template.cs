@@ -8,6 +8,7 @@ namespace TransportFramework.Classes
 		internal ContentPack	ContentPack = null;
 
 		public string			Id = null;
+		public string			Direction = null;
 		public int				Price = int.MinValue;
 		public string			Network = null;
 		public List<Point>		AccessTiles = null;
