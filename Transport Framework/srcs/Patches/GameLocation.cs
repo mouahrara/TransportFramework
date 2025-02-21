@@ -48,7 +48,7 @@ namespace TransportFramework.Patches
 				{
 					Layer frontLayer = __instance.Map?.GetLayer("Front");
 
-					if (frontLayer is not null && frontLayer.Tiles[tileLocation.X, tileLocation.Y] is not null)
+					if ((frontLayer is not null && frontLayer.Tiles[tileLocation.X, tileLocation.Y] is not null) || ActionsUtility.IsFrontLayerOfAnyStation(tileLocation.X, tileLocation.Y))
 					{
 						if (!AnyHigherPriorityActions(__instance, tileLocation, who) && ActionsUtility.OpenStationAtTile(tileLocation.X, tileLocation.Y + 1))
 						{

@@ -22,7 +22,7 @@ namespace TransportFramework.Utilities
 			{
 				Layer frontLayer = Game1.currentLocation?.Map?.GetLayer("Front");
 
-				if (frontLayer is not null && frontLayer.Tiles[xTile, yTile] is not null)
+				if ((frontLayer is not null && frontLayer.Tiles[xTile, yTile] is not null) || ActionsUtility.IsFrontLayerOfAnyStation(xTile, yTile))
 				{
 					if (ActionsUtility.GetStationAtTile(xTile, yTile + 1) is not null)
 					{
