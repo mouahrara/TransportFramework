@@ -37,11 +37,16 @@ namespace TransportFramework.Utilities
 						}
 						switch (deserializedContentPack.Format)
 						{
+							case "1.0.2":
+								LoadContentPackFormat_1_0_2(deserializedContentPack);
+								break;
 							case "1.0.1":
 								LoadContentPackFormat_1_0_1(deserializedContentPack);
+								UpgradeContentPackFromFormat_1_0_1(deserializedContentPack);
 								break;
 							case "1.0.0":
 								LoadContentPackFormat_1_0_0(deserializedContentPack);
+								UpgradeContentPackFromFormat_1_0_0(deserializedContentPack);
 								break;
 							default:
 								ModEntry.Monitor.Log($"Failed to load content pack ({deserializedContentPack.Manifest.Name} {deserializedContentPack.Manifest.Version}): The format {deserializedContentPack.Format} is not supported.", LogLevel.Error);
@@ -52,6 +57,58 @@ namespace TransportFramework.Utilities
 				catch (Exception e)
 				{
 					ModEntry.Monitor.Log($"Failed to parse content pack ({contentPack.Manifest.Name} {contentPack.Manifest.Version}): {e.Message}", LogLevel.Error);
+				}
+			}
+		}
+
+		private static void LoadContentPackFormat_1_0_2(ContentPack deserializedContentPack)
+		{
+			LoadContentPackFormat_1_0_1(deserializedContentPack);
+		}
+
+		private static void UpgradeContentPackFromFormat_1_0_1(ContentPack deserializedContentPack)
+		{
+			deserializedContentPack.Format = "1.0.2";
+			if (deserializedContentPack.Templates is not null)
+			{
+				foreach (Template template in deserializedContentPack.Templates)
+				{
+					if (template.Events is not null)
+					{
+						foreach (SEvent @event in template.Events)
+						{
+							if (!string.IsNullOrEmpty(@event.Script))
+							{
+								@event.Script = @event.Script.Replace($"{ModEntry.ModManifest.UniqueID}_StationTileX", $"{ModEntry.ModManifest.UniqueID}_StationTemplateReferenceTileX");
+								@event.Script = @event.Script.Replace($"{ModEntry.ModManifest.UniqueID}_StationTileY", $"{ModEntry.ModManifest.UniqueID}_StationTemplateReferenceTileY");
+							}
+						}
+					}
+				}
+			}
+			if (deserializedContentPack.Stations is not null)
+			{
+				foreach (Station station in deserializedContentPack.Stations)
+				{
+					if (!string.IsNullOrWhiteSpace(station.TemplateId))
+					{
+						station.Template = new()
+						{
+							Id = station.TemplateId
+						};
+						station.TemplateId = null;
+					}
+					if (station.Events is not null)
+					{
+						foreach (SEvent @event in station.Events)
+						{
+							if (!string.IsNullOrEmpty(@event.Script))
+							{
+								@event.Script = @event.Script.Replace($"{ModEntry.ModManifest.UniqueID}_StationTileX", $"{ModEntry.ModManifest.UniqueID}_StationTemplateReferenceTileX");
+								@event.Script = @event.Script.Replace($"{ModEntry.ModManifest.UniqueID}_StationTileY", $"{ModEntry.ModManifest.UniqueID}_StationTemplateReferenceTileY");
+							}
+						}
+					}
 				}
 			}
 		}
@@ -87,6 +144,12 @@ namespace TransportFramework.Utilities
 					ModEntry.Templates.Add(deserializedContentPack.Templates[i]);
 				}
 			}
+		}
+
+		private static void UpgradeContentPackFromFormat_1_0_0(ContentPack deserializedContentPack)
+		{
+			deserializedContentPack.Format = "1.0.1";
+			UpgradeContentPackFromFormat_1_0_1(deserializedContentPack);
 		}
 
 		private static void LoadContentPackFormat_1_0_0(ContentPack deserializedContentPack)

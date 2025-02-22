@@ -19,7 +19,7 @@ namespace TransportFramework.Utilities
 			{
 				Manifest = ModEntry.ModManifest,
 				Translation = ModEntry.Helper.Translation,
-				Format = "1.0.1",
+				Format = "1.0.2",
 				Templates = new()
 				{
 					new()

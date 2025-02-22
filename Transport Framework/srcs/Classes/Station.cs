@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 
 namespace TransportFramework.Classes
 {
-	public class Station
+	public class Station : StationObsolete
 	{
 		internal ContentPack		ContentPack = null;
 		internal string				LocalizedDisplayName = null;
