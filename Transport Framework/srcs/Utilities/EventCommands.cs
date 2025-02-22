@@ -134,6 +134,22 @@ namespace TransportFramework.Utilities
 			set => soundsPitchChange.Value = value;
 		}
 
+		// Control flow
+		private static readonly PerScreen<Stack<bool>>				controlFlowQueryResults = new(() => new());
+		private static readonly PerScreen<Dictionary<string, int>>	controlFlowLabels = new(() => new());
+
+		public static Stack<bool> ControlFlowQueryResults
+		{
+			get => controlFlowQueryResults.Value;
+			set => controlFlowQueryResults.Value = value;
+		}
+
+		public static Dictionary<string, int> ControlFlowLabels
+		{
+			get => controlFlowLabels.Value;
+			set => controlFlowLabels.Value = value;
+		}
+
 		// Location specific commands
 		private static readonly PerScreen<(TemporaryAnimatedSpriteList, TemporaryAnimatedSpriteList, TemporaryAnimatedSpriteList)>	locationSpecificCommandDrawParrotExpressLines = new(() => new());
 
@@ -152,35 +168,79 @@ namespace TransportFramework.Utilities
 				gameEvent.onEventFinished += () => SEvent = null;
 				Game1.currentLocation.currentEvent = gameEvent;
 				Game1.eventUp = true;
-				if (@event.Station.Sprites is not null)
+				AddStationSpritesToEventTemporaryAnimatedSpriteList(@event, gameEvent);
+				PreprocessControlFlowEventCommands(gameEvent);
+			}
+		}
+
+		private static void AddStationSpritesToEventTemporaryAnimatedSpriteList(SEvent @event, Event gameEvent)
+		{
+			if (@event.Station.Sprites is not null)
+			{
+				foreach (SSprite sprite in @event.Station.Sprites)
 				{
-					foreach (SSprite sprite in @event.Station.Sprites)
+					if (Game1.currentLocation.TemporarySprites is not null)
 					{
-						if (Game1.currentLocation.TemporarySprites is not null)
+						foreach (TemporaryAnimatedSprite temporaryAnimatedSprite in Game1.currentLocation.TemporarySprites)
 						{
-							foreach (TemporaryAnimatedSprite temporaryAnimatedSprite in Game1.currentLocation.TemporarySprites)
+							if (sprite.Data.InternalTextureName is not null && sprite.Data.InternalTextureName.Equals(temporaryAnimatedSprite.textureName) && sprite.Data.SourceRectangle.X == temporaryAnimatedSprite.sourceRectStartingPos.X && sprite.Data.SourceRectangle.Y == temporaryAnimatedSprite.sourceRectStartingPos.Y && sprite.Data.SourceRectangle.Width == temporaryAnimatedSprite.sourceRect.Width && sprite.Data.SourceRectangle.Height == temporaryAnimatedSprite.sourceRect.Height && sprite.Data.ComputedPosition == temporaryAnimatedSprite.position)
 							{
-								if (sprite.Data.InternalTextureName is not null && sprite.Data.InternalTextureName.Equals(temporaryAnimatedSprite.textureName) && sprite.Data.SourceRectangle.X == temporaryAnimatedSprite.sourceRectStartingPos.X && sprite.Data.SourceRectangle.Y == temporaryAnimatedSprite.sourceRectStartingPos.Y && sprite.Data.SourceRectangle.Width == temporaryAnimatedSprite.sourceRect.Width && sprite.Data.SourceRectangle.Height == temporaryAnimatedSprite.sourceRect.Height && sprite.Data.ComputedPosition == temporaryAnimatedSprite.position)
+								TemporarySprites.Add(temporaryAnimatedSprite);
+								if (sprite.CollisionBoxes is not null)
 								{
-									TemporarySprites.Add(temporaryAnimatedSprite);
-									if (sprite.CollisionBoxes is not null)
+									foreach (Rectangle collisionBox in sprite.ComputedCollisionBoxes)
 									{
-										foreach (Rectangle collisionBox in sprite.ComputedCollisionBoxes)
-										{
-											TemporarySpritesDestroyObjectsOnCollision.Add((temporaryAnimatedSprite, collisionBox, true, true));
-										}
+										TemporarySpritesDestroyObjectsOnCollision.Add((temporaryAnimatedSprite, collisionBox, true, true));
 									}
-									break;
 								}
+								break;
 							}
 						}
 					}
-					if (TemporarySprites.Count > 0)
-					{
-						gameEvent.onEventFinished += gameEvent.onEventFinished?.GetInvocationList().Contains(TemporarySprites.Clear) != true ? TemporarySprites.Clear : null;
-					}
+				}
+				if (TemporarySprites.Count > 0)
+				{
+					gameEvent.onEventFinished += gameEvent.onEventFinished?.GetInvocationList().Contains(TemporarySprites.Clear) != true ? TemporarySprites.Clear : null;
 				}
 			}
+		}
+
+		private static void PreprocessControlFlowEventCommands(Event gameEvent)
+		{
+			if (gameEvent.eventCommands is not null)
+			{
+				List<string> eventCommandsList = gameEvent.eventCommands.ToList();
+
+				for (int i = 0; i < eventCommandsList.Count; i++)
+				{
+					string[] args = ArgUtility.SplitBySpaceQuoteAware(eventCommandsList[i]);
+
+					if (args[0] == $"{ModEntry.ModManifest.UniqueID}_label")
+					{
+						PreprocessLabel(gameEvent, eventCommandsList, ref i, args);
+					}
+				}
+				gameEvent.eventCommands = eventCommandsList.ToArray();
+			}
+		}
+
+		private static void PreprocessLabel(Event gameEvent, List<string> eventCommandsList, ref int index, string[] args)
+		{
+			if (args.Length < 1)
+			{
+				return;
+			}
+			if (!ArgUtility.TryGet(args, 1, out string label, out string error))
+			{
+				return;
+			}
+			if (ControlFlowLabels.ContainsKey(label))
+			{
+				return;
+			}
+			ControlFlowLabels.Add(label, index);
+			gameEvent.onEventFinished += gameEvent.onEventFinished?.GetInvocationList().Contains(ControlFlowLabels.Clear) != true ? ControlFlowLabels.Clear : null;
+			eventCommandsList.RemoveAt(index--);
 		}
 
 		public static void Register()
@@ -222,7 +282,12 @@ namespace TransportFramework.Utilities
 			Event.RegisterCommand($"{ModEntry.ModManifest.UniqueID}_stopSoundsRange", StopSoundsRange);
 
 			// Control flow
-			Event.RegisterCommand($"{ModEntry.ModManifest.UniqueID}_query", Query);
+			Event.RegisterCommand($"{ModEntry.ModManifest.UniqueID}_if", If);
+			Event.RegisterCommand($"{ModEntry.ModManifest.UniqueID}_elif", Elif);
+			Event.RegisterCommand($"{ModEntry.ModManifest.UniqueID}_else", Else);
+			Event.RegisterCommand($"{ModEntry.ModManifest.UniqueID}_fi", Fi);
+			Event.RegisterCommand($"{ModEntry.ModManifest.UniqueID}_label", Label);
+			Event.RegisterCommand($"{ModEntry.ModManifest.UniqueID}_goto", Goto);
 
 			// Location specific commands
 			Event.RegisterCommand($"{ModEntry.ModManifest.UniqueID}_locationSpecificCommand_draw_ParrotExpress_lines", LocationSpecificCommand_draw_ParrotExpress_lines);
@@ -1890,33 +1955,152 @@ namespace TransportFramework.Utilities
 		}
 
 		// Control flow
-		private static void Query(Event @event, string[] args, EventContext context)
+		private static void If(Event @event, string[] args, EventContext context)
 		{
-			if (args.Length < 3)
+			if (args.Length < 1)
 			{
-				context.LogErrorAndSkip("invalid number of arguments. Expected mandatory fields [query, n1] followed by an optional [n2] field");
+				context.LogErrorAndSkip("invalid number of arguments. Expected a mandatory [query] field");
 				return;
 			}
-			if (!ArgUtility.TryGet(args, 1, out string query, out string error) || !ArgUtility.TryGetInt(args, 2, out int n1, out error) || !ArgUtility.TryGetOptionalInt(args, 3, out int n2, out error, 0))
+			if (!ArgUtility.TryGet(args, 1, out string query, out string error))
 			{
 				context.LogErrorAndSkip(error);
 				return;
 			}
-			if (GameStateQuery.CheckConditions(query))
+			ControlFlowQueryResults.Push(GameStateQuery.CheckConditions(query));
+			if (ControlFlowQueryResults.Peek())
 			{
-				if (n2 > 0)
-				{
-					List<string> eventCommands = @event.eventCommands.ToList();
+				@event.CurrentCommand++;
+				return;
+			}
+			SkipConditionalBlock(@event, new string[] { "elif", "else", "fi" });
+		}
 
-					eventCommands.RemoveRange(@event.currentCommand + n1 + 1, n2);
-					@event.eventCommands = eventCommands.ToArray();
+		private static void Elif(Event @event, string[] args, EventContext context)
+		{
+			if (!ControlFlowQueryResults.Any())
+			{
+				context.LogErrorAndSkip($"no preceding '{ModEntry.ModManifest.UniqueID}_if' command found");
+				return;
+			}
+			if (args.Length < 1)
+			{
+				context.LogErrorAndSkip("invalid number of arguments. Expected a mandatory [query] field");
+				return;
+			}
+			if (!ArgUtility.TryGet(args, 1, out string query, out string error))
+			{
+				context.LogErrorAndSkip(error);
+				return;
+			}
+			if (!ControlFlowQueryResults.Peek())
+			{
+				ControlFlowQueryResults.Pop();
+				ControlFlowQueryResults.Push(GameStateQuery.CheckConditions(query));
+				if (ControlFlowQueryResults.Peek())
+				{
+					@event.CurrentCommand++;
+					return;
 				}
 			}
-			else
+			SkipConditionalBlock(@event, new string[] { "elif", "else", "fi" });
+		}
+
+		private static void Else(Event @event, string[] args, EventContext context)
+		{
+			if (!ControlFlowQueryResults.Any())
 			{
-				@event.currentCommand += n1;
+				context.LogErrorAndSkip($"no preceding '{ModEntry.ModManifest.UniqueID}_if' command found");
+				return;
 			}
+			if (!ControlFlowQueryResults.Peek())
+			{
+				@event.CurrentCommand++;
+				return;
+			}
+			SkipConditionalBlock(@event, new string[] { "fi" });
+		}
+
+		private static void Fi(Event @event, string[] args, EventContext context)
+		{
+			if (!ControlFlowQueryResults.Any())
+			{
+				context.LogErrorAndSkip($"no preceding '{ModEntry.ModManifest.UniqueID}_if' command found");
+				return;
+			}
+			ControlFlowQueryResults.Pop();
 			@event.CurrentCommand++;
+		}
+
+		private static void SkipConditionalBlock(Event @event, string[] eventCommands)
+		{
+			int nestingLevel = 1;
+
+			@event.CurrentCommand++;
+			while (nestingLevel > 0)
+			{
+				if (@event.eventCommands[@event.CurrentCommand].StartsWith($"{ModEntry.ModManifest.UniqueID}_if"))
+				{
+					nestingLevel++;
+				}
+				while (@event.CurrentCommand < @event.eventCommands.Length && !eventCommands.Any(eventCommand => @event.eventCommands[@event.CurrentCommand].StartsWith($"{ModEntry.ModManifest.UniqueID}_{eventCommand}")))
+				{
+					@event.CurrentCommand++;
+				}
+				if (nestingLevel <= 1 || @event.eventCommands[@event.CurrentCommand].StartsWith($"{ModEntry.ModManifest.UniqueID}_fi"))
+				{
+					nestingLevel--;
+				}
+				@event.CurrentCommand++;
+			}
+			@event.CurrentCommand--;
+		}
+
+		private static void Label(Event @event, string[] args, EventContext context)
+		{
+			if (args.Length < 1)
+			{
+				context.LogErrorAndSkip("invalid number of arguments. Expected a mandatory [label] field");
+				return;
+			}
+			if (!ArgUtility.TryGet(args, 1, out string label, out string error))
+			{
+				context.LogErrorAndSkip(error);
+				return;
+			}
+			if (ControlFlowLabels.ContainsKey(label))
+			{
+				context.LogErrorAndSkip($"label {label} is already defined");
+				return;
+			}
+			ControlFlowLabels.Add(label, @event.CurrentCommand);
+			@event.onEventFinished += @event.onEventFinished?.GetInvocationList().Contains(ControlFlowLabels.Clear) != true ? ControlFlowLabels.Clear : null;
+			@event.CurrentCommand++;
+		}
+
+		private static void Goto(Event @event, string[] args, EventContext context)
+		{
+			if (SEvent is null)
+			{
+				context.LogErrorAndSkip("context station not defined");
+				return;
+			}
+			if (args.Length < 1)
+			{
+				context.LogErrorAndSkip("invalid number of arguments. Expected a mandatory [label] field");
+				return;
+			}
+			if (!ArgUtility.TryGet(args, 1, out string label, out string error))
+			{
+				context.LogErrorAndSkip(error);
+				return;
+			}
+			if (!ControlFlowLabels.ContainsKey(label))
+			{
+				context.LogErrorAndSkip($"label {label} is not defined");
+				return;
+			}
+			@event.CurrentCommand = ControlFlowLabels[label];
 		}
 
 		// Location specific commands
