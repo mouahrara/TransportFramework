@@ -56,6 +56,7 @@ namespace TransportFramework.Api
 
 	public interface IStation
 	{
+		public ISTemplate			Template					{ get; set; }
 		public string				Id							{ get; set; }
 		public string				DisplayName					{ get; set; }
 		public string				Location					{ get; set; }
@@ -78,6 +79,12 @@ namespace TransportFramework.Api
 		public IList<string>		IgnoreConditionsDeparture	{ get; set; }
 		public IList<string>		IgnoreConditionsArrival		{ get; set; }
 		public IList<ISRequiredMod>	RequiredMods				{ get; set; }
+	}
+
+	public interface ISTemplate
+	{
+		public string	Id				{ get; set; }
+		public Point	ReferenceTile	{ get; set; }
 	}
 
 	public interface ISSprite

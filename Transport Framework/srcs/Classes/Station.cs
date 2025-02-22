@@ -12,7 +12,7 @@ namespace TransportFramework.Classes
 		internal string				ConditionsLockedMessageCache = null;
 		internal bool				Disabled = false;
 
-		public string				TemplateId = null;
+		public STemplate			Template = null;
 		public string				Id = null;
 		public string				DisplayName = null;
 		public string				Location = null;

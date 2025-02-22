@@ -92,18 +92,18 @@ namespace TransportFramework.Utilities
 										/skippable
 										/beginSimultaneousCommand
 										/mouahrara.TransportFramework_removeTemporarySprites
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1247 128 64 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 1] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 4] false false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 0.1] 0 white 1 0 0 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1311 16 38 999999 1 1 [mouahrara.TransportFramework_StationTileX] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2.375] false false [mouahrara.TransportFramework_StationTileY] 0 white 1 0 0 0
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1247 128 64 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] - 1] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 4] false false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 0.1] 0 white 1 0 0 0
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1311 16 38 999999 1 1 [mouahrara.TransportFramework_StationTemplateReferenceTileX] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 2.375] false false [mouahrara.TransportFramework_StationTemplateReferenceTileY] 0 white 1 0 0 0
 										/endSimultaneousCommand
-										/mouahrara.TransportFramework_moveTo farmer [mouahrara.TransportFramework_StationTileX] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 1] 0 1
+										/mouahrara.TransportFramework_moveTo farmer [mouahrara.TransportFramework_StationTemplateReferenceTileX] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 1] 0 1
 										/playSound stoneStep
 										/mouahrara.TransportFramework_hideActor farmer
 										/playMusic none
 										/playSound trashcanlid
 										/beginSimultaneousCommand
 										/mouahrara.TransportFramework_removeTemporarySprites
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1247 128 64 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 1] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 4] false false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 0.1] 0 white 1 0 0 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1311 16 38 70 6 1 [mouahrara.TransportFramework_StationTileX] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2.375] false false [mouahrara.TransportFramework_StationTileY] 0 white 1 0 0 0 hold_last_frame true
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1247 128 64 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] - 1] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 4] false false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 0.1] 0 white 1 0 0 0
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1311 16 38 70 6 1 [mouahrara.TransportFramework_StationTemplateReferenceTileX] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 2.375] false false [mouahrara.TransportFramework_StationTemplateReferenceTileY] 0 white 1 0 0 0 hold_last_frame true
 										/endSimultaneousCommand
 										/pause 420
 										/fade
@@ -112,17 +112,17 @@ namespace TransportFramework.Utilities
 										/playSound busDriveOff
 										/beginSimultaneousCommand
 										/mouahrara.TransportFramework_removeTemporarySprites
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1247 128 64 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 1] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 4] false false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 0.1] 0 white 1 0 0 0 acceleration -0.1 0
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1247 128 64 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] - 1] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 4] false false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 0.1] 0 white 1 0 0 0 acceleration -0.1 0
 										/mouahrara.TransportFramework_if mouahrara.TransportFramework_CanDriveYourselfToday
-											/mouahrara.TransportFramework_temporaryFarmerSprite 117 48 608 16 32 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 0.9375] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2.3125] 3 true true false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 0.01]
-											/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors2 0 0 21 41 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 1] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2.8125] false false [mouahrara.TransportFramework_StationTileY] 0 white 1 0 0 0 acceleration -0.1 0
+											/mouahrara.TransportFramework_temporaryFarmerSprite 117 48 608 16 32 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] - 0.9375] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 2.3125] 3 true true false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 0.01]
+											/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors2 0 0 21 41 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] - 1] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 2.8125] false false [mouahrara.TransportFramework_StationTemplateReferenceTileY] 0 white 1 0 0 0 acceleration -0.1 0
 										/mouahrara.TransportFramework_else
-											/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 384 1311 15 19 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 1] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2] false false [mouahrara.TransportFramework_StationTileY] 0 white 1 0 0 0 acceleration -0.1 0
+											/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 384 1311 15 19 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] - 1] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 2] false false [mouahrara.TransportFramework_StationTemplateReferenceTileY] 0 white 1 0 0 0 acceleration -0.1 0
 										/mouahrara.TransportFramework_fi
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 368 1311 16 38 999999 1 1 [mouahrara.TransportFramework_StationTileX] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2.375] false false [mouahrara.TransportFramework_StationTileY] 0 white 1 0 0 0 acceleration -0.1 0
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -3 -3 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 20] none 0 0 acceleration 0 0
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -2 -3 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 20] none 0 0 acceleration 0 0
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -1 -3 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 20] none 0 0 acceleration 0 0
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 368 1311 16 38 999999 1 1 [mouahrara.TransportFramework_StationTemplateReferenceTileX] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 2.375] false false [mouahrara.TransportFramework_StationTemplateReferenceTileY] 0 white 1 0 0 0 acceleration -0.1 0
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -3 -3 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] - 20] none 0 0 acceleration 0 0
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -2 -3 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] - 20] none 0 0 acceleration 0 0
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -1 -3 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] - 20] none 0 0 acceleration 0 0
 										/mouahrara.TransportFramework_destroyObjectsOnCollision -3 0 1.5 8 2.25 true true
 										/endSimultaneousCommand
 										/pause 2400
@@ -135,23 +135,23 @@ namespace TransportFramework.Utilities
 								Type = "Arrival",
 								Script = @"none
 										/follow
-										/farmer [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 33] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 1] 3
+										/farmer [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] + 33] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 1] 3
 										/mouahrara.TransportFramework_hideWorldCharacters
 										/mouahrara.TransportFramework_hideActor farmer
 										/playSound busDriveOff
 										/beginSimultaneousCommand
 										/mouahrara.TransportFramework_removeTemporarySprites
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1247 128 64 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 32] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 4] false false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 0.1] 0 white 1 0 0 0 motion -6 0
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1247 128 64 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] + 32] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 4] false false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 0.1] 0 white 1 0 0 0 motion -6 0
 										/mouahrara.TransportFramework_if mouahrara.TransportFramework_CanDriveYourselfToday
-											/mouahrara.TransportFramework_temporaryFarmerSprite 117 48 608 16 32 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 32.0625] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2.3125] 3 true true false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 0.01]
-											/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors2 0 0 21 41 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 32] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2.8125] false false [mouahrara.TransportFramework_StationTileY] 0 white 1 0 0 0 motion -6 0
+											/mouahrara.TransportFramework_temporaryFarmerSprite 117 48 608 16 32 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] + 32.0625] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 2.3125] 3 true true false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 0.01]
+											/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors2 0 0 21 41 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] + 32] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 2.8125] false false [mouahrara.TransportFramework_StationTemplateReferenceTileY] 0 white 1 0 0 0 motion -6 0
 										/mouahrara.TransportFramework_else
-											/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 384 1311 15 19 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 32] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2] false false [mouahrara.TransportFramework_StationTileY] 0 white 1 0 0 0 motion -6 0
+											/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 384 1311 15 19 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] + 32] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 2] false false [mouahrara.TransportFramework_StationTemplateReferenceTileY] 0 white 1 0 0 0 motion -6 0
 										/mouahrara.TransportFramework_fi
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 368 1311 16 38 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 33] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2.375] false false [mouahrara.TransportFramework_StationTileY] 0 white 1 0 0 0 motion -6 0
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -3 -3 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 22] none 0 0 acceleration_change 0.0000896 0 stop_accelerating_when_velocity_is_zero true
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -2 -3 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 22] none 0 0 acceleration_change 0.0000896 0 stop_accelerating_when_velocity_is_zero true
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -1 -3 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 22] none 0 0 acceleration_change 0.0000896 0 stop_accelerating_when_velocity_is_zero true
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 368 1311 16 38 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] + 33] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 2.375] false false [mouahrara.TransportFramework_StationTemplateReferenceTileY] 0 white 1 0 0 0 motion -6 0
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -3 -3 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] + 22] none 0 0 acceleration_change 0.0000896 0 stop_accelerating_when_velocity_is_zero true
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -2 -3 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] + 22] none 0 0 acceleration_change 0.0000896 0 stop_accelerating_when_velocity_is_zero true
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -1 -3 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] + 22] none 0 0 acceleration_change 0.0000896 0 stop_accelerating_when_velocity_is_zero true
 										/mouahrara.TransportFramework_destroyObjectsOnCollision -3 0 1.5 8 2.25 true true
 										/mouahrara.TransportFramework_beginSyncWithTemporarySprite farmer
 										/endSimultaneousCommand
@@ -216,18 +216,18 @@ namespace TransportFramework.Utilities
 										/skippable
 										/beginSimultaneousCommand
 										/mouahrara.TransportFramework_removeTemporarySprites
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1247 128 64 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 6] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 4] false true [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 0.1] 0 white 1 0 0 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1311 16 38 999999 1 1 [mouahrara.TransportFramework_StationTileX] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2.375] false true [mouahrara.TransportFramework_StationTileY] 0 white 1 0 0 0
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1247 128 64 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] - 6] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 4] false true [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 0.1] 0 white 1 0 0 0
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1311 16 38 999999 1 1 [mouahrara.TransportFramework_StationTemplateReferenceTileX] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 2.375] false true [mouahrara.TransportFramework_StationTemplateReferenceTileY] 0 white 1 0 0 0
 										/endSimultaneousCommand
-										/mouahrara.TransportFramework_moveTo farmer [mouahrara.TransportFramework_StationTileX] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 1] 0 1
+										/mouahrara.TransportFramework_moveTo farmer [mouahrara.TransportFramework_StationTemplateReferenceTileX] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 1] 0 1
 										/playSound stoneStep
 										/mouahrara.TransportFramework_hideActor farmer
 										/playMusic none
 										/playSound trashcanlid
 										/beginSimultaneousCommand
 										/mouahrara.TransportFramework_removeTemporarySprites
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1247 128 64 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 6] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 4] false true [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 0.1] 0 white 1 0 0 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1311 16 38 70 6 1 [mouahrara.TransportFramework_StationTileX] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2.375] false true [mouahrara.TransportFramework_StationTileY] 0 white 1 0 0 0 hold_last_frame true
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1247 128 64 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] - 6] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 4] false true [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 0.1] 0 white 1 0 0 0
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1311 16 38 70 6 1 [mouahrara.TransportFramework_StationTemplateReferenceTileX] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 2.375] false true [mouahrara.TransportFramework_StationTemplateReferenceTileY] 0 white 1 0 0 0 hold_last_frame true
 										/endSimultaneousCommand
 										/pause 420
 										/fade
@@ -236,17 +236,17 @@ namespace TransportFramework.Utilities
 										/playSound busDriveOff
 										/beginSimultaneousCommand
 										/mouahrara.TransportFramework_removeTemporarySprites
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1247 128 64 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 6] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 4] false true [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 0.1] 0 white 1 0 0 0 acceleration 0.1 0
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1247 128 64 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] - 6] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 4] false true [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 0.1] 0 white 1 0 0 0 acceleration 0.1 0
 										/mouahrara.TransportFramework_if mouahrara.TransportFramework_CanDriveYourselfToday
-											/mouahrara.TransportFramework_temporaryFarmerSprite 117 48 608 16 32 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 0.9375] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2.3125] 1 false true false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 0.01]
-											/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors2 0 0 21 41 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 0.6875] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2.8125] false true [mouahrara.TransportFramework_StationTileY] 0 white 1 0 0 0 acceleration 0.1 0
+											/mouahrara.TransportFramework_temporaryFarmerSprite 117 48 608 16 32 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] + 0.9375] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 2.3125] 1 false true false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 0.01]
+											/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors2 0 0 21 41 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] + 0.6875] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 2.8125] false true [mouahrara.TransportFramework_StationTemplateReferenceTileY] 0 white 1 0 0 0 acceleration 0.1 0
 										/mouahrara.TransportFramework_else
-											/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 384 1311 15 19 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 1.0625] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2] false true [mouahrara.TransportFramework_StationTileY] 0 white 1 0 0 0 acceleration 0.1 0
+											/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 384 1311 15 19 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] + 1.0625] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 2] false true [mouahrara.TransportFramework_StationTemplateReferenceTileY] 0 white 1 0 0 0 acceleration 0.1 0
 										/mouahrara.TransportFramework_fi
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 368 1311 16 38 999999 1 1 [mouahrara.TransportFramework_StationTileX] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2.375] false true [mouahrara.TransportFramework_StationTileY] 0 white 1 0 0 0 acceleration 0.1 0
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -3 -3 > [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 15] none 0 0 acceleration 0 0
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -2 -3 > [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 15] none 0 0 acceleration 0 0
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -1 -3 > [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 15] none 0 0 acceleration 0 0
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 368 1311 16 38 999999 1 1 [mouahrara.TransportFramework_StationTemplateReferenceTileX] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 2.375] false true [mouahrara.TransportFramework_StationTemplateReferenceTileY] 0 white 1 0 0 0 acceleration 0.1 0
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -3 -3 > [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] + 15] none 0 0 acceleration 0 0
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -2 -3 > [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] + 15] none 0 0 acceleration 0 0
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -1 -3 > [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] + 15] none 0 0 acceleration 0 0
 										/mouahrara.TransportFramework_destroyObjectsOnCollision -3 0 1.5 8 2.25 true true
 										/endSimultaneousCommand
 										/pause 2400
@@ -259,23 +259,23 @@ namespace TransportFramework.Utilities
 								Type = "Arrival",
 								Script = @"none
 										/follow
-										/farmer [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 33] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 1] 1
+										/farmer [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] - 33] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 1] 1
 										/mouahrara.TransportFramework_hideWorldCharacters
 										/mouahrara.TransportFramework_hideActor farmer
 										/playSound busDriveOff
 										/beginSimultaneousCommand
 										/mouahrara.TransportFramework_removeTemporarySprites
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1247 128 64 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 39] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 4] false true [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 0.1] 0 white 1 0 0 0 motion 6 0
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 288 1247 128 64 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] - 39] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 4] false true [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 0.1] 0 white 1 0 0 0 motion 6 0
 										/mouahrara.TransportFramework_if mouahrara.TransportFramework_CanDriveYourselfToday
-											/mouahrara.TransportFramework_temporaryFarmerSprite 117 48 608 16 32 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 32.0625] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2.3125] 1 false true false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 0.01]
-											/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors2 0 0 21 41 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 32.3125] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2.8125] false true [mouahrara.TransportFramework_StationTileY] 0 white 1 0 0 0 motion 6 0
+											/mouahrara.TransportFramework_temporaryFarmerSprite 117 48 608 16 32 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] - 32.0625] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 2.3125] 1 false true false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 0.01]
+											/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors2 0 0 21 41 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] - 32.3125] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 2.8125] false true [mouahrara.TransportFramework_StationTemplateReferenceTileY] 0 white 1 0 0 0 motion 6 0
 										/mouahrara.TransportFramework_else
-											/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 384 1311 15 19 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 31.9375] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2] false true [mouahrara.TransportFramework_StationTileY] 0 white 1 0 0 0 motion 6 0
+											/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 384 1311 15 19 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] - 31.9375] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 2] false true [mouahrara.TransportFramework_StationTemplateReferenceTileY] 0 white 1 0 0 0 motion 6 0
 										/mouahrara.TransportFramework_fi
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 368 1311 16 38 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 33] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2.375] false true [mouahrara.TransportFramework_StationTileY] 0 white 1 0 0 0 motion 6 0
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -3 -3 > [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 29] none 0 0 acceleration_change -0.0000898 0 stop_accelerating_when_velocity_is_zero true
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -2 -3 > [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 29] none 0 0 acceleration_change -0.0000898 0 stop_accelerating_when_velocity_is_zero true
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -1 -3 > [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 29] none 0 0 acceleration_change -0.0000898 0 stop_accelerating_when_velocity_is_zero true
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\Cursors 368 1311 16 38 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] - 33] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 2.375] false true [mouahrara.TransportFramework_StationTemplateReferenceTileY] 0 white 1 0 0 0 motion 6 0
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -3 -3 > [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] - 29] none 0 0 acceleration_change -0.0000898 0 stop_accelerating_when_velocity_is_zero true
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -2 -3 > [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] - 29] none 0 0 acceleration_change -0.0000898 0 stop_accelerating_when_velocity_is_zero true
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -1 -3 > [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] - 29] none 0 0 acceleration_change -0.0000898 0 stop_accelerating_when_velocity_is_zero true
 										/mouahrara.TransportFramework_destroyObjectsOnCollision -3 0 1.5 8 2.25 true true
 										/mouahrara.TransportFramework_beginSyncWithTemporarySprite farmer
 										/endSimultaneousCommand
@@ -397,34 +397,34 @@ namespace TransportFramework.Utilities
 										/skippable
 										/beginSimultaneousCommand
 										/mouahrara.TransportFramework_removeTemporarySprites
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\ParrotPlatform 48 73 48 32 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 1.125] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 1.625] false false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2.1] 0 white 1 0 0 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\ParrotPlatform 0 0 48 68 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 1] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 4] false false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 2] 0 white 1 0 0 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\ParrotPlatform 48 0 48 68 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 1] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 4] false false [mouahrara.TransportFramework_StationTileY] 0 white 1 0 0 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 0 0 24 24 130 2 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 0.8] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 5.25] false false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] + 0.1] 0 white 1 0 0 0 shake_intensity 2 ping_pong true
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 0 0 24 24 130 2 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 0.325] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 5.25] false true [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] + 0.1] 0 white 1 0 0 0 shake_intensity 2 ping_pong true
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\ParrotPlatform 48 73 48 32 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] - 1.125] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 1.625] false false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 2.1] 0 white 1 0 0 0
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\ParrotPlatform 0 0 48 68 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] - 1] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 4] false false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 2] 0 white 1 0 0 0
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\ParrotPlatform 48 0 48 68 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] - 1] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 4] false false [mouahrara.TransportFramework_StationTemplateReferenceTileY] 0 white 1 0 0 0
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 0 0 24 24 130 2 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] - 0.8] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 5.25] false false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] + 0.1] 0 white 1 0 0 0 shake_intensity 2 ping_pong true
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 0 0 24 24 130 2 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] + 0.325] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 5.25] false true [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] + 0.1] 0 white 1 0 0 0 shake_intensity 2 ping_pong true
 										/endSimultaneousCommand
 										/playSound parrot
 										/pause 260
 										/beginSimultaneousCommand
 										/mouahrara.TransportFramework_removeTemporarySprites LooseSprites\parrots
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 0 0 24 24 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 0.8] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 5.25] false false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] + 0.1] 0 white 1 0 0 0
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 0 0 24 24 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 0.325] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 5.25] false true [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] + 0.1] 0 white 1 0 0 0
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 0 0 24 24 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] - 0.8] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 5.25] false false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] + 0.1] 0 white 1 0 0 0
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 0 0 24 24 999999 1 1 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] + 0.325] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 5.25] false true [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] + 0.1] 0 white 1 0 0 0
 										/endSimultaneousCommand
 										/pause 240
 										/beginSimultaneousCommand
 										/mouahrara.TransportFramework_removeTemporarySprites LooseSprites\parrots
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 120 0 24 24 50 3 999999 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] - 0.8] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 5.25] false false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] + 0.1] 0 white 1 0 0 0 interval_variation 3.75 frame_sound batFlap 2 motion -0.6 -0.6 acceleration 0 -0.1 sway [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 0.325] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 5.25] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 0.325] 0 0.25 2.5 4 16 default default y default
-										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 120 0 24 24 50 3 999999 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 0.325] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 5.25] false true [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] + 0.1] 0 white 1 0 0 0 interval_variation 3.75 frame_sound batFlap 2 motion 0.6 -0.6 acceleration 0 -0.1 sway [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 0.325] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 5.25] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileX] + 0.325] 0 0.25 2.5 4 16 default default y default
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -4 -1 none 0 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 7.25] 0 delay_before_animation_start 1 start_sound treethud
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -4 -1 none 0 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 7.25] 0 shake_intensity 6.6 shake_intensity_change -0.022
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -3 -1 none 0 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 7.25] 0 shake_intensity 6.6 shake_intensity_change -0.022
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -5 -1 none 0 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 7.25] 500 motion 0.16 0.16 scale 1 scale_change -0.01
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -4 -1 none 0 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 7.25] 500 motion 0 0 acceleration 0 -0.1
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -3 -1 none 0 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 7.25] 500 motion 0 0 acceleration 0 -0.1
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -2 -1 none 0 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 7.25] 0 motion 0 0 acceleration 0 0
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -1 -1 none 0 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 7.25] 0 motion 0 0 acceleration 0 0
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -2 -1 none 0 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 7.25] 500 motion 0 0 acceleration 0 -0.1
-										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -1 -1 none 0 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTileY] - 7.25] 500 motion 0 0 acceleration 0 -0.1
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 120 0 24 24 50 3 999999 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] - 0.8] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 5.25] false false [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] + 0.1] 0 white 1 0 0 0 interval_variation 3.75 frame_sound batFlap 2 motion -0.6 -0.6 acceleration 0 -0.1 sway [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] + 0.325] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 5.25] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] + 0.325] 0 0.25 2.5 4 16 default default y default
+										/mouahrara.TransportFramework_temporaryAnimatedSprite LooseSprites\parrots 120 0 24 24 50 3 999999 [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] + 0.325] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 5.25] false true [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] + 0.1] 0 white 1 0 0 0 interval_variation 3.75 frame_sound batFlap 2 motion 0.6 -0.6 acceleration 0 -0.1 sway [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] + 0.325] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 5.25] [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileX] + 0.325] 0 0.25 2.5 4 16 default default y default
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -4 -1 none 0 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 7.25] 0 delay_before_animation_start 1 start_sound treethud
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -4 -1 none 0 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 7.25] 0 shake_intensity 6.6 shake_intensity_change -0.022
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -3 -1 none 0 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 7.25] 0 shake_intensity 6.6 shake_intensity_change -0.022
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -5 -1 none 0 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 7.25] 500 motion 0.16 0.16 scale 1 scale_change -0.01
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -4 -1 none 0 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 7.25] 500 motion 0 0 acceleration 0 -0.1
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -3 -1 none 0 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 7.25] 500 motion 0 0 acceleration 0 -0.1
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -2 -1 none 0 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 7.25] 0 motion 0 0 acceleration 0 0
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -1 -1 none 0 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 7.25] 0 motion 0 0 acceleration 0 0
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -2 -1 none 0 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 7.25] 500 motion 0 0 acceleration 0 -0.1
+										/mouahrara.TransportFramework_changeTemporaryAnimatedSprite -1 -1 none 0 < [mouahrara.TransportFramework_QueryExpression [mouahrara.TransportFramework_StationTemplateReferenceTileY] - 7.25] 500 motion 0 0 acceleration 0 -0.1
 										/mouahrara.TransportFramework_beginSyncWithTemporarySprite farmer -4 offset
 										/mouahrara.TransportFramework_locationSpecificCommand_draw_ParrotExpress_lines
 										/endSimultaneousCommand
@@ -440,7 +440,10 @@ namespace TransportFramework.Utilities
 				{
 					new()
 					{
-						TemplateId = "Bus_left",
+						Template = new STemplate()
+						{
+							Id = "Bus_left"
+						},
 						Id = "Bus_BusStop",
 						DisplayName = "[mouahrara.TransportFramework_LocalizedStardewValley]",
 						Location = "BusStop",
@@ -472,7 +475,10 @@ namespace TransportFramework.Utilities
 					},
 					new()
 					{
-						TemplateId = "Bus_left",
+						Template = new STemplate()
+						{
+							Id = "Bus_left"
+						},
 						Id = "Bus_Desert",
 						DisplayName = "[LocalizedText Strings\\StringsFromCSFiles:MapPage.cs.11062]",
 						Location = "Desert",
@@ -622,7 +628,10 @@ namespace TransportFramework.Utilities
 					},
 					new()
 					{
-						TemplateId = "ParrotExpress",
+						Template = new STemplate()
+						{
+							Id = "ParrotExpress"
+						},
 						Id = "ParrotExpress_Volcano",
 						DisplayName = "[LocalizedText Strings\\UI:ParrotPlatform_Volcano]",
 						Location = "IslandNorth",
@@ -630,7 +639,10 @@ namespace TransportFramework.Utilities
 					},
 					new()
 					{
-						TemplateId = "ParrotExpress",
+						Template = new STemplate()
+						{
+							Id = "ParrotExpress"
+						},
 						Id = "ParrotExpress_Archaeology",
 						DisplayName = "[LocalizedText Strings\\UI:ParrotPlatform_Archaeology]",
 						Location = "IslandNorth",
@@ -646,7 +658,10 @@ namespace TransportFramework.Utilities
 					},
 					new()
 					{
-						TemplateId = "ParrotExpress",
+						Template = new STemplate()
+						{
+							Id = "ParrotExpress"
+						},
 						Id = "ParrotExpress_Farm",
 						DisplayName = "[LocalizedText Strings\\UI:ParrotPlatform_Farm]",
 						Location = "IslandWest",
@@ -654,7 +669,10 @@ namespace TransportFramework.Utilities
 					},
 					new()
 					{
-						TemplateId = "ParrotExpress",
+						Template = new STemplate()
+						{
+							Id = "ParrotExpress"
+						},
 						Id = "ParrotExpress_Forest",
 						DisplayName = "[LocalizedText Strings\\UI:ParrotPlatform_Forest]",
 						Location = "IslandEast",
@@ -662,7 +680,10 @@ namespace TransportFramework.Utilities
 					},
 					new()
 					{
-						TemplateId = "ParrotExpress",
+						Template = new STemplate()
+						{
+							Id = "ParrotExpress"
+						},
 						Id = "ParrotExpress_Docks",
 						DisplayName = "[LocalizedText Strings\\UI:ParrotPlatform_Docks]",
 						Location = "IslandSouth",
@@ -834,61 +855,68 @@ namespace TransportFramework.Utilities
 
 		public static bool TryApplyTemplateToStation(Station station)
 		{
-			if (!string.IsNullOrWhiteSpace(station.TemplateId) && station.Tile != new Point(int.MinValue, int.MinValue))
+			if (station.Template is not null && !string.IsNullOrWhiteSpace(station.Template.Id))
 			{
-				Template template = ModEntry.Templates.Find(t => t.Id.Equals(station.TemplateId));
+				if (station.Template.ReferenceTile == new Point(int.MinValue, int.MinValue))
+				{
+					station.Template.ReferenceTile = station.Tile;
+				}
+				if (station.Template.ReferenceTile != new Point(int.MinValue, int.MinValue))
+				{
+					Template template = ModEntry.Templates.Find(t => t.Id.Equals(station.Template.Id));
 
-				if (template is null)
-				{
-					ModEntry.Monitor.Log($"Failed to apply template to station (Id: {station.Id}): The template '{station.TemplateId}' cannot be found.", LogLevel.Error);
-					return false;
-				}
-				if (string.IsNullOrWhiteSpace(station.Direction) && !string.IsNullOrWhiteSpace(template.Direction))
-				{
-					station.Direction = template.Direction.DeepClone();
-				}
-				if (station.Price == int.MinValue && template.Price != int.MinValue)
-				{
-					station.Price = template.Price.DeepClone();
-				}
-				if (string.IsNullOrWhiteSpace(station.Network) && !string.IsNullOrWhiteSpace(template.Network))
-				{
-					station.Network = template.Network.DeepClone();
-				}
-				if (station.AccessTiles is null && template.AccessTiles is not null)
-				{
-					station.AccessTiles = template.AccessTiles.DeepClone();
-					for (int i = 0; i < station.AccessTiles.Count; i++)
+					if (template is null)
 					{
-						station.AccessTiles[i] = new Point(station.Tile.X + station.AccessTiles[i].X, station.Tile.Y + station.AccessTiles[i].Y);
+						ModEntry.Monitor.Log($"Failed to apply template to station (Id: {station.Id}): The template '{station.Template.Id}' cannot be found.", LogLevel.Error);
+						return false;
 					}
-				}
-				if (station.Sprites is null && template.Sprites is not null)
-				{
-					station.Sprites = template.Sprites.DeepClone();
-					for (int i = 0; i < station.Sprites.Count; i++)
+					if (string.IsNullOrWhiteSpace(station.Direction) && !string.IsNullOrWhiteSpace(template.Direction))
 					{
-						if (station.Sprites[i].Data.Position != new Vector2(float.MinValue, float.MinValue))
+						station.Direction = template.Direction.DeepClone();
+					}
+					if (station.Price == int.MinValue && template.Price != int.MinValue)
+					{
+						station.Price = template.Price.DeepClone();
+					}
+					if (string.IsNullOrWhiteSpace(station.Network) && !string.IsNullOrWhiteSpace(template.Network))
+					{
+						station.Network = template.Network.DeepClone();
+					}
+					if (station.AccessTiles is null && template.AccessTiles is not null)
+					{
+						station.AccessTiles = template.AccessTiles.DeepClone();
+						for (int i = 0; i < station.AccessTiles.Count; i++)
 						{
-							station.Sprites[i].Data.Position = new Vector2(station.Tile.X + station.Sprites[i].Data.Position.X, station.Tile.Y + station.Sprites[i].Data.Position.Y);
-						}
-						if (station.Sprites[i].Data.LayerDepth != float.MinValue)
-						{
-							station.Sprites[i].Data.LayerDepth = station.Tile.Y + station.Sprites[i].Data.LayerDepth;
+							station.AccessTiles[i] = new Point(station.Template.ReferenceTile.X + station.AccessTiles[i].X, station.Template.ReferenceTile.Y + station.AccessTiles[i].Y);
 						}
 					}
-				}
-				if (station.Conditions is null && template.Conditions is not null)
-				{
-					station.Conditions = template.Conditions.DeepClone();
-				}
-				if (station.Events is null && template.Events is not null)
-				{
-					station.Events = template.Events.DeepClone();
-				}
-				if (string.IsNullOrWhiteSpace(station.Sound) && !string.IsNullOrWhiteSpace(template.Sound))
-				{
-					station.Sound = template.Sound.DeepClone();
+					if (station.Sprites is null && template.Sprites is not null)
+					{
+						station.Sprites = template.Sprites.DeepClone();
+						for (int i = 0; i < station.Sprites.Count; i++)
+						{
+							if (station.Sprites[i].Data.Position != new Vector2(float.MinValue, float.MinValue))
+							{
+								station.Sprites[i].Data.Position = new Vector2(station.Template.ReferenceTile.X + station.Sprites[i].Data.Position.X, station.Template.ReferenceTile.Y + station.Sprites[i].Data.Position.Y);
+							}
+							if (station.Sprites[i].Data.LayerDepth != float.MinValue)
+							{
+								station.Sprites[i].Data.LayerDepth = station.Template.ReferenceTile.Y + station.Sprites[i].Data.LayerDepth;
+							}
+						}
+					}
+					if (station.Conditions is null && template.Conditions is not null)
+					{
+						station.Conditions = template.Conditions.DeepClone();
+					}
+					if (station.Events is null && template.Events is not null)
+					{
+						station.Events = template.Events.DeepClone();
+					}
+					if (string.IsNullOrWhiteSpace(station.Sound) && !string.IsNullOrWhiteSpace(template.Sound))
+					{
+						station.Sound = template.Sound.DeepClone();
+					}
 				}
 			}
 			return true;

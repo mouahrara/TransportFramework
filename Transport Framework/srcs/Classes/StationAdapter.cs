@@ -20,6 +20,12 @@ namespace TransportFramework.Classes
 			get => _station;
 		}
 
+		public ISTemplate Template
+		{
+			get => new ISTemplateAdapter(_station.Template);
+			set => _station.Template = ((ISTemplateAdapter)value).Template;
+		}
+
 		public string Id
 		{
 			get => _station.Id;
@@ -150,6 +156,33 @@ namespace TransportFramework.Classes
 		{
 			get => _station.RequiredMods.Select(c => new ISRequiredModAdapter(c)).Cast<ISRequiredMod>().ToList();
 			set => _station.RequiredMods = value.Select(c => ((ISRequiredModAdapter)c).RequiredMod).ToList();
+		}
+	}
+
+	public class ISTemplateAdapter : ISTemplate
+	{
+		private readonly STemplate _template;
+
+		public ISTemplateAdapter(STemplate template)
+		{
+			_template = template ?? throw new ArgumentNullException(nameof(template));
+		}
+
+		public STemplate Template
+		{
+			get => _template;
+		}
+
+		public string Id
+		{
+			get => _template.Id;
+			set => _template.Id = value;
+		}
+
+		public Point ReferenceTile
+		{
+			get => _template.ReferenceTile;
+			set => _template.ReferenceTile = value;
 		}
 	}
 

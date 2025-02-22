@@ -1967,7 +1967,7 @@ namespace TransportFramework.Utilities
 				context.LogErrorAndSkip(error);
 				return;
 			}
-			ControlFlowQueryResults.Push(GameStateQuery.CheckConditions(query));
+			ControlFlowQueryResults.Push(QueriesUtility.CheckConditions(SEvent.Station, query));
 			if (ControlFlowQueryResults.Peek())
 			{
 				@event.CurrentCommand++;
@@ -1996,7 +1996,7 @@ namespace TransportFramework.Utilities
 			if (!ControlFlowQueryResults.Peek())
 			{
 				ControlFlowQueryResults.Pop();
-				ControlFlowQueryResults.Push(GameStateQuery.CheckConditions(query));
+				ControlFlowQueryResults.Push(QueriesUtility.CheckConditions(SEvent.Station, query));
 				if (ControlFlowQueryResults.Peek())
 				{
 					@event.CurrentCommand++;

@@ -36,8 +36,8 @@ namespace TransportFramework.Utilities
 			// Event scripting
 			TokenParser.RegisterParser($"{ModEntry.ModManifest.UniqueID}_PlayerTileX", PlayerTileX);
 			TokenParser.RegisterParser($"{ModEntry.ModManifest.UniqueID}_PlayerTileY", PlayerTileY);
-			TokenParser.RegisterParser($"{ModEntry.ModManifest.UniqueID}_StationTileX", StationTileX);
-			TokenParser.RegisterParser($"{ModEntry.ModManifest.UniqueID}_StationTileY", StationTileY);
+			TokenParser.RegisterParser($"{ModEntry.ModManifest.UniqueID}_StationTemplateReferenceTileX", StationTemplateReferenceTileX);
+			TokenParser.RegisterParser($"{ModEntry.ModManifest.UniqueID}_StationTemplateReferenceTileY", StationTemplateReferenceTileY);
 			TokenParser.RegisterParser($"{ModEntry.ModManifest.UniqueID}_StationLocationWidth", StationLocationWidth);
 			TokenParser.RegisterParser($"{ModEntry.ModManifest.UniqueID}_StationLocationHeight", StationLocationHeight);
 			TokenParser.RegisterParser($"{ModEntry.ModManifest.UniqueID}_QueryExpression", QueryExpression);
@@ -78,23 +78,23 @@ namespace TransportFramework.Utilities
 			return true;
 		}
 
-		private static bool StationTileX(string[] query, out string replacement, Random random, Farmer player)
+		private static bool StationTemplateReferenceTileX(string[] query, out string replacement, Random random, Farmer player)
 		{
 			if (Station is null)
 			{
 				return TokenParser.LogTokenError(query, "context station not defined", out replacement);
 			}
-			replacement = Station.Tile.X.ToString();
+			replacement = Station.Template.ReferenceTile.X.ToString();
 			return true;
 		}
 
-		private static bool StationTileY(string[] query, out string replacement, Random random, Farmer player)
+		private static bool StationTemplateReferenceTileY(string[] query, out string replacement, Random random, Farmer player)
 		{
 			if (Station is null)
 			{
 				return TokenParser.LogTokenError(query, "context station not defined", out replacement);
 			}
-			replacement = Station.Tile.Y.ToString();
+			replacement = Station.Template.ReferenceTile.Y.ToString();
 			return true;
 		}
 
@@ -151,7 +151,7 @@ namespace TransportFramework.Utilities
 
 		private static bool CheckGameStateQuery(string[] query, out string replacement, Random random, Farmer player)
 		{
-			replacement = GameStateQuery.CheckConditions(string.Join(" ", query[1..])).ToString();
+			replacement = QueriesUtility.CheckConditions(Station, string.Join(" ", query[1..])).ToString();
 			return true;
 		}
 	}
