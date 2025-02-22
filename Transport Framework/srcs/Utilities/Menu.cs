@@ -135,7 +135,30 @@ namespace TransportFramework.Utilities
 			AddPreviousPageAndNextPageAnswers(answerChoices, pageIndex, pageCount, "Top");
 			for (int i = StartingIndex; i < StartingIndex + ModEntry.Config.NumberOfDestinationsPerPage && i < Stations.Count(); i++)
 			{
-				answerChoices.Add(new Response(Stations.ElementAt(i).Id, Stations.ElementAt(i).LocalizedDisplayName + (Stations.ElementAt(i).Price > 0 ? $" ({Stations.ElementAt(i).Price}$)" : "")));
+				string formattedDisplayName = Stations.ElementAt(i).LocalizedDisplayName;
+
+				if ((Station.Include is not null && Station.Include.Contains("all")) || (Station.IncludeDeparture is not null && Station.IncludeDeparture.Contains("all")))
+				{
+					string networkDisplayName = Stations.ElementAt(i).Network switch
+					{
+						"Minecart" => ModEntry.Helper.Translation.Get("Network.Minecart"),
+						"Bus" => ModEntry.Helper.Translation.Get("Network.Bus"),
+						"Boat" => ModEntry.Helper.Translation.Get("Network.Boat"),
+						"ParrotExpress" => ModEntry.Helper.Translation.Get("Network.ParrotExpress"),
+						"Train" => ModEntry.Helper.Translation.Get("Network.Train"),
+						_ => null
+					};
+
+					if (networkDisplayName is not null)
+					{
+						formattedDisplayName += $" [{networkDisplayName}]";
+					}
+				}
+				if (Stations.ElementAt(i).Price > 0)
+				{
+					formattedDisplayName += $" ({Stations.ElementAt(i).Price}$)";
+				}
+				answerChoices.Add(new Response(Stations.ElementAt(i).Id, formattedDisplayName));
 			}
 			AddPreviousPageAndNextPageAnswers(answerChoices, pageIndex, pageCount, "Bottom");
 			answerChoices.Add(new Response("cancel", Game1.content.LoadString("Strings\\Locations:MineCart_Destination_Cancel")));

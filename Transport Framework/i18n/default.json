@@ -5,6 +5,13 @@
 	// Stations menu
 	"Menu.NoDestinations": "There are no destinations available at the moment.",
 
+	// Networks
+	"Network.Minecart": "Minecart",
+	"Network.Bus": "Bus",
+	"Network.Boat": "Boat",
+	"Network.ParrotExpress": "Parrot Express",
+	"Network.Train": "Train",
+
 	// GMCM
 	"GMCM.AllowHorsebackTravel.Title": "Allow horseback travel",
 	"GMCM.AllowHorsebackTravel.Tooltip": "Defines whether or not the use of horseback transportation is allowed when the player has a {{HorseFlute}} in his inventory. Even if this option is enabled, the horse will be left behind if there is not enough space at the arrival.",

@@ -5,6 +5,13 @@
 	// Stations menu
 	"Menu.NoDestinations": "Il n'y a pas de destinations disponibles pour le moment.",
 
+	// Networks
+	"Network.Minecart": "Wagonnet",
+	"Network.Bus": "Bus",
+	"Network.Boat": "Bateau",
+	"Network.ParrotExpress": "Perroquet Express",
+	"Network.Train": "Train",
+
 	// GMCM
 	"GMCM.AllowHorsebackTravel.Title": "Autoriser les voyages à cheval",
 	"GMCM.AllowHorsebackTravel.Tooltip": "Définit si l'utilisation de moyens de transport à cheval est autorisée ou non lorsque le joueur a une {{HorseFlute}} dans son inventaire. Même si cette option est activée, le cheval sera laissé sur place s'il n'y a pas assez d'espace à l'arrivée.",
