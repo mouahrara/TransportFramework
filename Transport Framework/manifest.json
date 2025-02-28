@@ -1,7 +1,7 @@
 {
 	"Name": "Transport Framework",
 	"Author": "mouahrara",
-	"Version": "1.0.1",
+	"Version": "1.0.2",
 	"Description": "Load content packs which add new transport stations.",
 	"UniqueID": "mouahrara.TransportFramework",
 	"EntryDll": "TransportFramework.dll",
